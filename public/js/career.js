@@ -15,7 +15,7 @@ window.JOBS = [
       ],
       income: [
         "Mức thu nhập: 14.5 EUR/giờ",
-        "Tổng thu nhập: 3000 EUR/tháng ~80 triệu VND/tháng",
+        "Tổng thu nhập: 3000 EUR/tháng <strong> ~80 triệu VND/tháng </strong>",
       ],
       benefits: [
         "Hợp đồng dài hạn.",

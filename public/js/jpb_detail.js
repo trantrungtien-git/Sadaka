@@ -1,77 +1,93 @@
-// ========== JOB DETAIL ==========
+// public/js/job_detail.js
+(function () {
+  // Vercel + Vite: public/* sẽ ở root => dùng path tuyệt đối luôn
+  const pub = (p) => "/" + String(p).replace(/^\/+/, ""); // "img/a.jpg" -> "/img/a.jpg"
 
-document.addEventListener("DOMContentLoaded", () => {
-  const imgEl = document.getElementById("jobSliderImg");
+  const $ = (sel) => document.querySelector(sel);
 
-  // 1) Danh sách ảnh (thay bằng ảnh của bạn)
-  const images = [
-    "../assets/img/Edeka.jpg",
-    "../assets/img/Slider_2.jpg",
-    "../assets/img/Slider_3.jpg",
-    // "../assets/img/Slider_4.jpg",
+  function getParams() {
+    const url = new URL(window.location.href);
+    return {
+      id: (url.searchParams.get("id") || "").trim().toLowerCase(),
+      title: (url.searchParams.get("title") || "").trim(),
+    };
+  }
+
+  // map theo id (bạn thêm tuỳ ý)
+  const JOB_IMAGE_MAP = {
+    edeka: "img/Edeka.jpg",
+  };
+
+  // slider mặc định
+  const DEFAULT_SLIDES = [
+    "img/Edeka.jpg",
+    "img/Slider_2.jpg",
+    "img/Slider_3.jpg",
   ];
 
-  // 2) Cấu hình thời gian
-  const intervalMs = 20000; // đứng mỗi ảnh bao lâu rồi đổi
-  const fadeMs = 350; // phải khớp CSS opacity transition ~0.45s
+  function init() {
+    const { id, title } = getParams();
 
-  let index = 0;
-  let timer = null;
+    // ---- title ----
+    const titleEl = $("#job-title") || $(".job-title") || $("h1") || $("h2");
+    if (titleEl && title) titleEl.textContent = title;
 
-  // preload cho mượt (đỡ nháy)
-  images.forEach((src) => {
-    const pre = new Image();
-    pre.src = src;
-  });
+    // ---- lấy element ảnh chính (đổi selector cho đúng HTML bạn nếu cần) ----
+    const sliderImg =
+      $("#jobSliderImg") || // bạn đang có cái này (trong log trước)
+      $("#slider-main-image") ||
+      $("#job-main-image") ||
+      $("#jobImg") ||
+      $("img[data-role='job-image']");
 
-  function showNextImage() {
-    // fade out
-    imgEl.classList.add("is-fading");
+    if (!sliderImg) return;
 
-    // sau khi fade out xong thì đổi src và fade in
-    window.setTimeout(() => {
-      index = (index + 1) % images.length;
-      imgEl.src = images[index];
+    // ---- danh sách slide (ưu tiên theo id job) ----
+    const slides = [...DEFAULT_SLIDES];
+    const cover = JOB_IMAGE_MAP[id];
+    if (cover) slides[0] = cover;
 
-      // đảm bảo browser đã nhận src mới trước khi fade in
-      requestAnimationFrame(() => {
-        imgEl.classList.remove("is-fading");
-      });
-    }, fadeMs);
+    // set ảnh ban đầu
+    let idx = 0;
+    sliderImg.src = pub(slides[idx]);
+
+    // nếu có thumbnail thì set luôn (optional)
+    const t1 = $("#slide1") || $("#sliderImg1");
+    const t2 = $("#slide2") || $("#sliderImg2");
+    const t3 = $("#slide3") || $("#sliderImg3");
+    if (t1) t1.src = pub(slides[0]);
+    if (t2) t2.src = pub(slides[1]);
+    if (t3) t3.src = pub(slides[2]);
+
+    // ---- autoplay slider ----
+    const INTERVAL_MS = 3000;
+    let timer = setInterval(() => {
+      idx = (idx + 1) % slides.length;
+      sliderImg.src = pub(slides[idx]);
+    }, INTERVAL_MS);
+
+    // ---- (tuỳ chọn) nếu có nút prev/next ----
+    const btnPrev = $("#btnPrev") || $(".btn-prev");
+    const btnNext = $("#btnNext") || $(".btn-next");
+
+    function go(step) {
+      idx = (idx + step + slides.length) % slides.length;
+      sliderImg.src = pub(slides[idx]);
+      // reset timer để bấm tay không bị giật
+      clearInterval(timer);
+      timer = setInterval(() => {
+        idx = (idx + 1) % slides.length;
+        sliderImg.src = pub(slides[idx]);
+      }, INTERVAL_MS);
+    }
+
+    if (btnPrev) btnPrev.addEventListener("click", () => go(-1));
+    if (btnNext) btnNext.addEventListener("click", () => go(1));
   }
 
-  function start() {
-    if (!images.length) return;
-    // set ảnh đầu cho chắc
-    imgEl.src = images[index];
-    timer = window.setInterval(showNextImage, intervalMs);
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
   }
-
-  function stop() {
-    if (timer) window.clearInterval(timer);
-    timer = null;
-  }
-
-  // Optional: pause khi tab bị ẩn để đỡ tốn tài nguyên
-  document.addEventListener("visibilitychange", () => {
-    if (document.hidden) stop();
-    else start();
-  });
-
-  start();
-});
-
-// ../js/job_detail.js
-document.addEventListener("DOMContentLoaded", () => {
-  const params = new URLSearchParams(window.location.search);
-  const jobTitle = params.get("title");
-
-  if (jobTitle) {
-    // đổi cái <title> trong <head>
-    document.title = `${jobTitle} | Sadaka HR`;
-
-    // nếu bạn muốn đồng thời đổi luôn cái H2 trong nội dung:
-    const h2 = document.querySelector(".job-header .title h2");
-    if (h2) h2.textContent = jobTitle;
-  }
-});
+})();
