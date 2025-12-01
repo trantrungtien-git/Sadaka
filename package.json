@@ -8,7 +8,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "build:gh": "vite build --mode gh",
-    "deploy": "npm run build:gh && gh-pages -d dist -b gh-pages"
+    "preview": "vite preview",
+    "deploy": "vercel --prod"
   }
 }
