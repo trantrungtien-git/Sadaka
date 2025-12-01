@@ -1,0 +1,15 @@
+{
+  "dependencies": {
+    "bootstrap": "^5.3.8"
+  },
+  "devDependencies": {
+    "gh-pages": "^6.3.0",
+    "vite": "^7.2.4"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "build:gh": "vite build --mode gh",
+    "deploy": "npm run build:gh && gh-pages -d dist -b gh-pages"
+  }
+}

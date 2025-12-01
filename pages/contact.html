@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="../assets/img/Logo_SADAKAHR_resize_removebg.png">
+    <link rel="stylesheet" href="../assets/css/style.css" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+
+    <title>Liên hệ | Sadaka HR</title>
+</head>
+
+<body>
+    <div class="container">
+        <!-- =========== HEADER =========== -->
+        <div class="top-bar-header">
+            <div class="marquee">
+                <span>
+                    Cơ hội việc làm và định cư tại Đức - SADAKA HR đồng hành cùng bạn -
+                    Hotline: 090 990 8353
+                </span>
+            </div>
+        </div>
+        <div class="header-container">
+            <header id="main-header">
+                <a href="../index.html" class="logo-link">
+                    <div class="logo">
+                        <img src="../assets/img/Logo_SADAKAHR_resize.jpg" alt="SADAKA HR Logo" />
+                    </div>
+                </a>
+
+                <div class="navbar-header">
+                    <nav class="main-nav">
+                        <ul class="nav">
+                            <li class="has-dropdown">
+                                <div>
+                                    <a href="./recruit.html" class="dropdown-toggle">
+                                        Tuyển dụng
+                                        <!-- <span class="material-icons">arrow_drop_down</span> -->
+                                    </a>
+                                    <!-- <ul class="dropdown">
+                                        <li><a href="#">Cơ hội việc làm tại Đức</a></li>
+                                        <li><a href="#">Đào tạo tiếng Đức</a></li>
+                                        <li><a href="#">Quy trình tuyển dụng</a></li>
+                                    </ul> -->
+                                </div>
+                            </li>
+
+                            <li><a href="./training.html">Đào tạo</a></li>
+                            <li><a href="./about.html">Giới thiệu</a></li>
+                            <li><a href="./blog.html">Bài viết</a></li>
+                        </ul>
+                    </nav>
+
+                    <div class="header-actions">
+                        <a href="#" class="notification-link" aria-label="Thông báo">
+                            <span class="material-icons">notifications_none</span>
+                        </a>
+                        <div class="box-recruitment">
+                            <a href="./contact.html">Ứng tuyển ngay</a>
+                        </div>
+                    </div>
+                </div>
+            </header>
+        </div>
+        <!-- =========== CONTENT =========== -->
+        <div class="main-container">
+            <section class="contact-section" id="contact">
+                <div class="contact-header">
+                    <h2>Đồng hành cùng SADAKA HR</h2>
+                    <p>
+                        Bạn đã sẵn sàng nâng tầm nguồn nhân lực của mình? Hãy điền vào
+                        biểu mẫu bên dưới, đội ngũ SADAKA HR sẽ liên hệ với bạn trong thời
+                        gian sớm nhất.
+                    </p>
+                </div>
+
+                <!-- 3 highlight cards -->
+                <!-- <div class="contact-highlights">
+                    <article class="contact-highlight">
+                        <div class="highlight-icon">
+                            <span class="material-icons">shield</span>
+                        </div>
+                        <h3>Bảo mật</h3>
+                        <p>Thông tin của bạn được bảo mật an toàn và riêng tư.</p>
+                    </article>
+
+                    <article class="contact-highlight">
+                        <div class="highlight-icon">
+                            <span class="material-icons">bolt</span>
+                        </div>
+                        <h3>Phản hồi nhanh</h3>
+                        <p>Chúng tôi sẽ liên hệ với bạn trong vòng 1 ngày làm việc.</p>
+                    </article>
+
+                    <article class="contact-highlight">
+                        <div class="highlight-icon">
+                            <span class="material-icons">task_alt</span>
+                        </div>
+                        <h3>Không ràng buộc</h3>
+                        <p>Tư vấn miễn phí, không yêu cầu bất kỳ cam kết nào.</p>
+                    </article>
+                </div> -->
+
+                <!-- Form card -->
+                <div class="contact-form-card" id="apply-now">
+                    <form id="contact-form" novalidate>
+                        <div class="form-grid">
+                            <div class="form-field">
+                                <label for="fullName">Họ và tên *</label>
+                                <input type="text" id="fullName" name="fullName" placeholder="Nguyễn Văn A" required />
+                                <span class="field-error"></span>
+                            </div>
+
+                            <div class="form-field">
+                                <label for="email">Địa chỉ email *</label>
+                                <input type="email" id="email" name="email" placeholder="mail@example.com" required />
+                                <span class="field-error"></span>
+                            </div>
+
+                            <div class="form-field form-field-full">
+                                <label for="phone">Phone Number</label>
+                                <input type="tel" id="phone" name="phone" placeholder="098xxxxxxx" />
+                                <span class="field-error"></span>
+                            </div>
+
+                            <div class="form-field form-field-full">
+                                <label for="service">Dịch vụ bạn quan tâm *</label>
+                                <select id="service" name="service" required>
+                                    <option value="">Chọn dịch vụ</option>
+                                    <option value="Language Training">Đào tạo ngôn ngữ</option>
+                                    <option value="Overseas Recruitment">
+                                        Tuyển dụng lao động nước ngoài
+                                    </option>
+                                    <option value="Career Coaching">
+                                        Định hướng &amp; tư vấn nghề nghiệp
+                                    </option>
+                                    <option value="Other">Khác</option>
+                                </select>
+                                <span class="field-error"></span>
+                            </div>
+
+                            <div class="form-field form-field-full">
+                                <label for="message">Lời nhắn</label>
+                                <textarea id="message" name="message" rows="4"
+                                    placeholder="Hãy cho chúng tôi biết nhu cầu của bạn..."></textarea>
+                                <span class="field-error"></span>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="contact-submit-btn">
+                            <span class="material-icons">send</span>
+                            <span>Gửi tin nhắn</span>
+                        </button>
+
+                        <p class="contact-footnote">
+                            <b>Hoặc bạn có thể liên hệ trực tiếp thông qua
+                                <br>
+                                <a href="tel:090 990 8353">090 990 8353</a> |
+                                <a href="mailto:sadakahr.text@gmail.com">sadakahr.text@gmail.com</a>
+                            </b>
+                            <br>
+                            Chúng tôi sẽ liên hệ với bạn ngay hoặc trong vòng 1 ngày làm
+                            việc. Thông tin của bạn luôn được bảo mật.
+                        </p>
+                        <p class="form-status" id="form-status"></p>
+                    </form>
+                </div>
+            </section>
+
+            <!-- MAP SECTION -->
+            <section class="map-section" id="map">
+                <div class="map-card in-view">
+                    <div class="map-info">
+                        <h3>Văn phòng SADAKA HR</h3>
+                        <p class="map-text">
+                            Chúng tôi luôn sẵn sàng đón tiếp và tư vấn trực tiếp cho ứng viên
+                            cũng như doanh nghiệp tại văn phòng SADAKA HR.
+                        </p>
+
+                        <ul class="map-details">
+                            <li>
+                                <span class="material-icons">place</span>
+                                <div>
+                                    <strong>Địa chỉ</strong><br />
+                                    8B Cư Xá Đồng Tiến, Phường Diên Hồng, TP Hồ Chí Minh
+                                </div>
+                            </li>
+                            <li>
+                                <span class="material-icons">call</span>
+                                <a href="tel:0909908353">090 990 8353</a>
+                            </li>
+                            <li>
+                                <span class="material-icons">mail</span>
+                                <a href="mailto:sadakahr.text@gmail.com">sadakahr.text@gmail.com</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="map-embed-wrapper">
+                        <iframe title="Bản đồ SADAKA HR"
+                            src="https://www.google.com/maps?q=10.770224674928485,106.66477780364136&z=19&output=embed"
+                            loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <!-- =========== FOOTER =========== -->
+        <div class="footer-container">
+            <footer class="site-footer">
+                <div class="footer-inner">
+                    <div class="footer-col footer-brand">
+                        <div class="footer-logo">
+                            <div class="footer-logo-icon">
+                                <a href="#" class="logo-link">
+                                    <div class="logo">
+                                        <img src="../assets/img/SADAKAHR_Logo_removebg.png" alt="SADAKA HR Logo" />
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <p class="footer-brand-text">
+                            Đồng hành cùng doanh nghiệp với các giải pháp nhân sự chuyên
+                            sâu, đào tạo ngôn ngữ và dịch vụ tuyển dụng chiến lược.
+                        </p>
+
+                        <div class="footer-socials">
+                            <a href="#" aria-label="LinkedIn">
+                                <span class="material-icons">link</span>
+                            </a>
+                            <a href="https://www.tiktok.com/@sadaka_hr?is_from_webapp=1&sender_device=pc"
+                                aria-label="Tiktok">
+                                <span class="material-icons">video_library</span>
+                            </a>
+                            <a href="https://www.facebook.com/profile.php?id=61583882228875" aria-label="Facebook">
+                                <span class="material-icons">facebook</span>
+                            </a>
+                            <!-- <a href="#" aria-label="Instagram">
+                  <span class="material-icons">photo_camera</span>
+                </a> -->
+                        </div>
+                    </div>
+
+                    <div class="footer-col">
+                        <h4 class="footer-heading">Dịch vụ</h4>
+                        <ul class="footer-links">
+                            <li><a href="./training.html">Đào tạo ngôn ngữ</a></li>
+                            <li><a href="./recruit.html">Dịch vụ tuyển dụng</a></li>
+                            <li><a href="./blog.html">Tìm kiếm nhân sự cấp cao</a></li>
+                            <li><a href="./contact.html">Tư vấn nhân sự</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="footer-col">
+                        <h4 class="footer-heading">Công ty</h4>
+                        <ul class="footer-links">
+                            <li><a href="./about.html">Về chúng tôi</a></li>
+                            <li><a href="#">Đội ngũ của chúng tôi</a></li>
+                            <li><a href="./recruit.html">Cơ hội nghề nghiệp</a></li>
+                            <li><a href="./blog.html">Câu chuyện thành công</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="footer-col">
+                        <h4 class="footer-heading">Liên hệ</h4>
+                        <ul class="footer-contact">
+                            <li>
+                                <span class="material-icons">location_on</span>
+                                <div>
+                                    8B Cư Xá Đồng Tiến<br />
+                                    Phường Diên Hồng, TP HCM
+                                </div>
+                            </li>
+                            <li>
+                                <span class="material-icons">call</span>
+                                <a href="tel:090 990 8353">090 990 8353</a>
+                            </li>
+                            <li>
+                                <span class="material-icons">mail</span>
+                                <a href="mailto:sadakahr.text@gmail.com">sadakahr.text@gmail.com</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="footer-bottom">
+                    <p class="footer-copy">© 2025 SADAKA HR. Bảo lưu mọi quyền.</p>
+                    <div class="footer-bottom-links">
+                        <a href="#">Chính sách bảo mật</a>
+                        <span>•</span>
+                        <a href="#">Điều khoản sử dụng</a>
+                        <span>•</span>
+                        <a href="#">Chính sách Cookie</a>
+                    </div>
+                </div>
+            </footer>
+        </div>
+        <!-- =========== END CONTAINER =========== -->
+    </div>
+
+    <!-- Floating Contact Button + Panel -->
+    <div class="contact-fab" id="contactFab">
+        <!-- Nút tròn -->
+        <button class="fab-btn" id="fabBtn" aria-label="Liên hệ" aria-expanded="false">
+            <span class="fab-icon">💬</span>
+            <span class="fab-text">Liên hệ</span>
+        </button>
+
+        <!-- Panel -->
+        <div class="fab-panel" id="fabPanel" aria-hidden="true">
+            <div class="panel-head">
+                <div class="panel-title">
+                    <span class="panel-dot">📞</span>
+                    <strong>HOTLINE</strong>
+                </div>
+                <button class="panel-close" id="fabClose" aria-label="Đóng">✕</button>
+            </div>
+
+            <a class="panel-item" href="https://zalo.me/xxxxxxxxxx" target="_blank" rel="noopener">
+                <span class="item-icon zalo">Z</span>
+                <span class="item-text">TƯ VẤN QUA ZALO</span>
+            </a>
+
+            <a class="panel-item" href="mailto:sadakahr@example.com">
+                <span class="item-icon mail">✉</span>
+                <span class="item-text">LIÊN HỆ QUA EMAIL</span>
+            </a>
+
+            <a class="panel-item" href="tel:+84901234567">
+                <span class="item-icon phone">☎</span>
+                <span class="item-text">GỌI NGAY: 0901 234 567</span>
+            </a>
+        </div>
+    </div>
+
+<script src="../assets/js/contact_fab.js" defer></script>
+<script src="../assets/js/main.js" defer></script>
+</body>
+
+
+
+<!--  -->
+
+</html>
