@@ -15,6 +15,9 @@
 
   /* border hơi xanh nhẹ, thay vì xám xanh cũ */
   --border-soft: rgba(20, 69, 47, 0.18);
+
+  /* Scale chữ toàn site */
+  --font-scale: 1;
 }
 
 html {
@@ -54,7 +57,7 @@ body {
   display: inline-block;
   white-space: nowrap;
   padding-left: 100%;
-  font-size: 16px;
+  font-size: calc(16px * var(--font-scale));
   font-weight: 500;
   color: #fff;
   animation: marquee 22s linear infinite;
@@ -146,7 +149,7 @@ body {
   text-decoration: none;
   color: var(--text-main);
   font-weight: 500;
-  font-size: 16px;
+  font-size: calc(16px * var(--font-scale));
   transition: color 0.3s ease;
 }
 
@@ -209,7 +212,7 @@ body {
   align-items: center;
   justify-content: space-between;
   padding: 8px 16px;
-  font-size: 14px;
+  font-size: calc(14px * var(--font-scale));
   font-weight: 400;
   line-height: 1.4;
   color: #374151;
@@ -263,7 +266,7 @@ body {
 }
 
 .notification-link .material-icons {
-  font-size: 22px;
+  font-size: 22px; /* giữ nguyên icon */
   color: #4b5563;
   transition: color 0.3s ease;
 }
@@ -284,7 +287,7 @@ body {
   border: none;
   border-radius: 999px;
   cursor: pointer;
-  font-size: 16px;
+  font-size: calc(16px * var(--font-scale));
   font-weight: 500;
   height: 42px;
   display: flex;
@@ -317,38 +320,52 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
+  overflow: hidden; /* để ảnh bị “khuất” */
 }
 
+/* Tạo “khung” đủ cao cho các slide absolute */
 .hero-slider-inner {
   position: relative;
   width: 100%;
   max-width: 1200px;
   padding: 40px 24px 60px;
+  min-height: 70vh;
 }
 
 .hero-slide {
-  display: grid;
-  grid-template-columns: 1.2fr 1fr;
-  align-items: center;
-  gap: 40px;
+  /* Giữ slide chồng lên nhau */
+  position: absolute;
+  inset: 40px 24px 80px;
+
+  /* Không dùng grid nữa vì cần layer (text trên, ảnh phía sau) */
+  display: block;
+
   opacity: 0;
   transform: translateX(30px);
   pointer-events: none;
   transition: opacity 0.5s ease, transform 0.5s ease;
-  position: absolute;
-  inset: 40px 24px 80px;
 }
 
 .hero-slide.active {
   opacity: 1;
   transform: translateX(0);
   pointer-events: auto;
-  position: relative;
 }
 
+/* Lớp chữ phải luôn nằm trên ảnh */
+.hero-slide-content {
+  position: relative;
+  z-index: 2;
+  padding: 30px;
+  width: min(815px, 92vw);
+
+  background: rgba(241, 250, 245, 0.92);
+  border-radius: 5%;
+  top: 75px;
+}
+/* 
 .hero-slide-content h1 {
-  font-size: 3rem;
+  font-size: calc(3rem * var(--font-scale));
   line-height: 1.1;
   text-transform: uppercase;
   letter-spacing: 2px;
@@ -359,28 +376,77 @@ body {
   border-radius: 14px;
   background-color: var(--brand-primary);
   border-left: 4px solid var(--brand-accent);
+  text-align: left;
+} */
+
+.hero-slide-content h1 {
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+
+  font-size: clamp(32px, 3.2vw, 56px);
+  line-height: 1.12;
+
+  /*làm các dòng cân hơn */
+  text-wrap: balance;
+
+  /*khống chế số dòng */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+
+  text-align: left;
+  margin: 0;
 }
 
 .hero-slide-content p {
-  margin-top: 24px;
-  font-size: 1.1rem;
+  margin-top: 22px;
+  font-size: calc(1.3rem * var(--font-scale));
   line-height: 1.6;
   color: var(--text-main);
-  max-width: 550px;
-}
+  max-width: 560px;
+  /* text-align: center; */
 
+  /* nhẹ nhẹ để đọc rõ khi ảnh nằm phía sau */
+  /* background: rgba(241, 250, 245, 0.92); */
+  /* border: 1px solid rgba(20, 69, 47, 0.14); */
+  padding: 14px 16px;
+  border-radius: 14px;
+  /* box-shadow: 0 16px 30px rgba(15, 23, 42, 0.06); */
+}
+/* Ảnh to + nằm phía sau + “khuất” bên phải */
 .hero-slide-graphic {
+  position: absolute;
+  z-index: 1;
+  right: -10%;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
   display: flex;
   align-items: center;
   justify-content: center;
+
+  /* SET CỨNG KHUNG ẢNH */
+  width: min(920px, 75vw);
+  height: min(520px, 70vh); /* bạn có thể tăng/giảm */
 }
 
 .hero-slide-graphic img {
   width: 100%;
-  max-width: 520px;
-  border-radius: 24px;
-  box-shadow: 0 20px 40px rgba(37, 99, 235, 0.25);
+  height: 100%;
+  display: block;
+
+  /* luôn fill khung, ảnh khác tỉ lệ vẫn đẹp */
   object-fit: cover;
+  object-position: center;
+
+  border-radius: 26px;
+  box-shadow: 0 26px 55px rgba(15, 23, 42, 0.12);
+
+  /* ❌ bỏ mấy cái này để khỏi chênh */
+  max-width: none;
+  transform: none;
 }
 
 /* Slider arrows */
@@ -394,13 +460,14 @@ body {
   border: none;
   background: #ffffff;
   color: var(--brand-primary);
-  font-size: 24px;
+  font-size: 24px; /* coi như icon/biểu tượng — giữ nguyên */
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.16);
   transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  z-index: 5; /* luôn nổi trên ảnh */
 }
 
 .slider-arrow-prev {
@@ -426,6 +493,7 @@ body {
   transform: translateX(-50%);
   display: flex;
   gap: 10px;
+  z-index: 5;
 }
 
 .slider-dot {
@@ -448,24 +516,38 @@ body {
   transform: translateY(-1px);
 }
 
+.hero-slide-content h1,
+.hero-slide-content p {
+  margin-left: 0;
+  margin-right: 0;
+}
+
 /* Hero responsive */
 @media (max-width: 900px) {
+  .hero-slider-inner {
+    padding: 28px 16px 56px;
+    min-height: 72vh;
+  }
+
   .hero-slide {
-    grid-template-columns: 1fr;
     inset: 24px 16px 80px;
   }
 
-  .hero-slide-graphic {
-    order: -1;
+  .hero-slide-content h1 {
+    font-size: calc(2.2rem * var(--font-scale));
+    align-items: flex-start;
   }
 
-  .hero-slide-content h1 {
-    font-size: 2.2rem;
+  .hero-slide-graphic {
+    right: -24%;
+    width: 110vw;
+    opacity: 0.98;
   }
 
   .slider-arrow-prev {
     left: 12px;
   }
+
   .slider-arrow-next {
     right: 12px;
   }
@@ -485,7 +567,7 @@ body {
 }
 
 .services-header h2 {
-  font-size: 1.4rem;
+  font-size: calc(1.4rem * var(--font-scale));
   font-weight: 600;
   margin-bottom: 8px;
 }
@@ -519,6 +601,7 @@ body {
 
 .service-text {
   flex: 1;
+  font-size: large;
 }
 
 /* Badge */
@@ -528,7 +611,7 @@ body {
   gap: 8px;
   padding: 6px 16px;
   border-radius: 999px;
-  font-size: 0.9rem;
+  font-size: calc(0.9rem * var(--font-scale));
   font-weight: 500;
   background-color: var(--brand-primary-soft);
   color: #fff;
@@ -536,11 +619,11 @@ body {
 }
 
 .service-badge .material-icons {
-  font-size: 18px;
+  font-size: 18px; /* icon giữ nguyên */
 }
 
 .service-text h3 {
-  font-size: 1.5rem;
+  font-size: calc(1.5rem * var(--font-scale));
   margin-bottom: 10px;
 }
 
@@ -583,7 +666,7 @@ body {
 
 .service-list li p {
   margin: 0;
-  font-size: 0.95rem;
+  font-size: calc(0.95rem * var(--font-scale));
   color: var(--text-muted);
 }
 
@@ -595,7 +678,7 @@ body {
   background-color: var(--brand-primary-soft);
   color: #fff;
   font-weight: 600;
-  font-size: 0.98rem;
+  font-size: calc(0.98rem * var(--font-scale));
   cursor: pointer;
   box-shadow: 0 10px 22px rgba(15, 23, 42, 0.22);
   transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
@@ -656,7 +739,7 @@ body {
 }
 
 .about-title {
-  font-size: 1.4rem;
+  font-size: calc(1.4rem * var(--font-scale));
   font-weight: 600;
   margin-bottom: 16px;
 }
@@ -665,7 +748,7 @@ body {
   max-width: 900px;
   color: #4b5563;
   line-height: 1.7;
-  font-size: 0.98rem;
+  font-size: calc(0.98rem * var(--font-scale));
 }
 
 .about-text p {
@@ -692,19 +775,19 @@ body {
 }
 
 .about-stat-number {
-  font-size: 2.4rem;
+  font-size: calc(2.4rem * var(--font-scale));
   line-height: 1;
   color: var(--brand-primary-soft);
 }
 
 .about-stat-suffix {
-  font-size: 1.4rem;
+  font-size: calc(1.4rem * var(--font-scale));
   color: var(--brand-primary-soft);
 }
 
 .about-stat-label {
   margin-top: 6px;
-  font-size: 0.95rem;
+  font-size: calc(0.95rem * var(--font-scale));
   color: var(--text-muted);
 }
 
@@ -733,7 +816,7 @@ body {
 }
 
 .why-header h2 {
-  font-size: 1.4rem;
+  font-size: calc(1.4rem * var(--font-scale));
   font-weight: 600;
   margin-bottom: 8px;
 }
@@ -781,12 +864,15 @@ body {
 .why-card:nth-child(1) {
   transition-delay: 0.03s;
 }
+
 .why-card:nth-child(2) {
   transition-delay: 0.08s;
 }
+
 .why-card:nth-child(3) {
   transition-delay: 0.13s;
 }
+
 .why-card:nth-child(4) {
   transition-delay: 0.18s;
 }
@@ -813,7 +899,7 @@ body {
 }
 
 .why-icon .material-icons {
-  font-size: 30px;
+  font-size: 30px; /* icon giữ nguyên */
 }
 
 .why-card:hover .why-icon {
@@ -822,13 +908,13 @@ body {
 }
 
 .why-card h3 {
-  font-size: 1.05rem;
+  font-size: calc(1.05rem * var(--font-scale));
   margin-bottom: 8px;
 }
 
 .why-card p {
   margin: 0;
-  font-size: 0.95rem;
+  font-size: calc(0.95rem * var(--font-scale));
   color: var(--text-muted);
   line-height: 1.6;
 }
@@ -864,7 +950,7 @@ body {
 }
 
 .contact-header h2 {
-  font-size: 1.4rem;
+  font-size: calc(1.4rem * var(--font-scale));
   font-weight: 600;
   margin-bottom: 8px;
 }
@@ -905,17 +991,17 @@ body {
 }
 
 .highlight-icon .material-icons {
-  font-size: 18px;
+  font-size: 18px; /* icon giữ nguyên */
 }
 
 .contact-highlight h3 {
-  font-size: 0.95rem;
+  font-size: calc(0.95rem * var(--font-scale));
   font-weight: 600;
 }
 
 .contact-highlight p {
   margin: 0;
-  font-size: 0.9rem;
+  font-size: calc(0.9rem * var(--font-scale));
   color: var(--text-muted);
 }
 
@@ -944,7 +1030,7 @@ body {
 }
 
 .form-field label {
-  font-size: 0.88rem;
+  font-size: calc(0.88rem * var(--font-scale));
   margin-bottom: 6px;
   color: #4b5563;
 }
@@ -955,7 +1041,7 @@ body {
   border-radius: 10px;
   border: 1px solid #d1d5db;
   padding: 10px 12px;
-  font-size: 0.95rem;
+  font-size: calc(0.95rem * var(--font-scale));
   outline: none;
   background: #f9fafb;
   transition: border-color 0.18s ease, box-shadow 0.18s ease,
@@ -981,7 +1067,7 @@ body {
 
 .field-error {
   margin-top: 4px;
-  font-size: 0.8rem;
+  font-size: calc(0.8rem * var(--font-scale));
   color: #ef4444;
   min-height: 14px;
 }
@@ -1000,7 +1086,7 @@ body {
   cursor: pointer;
   font-weight: 600;
   color: #fff;
-  font-size: 0.98rem;
+  font-size: calc(0.98rem * var(--font-scale));
   background: linear-gradient(
     90deg,
     var(--brand-primary),
@@ -1011,7 +1097,7 @@ body {
 }
 
 .contact-submit-btn .material-icons {
-  font-size: 18px;
+  font-size: 18px; /* icon giữ nguyên */
 }
 
 .contact-submit-btn:hover {
@@ -1022,7 +1108,7 @@ body {
 
 .contact-footnote {
   margin-top: 10px;
-  font-size: 0.8rem;
+  font-size: calc(0.8rem * var(--font-scale));
   color: var(--text-muted);
   text-align: center;
 }
@@ -1036,7 +1122,7 @@ body {
 
 .form-status {
   margin-top: 8px;
-  font-size: 0.85rem;
+  font-size: calc(0.85rem * var(--font-scale));
   text-align: center;
   color: #10b981;
 }
@@ -1103,12 +1189,12 @@ body {
 
 .footer-logo-text {
   font-weight: 600;
-  font-size: 1.05rem;
+  font-size: calc(1.05rem * var(--font-scale));
 }
 
 .footer-brand-text {
   margin: 0 0 18px;
-  font-size: 0.9rem;
+  font-size: calc(0.9rem * var(--font-scale));
   color: #9ca3af;
   line-height: 1.6;
 }
@@ -1133,7 +1219,7 @@ body {
 }
 
 .footer-socials a .material-icons {
-  font-size: 18px;
+  font-size: 18px; /* icon giữ nguyên */
   line-height: 1;
 }
 
@@ -1145,7 +1231,7 @@ body {
 
 /* Column headings + links */
 .footer-heading {
-  font-size: 0.96rem;
+  font-size: calc(0.96rem * var(--font-scale));
   font-weight: 600;
   margin-bottom: 10px;
   color: #f9fafb;
@@ -1161,7 +1247,7 @@ body {
 }
 
 .footer-links a {
-  font-size: 0.9rem;
+  font-size: calc(0.9rem * var(--font-scale));
   color: #cbd5f5;
   text-decoration: none;
   transition: color 0.2s ease, transform 0.2s ease;
@@ -1180,7 +1266,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  font-size: 0.9rem;
+  font-size: calc(0.9rem * var(--font-scale));
 }
 
 .footer-contact li {
@@ -1190,7 +1276,7 @@ body {
 }
 
 .footer-contact .material-icons {
-  font-size: 18px;
+  font-size: 18px; /* icon giữ nguyên */
   color: var(--brand-primary-soft);
   margin-top: 2px;
 }
@@ -1215,7 +1301,7 @@ body {
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  font-size: 0.82rem;
+  font-size: calc(0.82rem * var(--font-scale));
   color: #9ca3af;
 }
 
@@ -1256,10 +1342,10 @@ body {
     align-items: flex-start;
   }
 }
+
 /* ========== CONTACT PAGE ========== */
 
-/* MAP SECTION*/
-
+/* MAP SECTION */
 .map-section {
   max-width: 1200px;
   margin: 0 auto 80px;
@@ -1295,14 +1381,14 @@ body {
 }
 
 .map-info h3 {
-  font-size: 1.2rem;
+  font-size: calc(1.2rem * var(--font-scale));
   font-weight: 600;
   margin-bottom: 8px;
 }
 
 .map-text {
   margin: 0 0 16px;
-  font-size: 0.96rem;
+  font-size: calc(0.96rem * var(--font-scale));
   color: var(--text-muted);
   line-height: 1.6;
 }
@@ -1315,7 +1401,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  font-size: 0.94rem;
+  font-size: calc(0.94rem * var(--font-scale));
 }
 
 .map-details li {
@@ -1325,7 +1411,7 @@ body {
 }
 
 .map-details .material-icons {
-  font-size: 20px;
+  font-size: 20px; /* icon giữ nguyên */
   color: var(--brand-primary-soft);
   margin-top: 2px;
 }
@@ -1371,6 +1457,7 @@ body {
 }
 
 /* ========== ABOUT US PAGE ========== */
+
 .main-container .hero-slogan {
   width: 100%;
   height: 600px;
@@ -1414,7 +1501,7 @@ section.content {
 }
 
 .about-title {
-  font-size: 1.5rem;
+  font-size: calc(1.5rem * var(--font-scale));
   font-weight: 600;
   margin-bottom: 16px;
 }
@@ -1511,30 +1598,13 @@ section.content {
 }
 
 /* Key figures sections */
-/* .key-figures {
-  margin-top: 60px;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
-}
-
-.key-figures .key-figure-text {
-  text-align: center;
-}
-
-.key-figures .about-stats {
-  gap: 100px;
-  margin-top: 50px;
-} */
-
 .key-figures {
   padding: 3rem 1rem;
   text-align: center;
 }
 
 .key-figure-text h1 {
-  font-size: 2rem;
+  font-size: calc(2rem * var(--font-scale));
   margin-bottom: 2rem;
 }
 
@@ -1558,19 +1628,27 @@ section.content {
 }
 
 .about-stat-number {
-  font-size: clamp(2.4rem, 4vw, 3.2rem);
+  font-size: clamp(
+    calc(2.4rem * var(--font-scale)),
+    calc(4vw * var(--font-scale)),
+    calc(3.2rem * var(--font-scale))
+  );
   font-weight: 700;
   color: var(--brand-primary);
 }
 
 .about-stat-suffix {
-  font-size: clamp(1.6rem, 3vw, 2rem);
+  font-size: clamp(
+    calc(1.6rem * var(--font-scale)),
+    calc(3vw * var(--font-scale)),
+    calc(2rem * var(--font-scale))
+  );
   font-weight: 700;
   color: var(--brand-primary);
 }
 
 .about-stat-label {
-  font-size: 0.95rem;
+  font-size: calc(0.95rem * var(--font-scale));
   color: var(--text-muted);
 }
 
@@ -1628,7 +1706,11 @@ section.content {
 
   text-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
 
-  font-size: clamp(28px, 3.2vw, 54px);
+  font-size: clamp(
+    calc(28px * var(--font-scale)),
+    calc(3.2vw * var(--font-scale)),
+    calc(54px * var(--font-scale))
+  );
 }
 
 #training-slogan .slogan h1 {
@@ -1643,6 +1725,7 @@ section.content {
   #training-slogan {
     height: 420px;
   }
+
   #training-slogan .layer {
     clip-path: none;
     background: linear-gradient(
@@ -1681,7 +1764,7 @@ section.content {
 }
 
 .about-title {
-  font-size: 1.5rem;
+  font-size: calc(1.5rem * var(--font-scale));
   font-weight: 600;
   margin-bottom: 16px;
 }
@@ -1879,7 +1962,6 @@ section.content {
 }
 
 .job-list-section .job-content {
-  /* flex: 1; */
   display: flex;
   flex-direction: column;
   flex: 1 1 0;
@@ -1909,7 +1991,6 @@ section.content {
 }
 
 /* Description arrow */
-
 .job-list-section .job-content .title {
   display: flex;
   align-items: center;
@@ -1932,7 +2013,7 @@ section.content {
 
 .btn-desc .material-icons {
   color: #fff;
-  font-size: 24px;
+  font-size: 24px; /* icon giữ nguyên */
   line-height: 1;
 }
 
@@ -1940,6 +2021,7 @@ section.content {
   transform: translateX(2px);
   filter: brightness(1.05);
 }
+
 .btn-desc:active {
   transform: translateX(1px) scale(0.98);
 }
@@ -1966,7 +2048,6 @@ section.content {
 }
 
 #blog-content .job-content {
-  /* flex: 0 1 420px;  */
   margin: 0;
   padding: 18px;
   padding-bottom: 78px;
@@ -2007,7 +2088,7 @@ section.content {
 
 #blog-content .btn-desc .material-icons {
   color: #fff;
-  font-size: 24px;
+  font-size: 24px; /* icon giữ nguyên */
   line-height: 1;
 }
 
@@ -2016,7 +2097,6 @@ section.content {
   width: auto;
   margin: 100px 200px;
   display: flex;
-  /* justify-content: space-between; */
 }
 
 .main-detail-sections .main-detail {
@@ -2025,7 +2105,7 @@ section.content {
 }
 
 .main-detail-sections h1 {
-  font-size: 2.2rem;
+  font-size: calc(2.2rem * var(--font-scale));
   font-weight: 800;
   max-width: 100%;
 }
@@ -2071,7 +2151,6 @@ section.content {
 }
 
 .list-rcm .rcm-item {
-  /* width: 100%; */
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -2105,7 +2184,7 @@ section.content {
 
 .list-rcm .title-blog {
   margin: 0 0 6px;
-  font-size: 18px;
+  font-size: calc(18px * var(--font-scale));
   font-weight: 700;
   color: #0f172a;
 }
@@ -2114,7 +2193,7 @@ section.content {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  font-size: 13px;
+  font-size: calc(13px * var(--font-scale));
   color: rgba(15, 23, 42, 0.65);
 }
 
@@ -2139,8 +2218,9 @@ section.content {
   .main-detail-sections .list-rcm {
     padding: 14px;
   }
+
   .list-rcm .title-blog {
-    font-size: 16px;
+    font-size: calc(16px * var(--font-scale));
   }
 }
 
@@ -2166,7 +2246,6 @@ section.content {
 /* ảnh slider */
 .job-slider img {
   width: 100%;
-  /* max-width: 800px; bạn có thể bỏ nếu muốn full container */
   display: block;
   object-fit: cover;
 
@@ -2188,13 +2267,13 @@ section.content {
 
 .title h2 {
   margin: 0 0 10px;
-  font-size: 26px;
+  font-size: calc(26px * var(--font-scale));
   line-height: 1.25;
 }
 
 .title p {
   margin: 0;
-  font-size: 15px;
+  font-size: calc(15px * var(--font-scale));
 }
 
 /* job description */
@@ -2224,19 +2303,21 @@ section.content {
   text-decoration: none;
   border-bottom: 2px solid rgba(37, 99, 235, 0.35);
 }
+
 .job-description .slogan a:hover {
   border-bottom-color: rgba(37, 99, 235, 0.75);
 }
 
 .job-description h3 {
   margin: 22px 0 10px;
-  font-size: 18px;
+  font-size: calc(18px * var(--font-scale));
   letter-spacing: 0.4px;
   color: #0f172a;
   text-transform: uppercase;
   position: relative;
   padding-left: 12px;
 }
+
 .job-description h3::before {
   content: "";
   position: absolute;
@@ -2250,7 +2331,7 @@ section.content {
 
 .job-description p {
   margin: 10px 0;
-  font-size: 16px; /* bạn đang để 18px, mình chỉnh nhẹ cho giống blog/job detail */
+  font-size: calc(16px * var(--font-scale));
   line-height: 1.75;
   color: rgba(15, 23, 42, 0.8);
 }
@@ -2266,7 +2347,7 @@ section.content {
 
 .job-description ul li {
   margin: 8px 0;
-  font-size: 16px;
+  font-size: calc(16px * var(--font-scale));
   line-height: 1.7;
   color: rgba(15, 23, 42, 0.8);
 }
@@ -2284,7 +2365,7 @@ section.content {
 
 .related-posts__title {
   margin: 0 0 14px;
-  font-size: 22px;
+  font-size: calc(22px * var(--font-scale));
   font-weight: 800;
   color: #0f172a;
 }
@@ -2300,6 +2381,7 @@ section.content {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
+
 @media (max-width: 560px) {
   .related-grid {
     grid-template-columns: 1fr;
@@ -2340,6 +2422,7 @@ section.content {
   transform: scale(1);
   transition: transform 0.35s ease;
 }
+
 .related-card:hover .related-thumb img {
   transform: scale(1.05);
 }
@@ -2353,7 +2436,7 @@ section.content {
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.92);
   border: 1px solid rgba(15, 23, 42, 0.08);
-  font-size: 12px;
+  font-size: calc(12px * var(--font-scale));
   font-weight: 800;
   color: #0f172a;
   backdrop-filter: blur(6px);
@@ -2371,7 +2454,7 @@ section.content {
 
 .related-titlebar h4 {
   margin: 0;
-  font-size: 14px;
+  font-size: calc(14px * var(--font-scale));
   font-weight: 900;
   line-height: 1.35;
   color: #0b1220;
@@ -2446,13 +2529,14 @@ section.content {
 }
 
 .fab-icon {
-  font-size: 22px;
+  font-size: 22px; /* icon giữ nguyên */
   line-height: 1;
 }
+
 .fab-text {
   position: absolute;
   bottom: -18px;
-  font-size: 11px;
+  font-size: calc(11px * var(--font-scale));
   font-weight: 700;
   background: rgba(0, 0, 0, 0.65);
   padding: 4px 8px;
@@ -2498,7 +2582,7 @@ section.content {
   display: flex;
   gap: 10px;
   align-items: center;
-  font-size: 14px;
+  font-size: calc(14px * var(--font-scale));
   letter-spacing: 0.5px;
 }
 
@@ -2509,9 +2593,10 @@ section.content {
   border: none;
   background: transparent;
   cursor: pointer;
-  font-size: 18px;
+  font-size: 18px; /* nút/icon — giữ nguyên */
   opacity: 0.65;
 }
+
 .panel-close:hover {
   opacity: 1;
   background: rgba(15, 23, 42, 0.06);
@@ -2528,6 +2613,7 @@ section.content {
   border-top: 1px solid rgba(15, 23, 42, 0.08);
   transition: background 0.2s ease;
 }
+
 .panel-item:hover {
   background: rgba(37, 99, 235, 0.06);
 }
@@ -2546,16 +2632,18 @@ section.content {
 .item-icon.zalo {
   background: #2563eb;
 }
+
 .item-icon.mail {
   background: #22c55e;
 }
+
 .item-icon.phone {
   background: #ef4444;
 }
 
 .item-text {
   font-weight: 800;
-  font-size: 13px;
+  font-size: calc(13px * var(--font-scale));
   letter-spacing: 0.4px;
 }
 
@@ -2565,6 +2653,7 @@ section.content {
     right: 12px;
     bottom: 12px;
   }
+
   .fab-btn {
     width: 58px;
     height: 58px;
