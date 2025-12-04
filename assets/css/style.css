@@ -17,7 +17,7 @@
   --border-soft: rgba(20, 69, 47, 0.18);
 
   /* Scale chữ toàn site */
-  --font-scale: 1;
+  --font-scale: 1.1;
 }
 
 html {
@@ -362,6 +362,8 @@ body {
   background: rgba(241, 250, 245, 0.92);
   border-radius: 5%;
   top: 75px;
+
+  box-shadow: 0 18px 40px rgba(2, 6, 23, 0.12);
 }
 /* 
 .hero-slide-content h1 {
@@ -739,8 +741,8 @@ body {
 }
 
 .about-title {
-  font-size: calc(1.4rem * var(--font-scale));
-  font-weight: 600;
+  font-size: calc(1.5rem * var(--font-scale));
+  font-weight: 1100;
   margin-bottom: 16px;
 }
 
@@ -1371,6 +1373,7 @@ body {
 }
 
 .map-card.in-view {
+  min-height: 20rem;
   opacity: 1;
   transform: translateY(0);
 }
