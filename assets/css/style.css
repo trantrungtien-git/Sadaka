@@ -1562,12 +1562,13 @@ section.content {
   display: flex;
   overflow: hidden;
   justify-content: space-around;
-  margin: 0 230px;
+  margin: 0 130px;
   gap: 24px;
   align-items: stretch;
 }
 
 .core-contents .core-value {
+  min-height: 530px;
   display: flex;
   flex: 1 1 0;
   flex-direction: column;
@@ -1584,7 +1585,7 @@ section.content {
 
 .core-contents img {
   width: 100%;
-  height: 230px;
+  height: 300px;
   margin-top: auto;
   border-radius: 16px;
   display: block;
