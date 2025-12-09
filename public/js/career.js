@@ -30,32 +30,33 @@ window.JOBS = [
     },
     relatedIds: ["job-2", "job-3"],
   },
-  // thêm job mới chỉ cần thêm object mới
 
+  // ======== Job 2 ========
   {
-    id: "Nihongo",
-    title: "CHƯƠNG TRÌNH LÀM VIỆC TẠI NHẬT VỚI TẬP ĐOÀN NIHONGO",
+    id: "BeautyCare",
+    title: "TUYỂN DỤNG NHÂN VIÊN NAIL, KOMESTIC LÀM VIỆC TẠI ĐỨC",
     status: "Còn tuyển",
     heroImages: ["../assets/img/Edeka.jpg", "../assets/img/Slider_2.jpg"],
     slogan:
       "Bạn có nhu cầu muốn được làm việc với các doanh nghiệp nước ngoài, SADAKA HR mang đến cho bạn cơ hội...",
     sections: {
       content: [
-        "Vị trí: Kỹ sư ô tô",
-        "Địa điểm: Tokyo, Nhật Bản",
-        "Thời gian: 6 ngày/tuần - 40 giờ/tuần.",
+        "Vị trí: Nhân viên chăm sóc móng",
+        "Địa điểm: Humburg / Rostock / Schewerin",
+        "Thời gian: 5 ngày/tuần - 40 giờ/tuần.",
       ],
       income: [
-        "Mức thu nhập: 2000 Yen/giờ",
-        "Tổng thu nhập: 600000 Yen/tháng ~ 120 triệu VND/tháng",
+        "Mức thu nhập: 17 Euro/giờ",
+        "Tổng thu nhập: 2450 Euro/tháng ~ <strong> 75 triệu VND/tháng </strong>",
       ],
       benefits: [
         "Hợp đồng dài hạn.",
-        "Chế độ an sinh theo luật Nhật.",
-        "Có đưa rước nhân viên.",
+        "Thuế và bảo hiểm theo quy định pháp luật Đức.",
+        "Cung cấp nhà ở và có đưa rước nhân viên.",
+        "Nghỉ phép 20 ngày.",
       ],
       requirements: [
-        "Số lượng: 10 nam/nữ.",
+        "Số lượng: 10 lao động.",
         "Độ tuổi: 20 - 43.",
         "Trình độ tiếng Nhật: tối thiểu N3.",
       ],
