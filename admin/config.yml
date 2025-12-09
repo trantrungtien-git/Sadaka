@@ -1,19 +1,71 @@
 backend:
   name: git-gateway
-  branch: main # Hoặc master nếu bạn dùng branch master
+  branch: master
 
-media_folder: "images/uploads" # Folder lưu ảnh upload
+media_folder: "images/uploads"
 public_folder: "/images/uploads"
 
 collections:
-  - name: "blog" # Tên collection
-    label: "Blog Posts" # Hiển thị trong CMS
-    folder: "blog/posts" # Folder chứa bài viết
-    create: true # Cho phép tạo bài mới
-    slug: "{{year}}-{{month}}-{{day}}-{{slug}}" # Format tên file
-    fields: # Các trường thông tin
+  - name: "blog"
+    label: "Bài viết Blog"
+    folder: "content/blog"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
       - { label: "Tiêu đề", name: "title", widget: "string" }
       - { label: "Ngày đăng", name: "date", widget: "datetime" }
       - { label: "Ảnh đại diện", name: "thumbnail", widget: "image" }
       - { label: "Mô tả ngắn", name: "description", widget: "text" }
       - { label: "Nội dung", name: "body", widget: "markdown" }
+
+  - name: "jobs"
+    label: "Việc làm tuyển dụng"
+    folder: "content/jobs"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "ID công việc", name: "id", widget: "string", hint: "ID duy nhất, ví dụ: edeka, beauty-care" }
+      - { label: "Tiêu đề công việc", name: "title", widget: "string" }
+      - { label: "Trạng thái", name: "status", widget: "select", options: ["Còn tuyển", "Đã đủ", "Tạm ngưng"], default: "Còn tuyển" }
+      - { label: "Slogan ngắn", name: "slogan", widget: "string" }
+      - label: "Ảnh banner"
+        name: "heroImages"
+        widget: "list"
+        field: { label: "Ảnh", name: "image", widget: "image" }
+      - label: "Nội dung công việc"
+        name: "content"
+        widget: "list"
+        field: { label: "Mục", name: "item", widget: "string" }
+      - label: "Thu nhập"
+        name: "income"
+        widget: "list"
+        field: { label: "Mục", name: "item", widget: "string" }
+      - label: "Quyền lợi"
+        name: "benefits"
+        widget: "list"
+        field: { label: "Mục", name: "item", widget: "string" }
+      - label: "Yêu cầu"
+        name: "requirements"
+        widget: "list"
+        field: { label: "Mục", name: "item", widget: "string" }
+      - label: "Việc làm liên quan"
+        name: "relatedIds"
+        widget: "list"
+        required: false
+        field: { label: "ID", name: "id", widget: "string" }
+
+  - name: "pages"
+    label: "Trang nội dung"
+    files:
+      - label: "Trang Giới thiệu"
+        name: "about"
+        file: "content/pages/about.md"
+        fields:
+          - { label: "Tiêu đề", name: "title", widget: "string" }
+          - { label: "Nội dung", name: "body", widget: "markdown" }
+      - label: "Trang Đào tạo"
+        name: "training"
+        file: "content/pages/training.md"
+        fields:
+          - { label: "Tiêu đề", name: "title", widget: "string" }
+          - { label: "Nội dung", name: "body", widget: "markdown" }
