@@ -96,20 +96,18 @@ body {
   text-decoration: none;
 }
 
-/* Khung logo – KHÔNG bo tròn */
 .logo {
-  /* chiều cao thanh nav ~72px, logo chiếm khoảng 60px */
-  height: 70px; /* tăng size logo */
+  height: 115px;
   width: auto;
-  padding: 4px 0; /* chút khoảng trắng trên dưới */
+  padding: 4px 0;
 }
 
 /* Ảnh logo */
 .logo img {
-  height: 100%; /* fill theo chiều cao khung logo */
-  width: auto; /* giữ đúng tỉ lệ, không méo */
+  height: 100%;
+  width: auto;
   display: block;
-  image-rendering: auto; /* để trình duyệt tự làm mịn, không vỡ hạt */
+  image-rendering: auto;
 }
 
 /* ========== NAVBAR ========== */
