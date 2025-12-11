@@ -5,12 +5,14 @@ backend:
   base_url: https://sadakahr.vercel.app
   auth_endpoint: api/auth
 
+publish_mode: editorial_workflow
+
 media_folder: "public/images/uploads"
 public_folder: "/images/uploads"
 
 collections:
   - name: "posts"
-    label: "Bài viết / Tin tức"
+    label: "Bài viết"
     folder: "content/posts"
     create: true
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
@@ -18,12 +20,12 @@ collections:
     extension: md
     fields:
       - { label: "Tiêu đề", name: "title", widget: "string" }
-      - { label: "Ngày", name: "date", widget: "datetime" }
+      - { label: "Ngày", name: "date", widget: "datetime", default: "" }
       - {
           label: "Ảnh đại diện",
           name: "thumbnail",
           widget: "image",
           required: false,
         }
-      - { label: "Tóm tắt", name: "summary", widget: "text" }
+      - { label: "Tóm tắt", name: "summary", widget: "text", required: false }
       - { label: "Nội dung", name: "body", widget: "markdown" }
