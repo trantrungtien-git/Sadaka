@@ -1,0 +1,30 @@
+backend:
+  name: github
+  repo: "trantrungtien-git/Sadaka"
+  branch: "master" # đổi thành "master" nếu repo của bạn dùng master
+  auth_type: "oauth"
+  client_id: "Ov23liy1zBSA7PImLpeQ"
+
+media_folder: "images/uploads"
+public_folder: "/images/uploads"
+
+collections:
+  - name: "posts"
+    label: "Bài viết / Tin tức"
+    folder: "content/posts"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    format: json
+    fields:
+      - { label: "Tiêu đề", name: "title", widget: "string" }
+      - { label: "Slug", name: "slug", widget: "string", required: false }
+      - { label: "Ngày", name: "date", widget: "datetime" }
+      - { label: "Ảnh đại diện", name: "thumbnail", widget: "image" }
+      - { label: "Tóm tắt", name: "summary", widget: "string" }
+      - { label: "Nội dung", name: "body", widget: "markdown" }
+      - {
+          label: "Hiển thị",
+          name: "published",
+          widget: "boolean",
+          default: true,
+        }

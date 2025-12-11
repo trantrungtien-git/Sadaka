@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Admin — Decap CMS</title>
+</head>
+
+<body>
+    <!-- Load local decap first; fallback to jsDelivr -->
+    <script>
+        (function () {
+            var script = document.createElement('script');
+            script.src = '/admin/decap-cms.js';
+            script.onload = function () { console.log('Loaded local decap-cms.js'); };
+            script.onerror = function () {
+                console.warn('Local decap-cms.js not found, fallback to jsDelivr');
+                var s2 = document.createElement('script');
+                s2.src = 'https://cdn.jsdelivr.net/npm/decap-cms@^3.0.0/dist/decap-cms.js';
+                document.head.appendChild(s2);
+            };
+            document.head.appendChild(script);
+        })();
+    </script>
+</body>
+
+</html>
