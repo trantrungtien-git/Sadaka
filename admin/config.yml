@@ -5,6 +5,9 @@ backend:
   base_url: https://sadakahr.vercel.app
   auth_endpoint: api/auth
 
+# Thêm dòng này để force sử dụng OAuth
+site_url: https://sadakahr.vercel.app
+
 media_folder: "public/images/uploads"
 public_folder: "/images/uploads"
 
