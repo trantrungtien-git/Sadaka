@@ -1,15 +1,12 @@
 export default async function handler(req, res) {
   const { code } = req.query;
 
-  console.log("Callback - Code received:", !!code);
-
   if (!code) {
     return res.status(400).send("No authorization code provided");
   }
 
   if (!process.env.OAUTH_CLIENT_ID || !process.env.OAUTH_CLIENT_SECRET) {
-    console.error("Missing OAuth credentials");
-    return res.status(500).send("OAuth not configured");
+    return res.status(500).send("OAuth credentials not configured");
   }
 
   try {
@@ -31,50 +28,83 @@ export default async function handler(req, res) {
 
     const data = await tokenResponse.json();
 
-    console.log("Token response received:", {
-      hasAccessToken: !!data.access_token,
-      hasError: !!data.error,
-    });
-
     if (data.error) {
-      console.error("GitHub OAuth error:", data.error);
       return res
         .status(400)
         .send(`GitHub error: ${data.error_description || data.error}`);
     }
 
     if (!data.access_token) {
-      console.error("No access token in response");
       return res.status(400).send("No access token received");
     }
 
-    // Script để gửi message về CMS
+    // HTML với script để gửi message về CMS
     const html = `
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
   <title>Authorizing...</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      background: #f5f5f5;
+    }
+    .message {
+      text-align: center;
+      padding: 2rem;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+  </style>
 </head>
 <body>
-  <p>Authorization successful! Closing window...</p>
+  <div class="message">
+    <h2>✓ Authorization successful!</h2>
+    <p>Redirecting back to CMS...</p>
+  </div>
   <script>
     (function() {
-      const data = ${JSON.stringify(data)};
-      
-      // Post message to opener
-      if (window.opener) {
-        window.opener.postMessage(
-          'authorization:github:success:' + JSON.stringify(data),
-          window.location.origin
-        );
+      try {
+        const data = ${JSON.stringify(data)};
+        const token = data.access_token;
         
-        // Close window after a short delay
-        setTimeout(function() {
-          window.close();
-        }, 1000);
-      } else {
-        document.body.innerHTML = '<p>Please close this window and return to the application.</p>';
+        console.log('Token received:', !!token);
+        
+        // Gửi message về parent window
+        const message = {
+          token: token,
+          provider: "github"
+        };
+        
+        // Thử gửi bằng postMessage
+        if (window.opener) {
+          console.log('Sending message to opener...');
+          window.opener.postMessage(
+            'authorization:github:success:' + JSON.stringify(data),
+            '*'
+          );
+          
+          // Đợi 1 giây rồi đóng cửa sổ
+          setTimeout(function() {
+            console.log('Closing window...');
+            window.close();
+          }, 1000);
+        } else {
+          console.error('No window.opener found');
+          document.querySelector('.message').innerHTML = 
+            '<h2>⚠ Please close this window</h2><p>And return to the CMS to continue.</p>';
+        }
+      } catch (error) {
+        console.error('Error in callback script:', error);
+        document.querySelector('.message').innerHTML = 
+          '<h2>⚠ Error</h2><p>' + error.message + '</p>';
       }
     })();
   </script>
