@@ -1,19 +1,30 @@
 backend:
-  name: git-gateway
-  branch: main # Hoặc master nếu bạn dùng branch master
+  name: github
+  repo: "trantrungtien-git/Sadaka" # ví dụ: myuser/myrepo
+  branch: "master" # branch để commit
+  auth_type: "oauth"
+  client_id: "Ov23liy1zBSA7PImLpeQ"
 
-media_folder: "images/uploads" # Folder lưu ảnh upload
+media_folder: "images/uploads"
 public_folder: "/images/uploads"
 
 collections:
-  - name: "blog" # Tên collection
-    label: "Blog Posts" # Hiển thị trong CMS
-    folder: "blog/posts" # Folder chứa bài viết
-    create: true # Cho phép tạo bài mới
-    slug: "{{year}}-{{month}}-{{day}}-{{slug}}" # Format tên file
-    fields: # Các trường thông tin
+  - name: "posts"
+    label: "Bài viết / Tin tức"
+    folder: "content/posts"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    format: json
+    fields:
       - { label: "Tiêu đề", name: "title", widget: "string" }
-      - { label: "Ngày đăng", name: "date", widget: "datetime" }
+      - { label: "Slug", name: "slug", widget: "string", required: false }
+      - { label: "Ngày", name: "date", widget: "datetime" }
       - { label: "Ảnh đại diện", name: "thumbnail", widget: "image" }
-      - { label: "Mô tả ngắn", name: "description", widget: "text" }
+      - { label: "Tóm tắt", name: "summary", widget: "string" }
       - { label: "Nội dung", name: "body", widget: "markdown" }
+      - {
+          label: "Hiển thị",
+          name: "published",
+          widget: "boolean",
+          default: true,
+        }
