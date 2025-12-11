@@ -1,11 +1,10 @@
 backend:
   name: github
-  repo: "trantrungtien-git/Sadaka" # ví dụ: myuser/myrepo
-  branch: "master" # branch để commit
+  repo: "trantrungtien-git/Sadaka"
+  branch: "master"
   auth_type: "oauth"
   client_id: "Ov23liy1zBSA7PImLpeQ"
 
-media_folder: "images/uploads"
 media_folder: "images/uploads"
 public_folder: "/images/uploads"
 

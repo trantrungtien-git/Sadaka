@@ -7,7 +7,7 @@
 </head>
 
 <body>
-    <!-- Try load local decap first; fallback to jsdelivr -->
+    <!-- Load local decap first; fallback to jsDelivr -->
     <script>
         (function () {
             var script = document.createElement('script');
@@ -16,7 +16,7 @@
             script.onerror = function () {
                 console.warn('Local decap-cms.js not found, fallback to jsDelivr');
                 var s2 = document.createElement('script');
-                s2.src = 'https://cdn.jsdelivr.net/npm/decap-cms@2.0.0/dist/decap-cms.js';
+                s2.src = 'https://cdn.jsdelivr.net/npm/decap-cms@^3.0.0/dist/decap-cms.js';
                 document.head.appendChild(s2);
             };
             document.head.appendChild(script);
