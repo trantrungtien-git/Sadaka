@@ -1,88 +1,91 @@
 // .github/scripts/build-posts.js
 // Safe build: convert content/posts/*.json -> news/<slug>.html and create content/posts/index.json
-// If content/posts does not exist or has no published posts, script exits normally (no error).
+// Uses dynamic import for 'marked' (ESM) so it works inside CommonJS environment.
 
 const fs = require("fs");
 const path = require("path");
-const { marked } = require("marked");
 const slugify = require("slugify");
 
-const postsDir = path.join(process.cwd(), "content", "posts");
-const outDir = path.join(process.cwd(), "news");
+(async () => {
+  // dynamic import for marked (ESM)
+  const { marked } = await import("marked");
 
-function escapeHtml(s = "") {
-  return String(s).replace(
-    /[&<>"']/g,
-    (m) =>
-      ({
-        "&": "&amp;",
-        "<": "&lt;",
-        ">": "&gt;",
-        '"': "&quot;",
-        "'": "&#39;",
-      }[m])
-  );
-}
+  const postsDir = path.join(process.cwd(), "content", "posts");
+  const outDir = path.join(process.cwd(), "news");
 
-// Ensure output dir exists
-if (!fs.existsSync(outDir)) {
-  fs.mkdirSync(outDir, { recursive: true });
-}
+  function escapeHtml(s = "") {
+    return String(s).replace(
+      /[&<>"']/g,
+      (m) =>
+        ({
+          "&": "&amp;",
+          "<": "&lt;",
+          ">": "&gt;",
+          '"': "&quot;",
+          "'": "&#39;",
+        }[m])
+    );
+  }
 
-// If postsDir missing -> create it and write empty index.json, then exit gracefully
-if (!fs.existsSync(postsDir)) {
-  console.log("No posts directory found at", postsDir);
-  // ensure parent exists
-  const contentDir = path.join(process.cwd(), "content");
-  if (!fs.existsSync(contentDir)) fs.mkdirSync(contentDir, { recursive: true });
-  if (!fs.existsSync(postsDir)) fs.mkdirSync(postsDir, { recursive: true });
-  const indexPath = path.join(postsDir, "index.json");
-  fs.writeFileSync(indexPath, JSON.stringify([], null, 2));
-  console.log(
-    "Created empty content/posts and wrote index.json (empty). Exiting."
-  );
-  process.exit(0);
-}
+  // Ensure output dir exists
+  if (!fs.existsSync(outDir)) {
+    fs.mkdirSync(outDir, { recursive: true });
+  }
 
-const files = fs.readdirSync(postsDir).filter((f) => f.endsWith(".json"));
-const indexMeta = [];
+  // If postsDir missing -> create it and write empty index.json, then exit gracefully
+  if (!fs.existsSync(postsDir)) {
+    console.log("No posts directory found at", postsDir);
+    const contentDir = path.join(process.cwd(), "content");
+    if (!fs.existsSync(contentDir))
+      fs.mkdirSync(contentDir, { recursive: true });
+    if (!fs.existsSync(postsDir)) fs.mkdirSync(postsDir, { recursive: true });
+    const indexPath = path.join(postsDir, "index.json");
+    fs.writeFileSync(indexPath, JSON.stringify([], null, 2));
+    console.log(
+      "Created empty content/posts and wrote index.json (empty). Exiting."
+    );
+    process.exit(0);
+  }
 
-if (files.length === 0) {
-  // write empty index.json and exit normally
-  const indexPath = path.join(postsDir, "index.json");
-  fs.writeFileSync(indexPath, JSON.stringify([], null, 2));
-  console.log("No post JSON files found. Wrote empty index.json. Exiting.");
-  process.exit(0);
-}
+  const files = fs.readdirSync(postsDir).filter((f) => f.endsWith(".json"));
+  const indexMeta = [];
 
-files.forEach((fname) => {
-  try {
-    const raw = fs.readFileSync(path.join(postsDir, fname), "utf8");
-    const j = JSON.parse(raw);
+  if (files.length === 0) {
+    // write empty index.json and exit normally
+    const indexPath = path.join(postsDir, "index.json");
+    fs.writeFileSync(indexPath, JSON.stringify([], null, 2));
+    console.log("No post JSON files found. Wrote empty index.json. Exiting.");
+    process.exit(0);
+  }
 
-    if (j.published === false) {
-      console.log("Skipping unpublished:", fname);
-      return;
-    }
+  for (const fname of files) {
+    try {
+      const raw = fs.readFileSync(path.join(postsDir, fname), "utf8");
+      const j = JSON.parse(raw);
 
-    // slug resolution
-    let slug = (j.slug && j.slug.trim()) || null;
-    if (!slug) {
-      if (j.title) slug = slugify(j.title, { lower: true, strict: true });
-      else slug = fname.replace(/\.json$/, "");
-    }
+      if (j.published === false) {
+        console.log("Skipping unpublished:", fname);
+        continue;
+      }
 
-    const title = j.title || "";
-    const dateISO = new Date(j.date || Date.now()).toISOString();
-    const thumbnail = j.thumbnail || "";
-    const summary = j.summary || "";
-    const bodyMd = j.body || "";
+      // slug resolution
+      let slug = (j.slug && j.slug.trim()) || null;
+      if (!slug) {
+        if (j.title) slug = slugify(j.title, { lower: true, strict: true });
+        else slug = fname.replace(/\.json$/, "");
+      }
 
-    // convert markdown -> html
-    const htmlBody = marked.parse(bodyMd);
+      const title = j.title || "";
+      const dateISO = new Date(j.date || Date.now()).toISOString();
+      const thumbnail = j.thumbnail || "";
+      const summary = j.summary || "";
+      const bodyMd = j.body || "";
 
-    // Basic HTML template - customize to match your site
-    const outHtml = `<!doctype html>
+      // convert markdown -> html using marked
+      const htmlBody = marked.parse(bodyMd);
+
+      // Basic HTML template - customize to match your site
+      const outHtml = `<!doctype html>
 <html lang="vi">
 <head>
   <meta charset="utf-8">
@@ -97,8 +100,8 @@ files.forEach((fname) => {
     <article class="post">
       <h1>${escapeHtml(title)}</h1>
       <time datetime="${dateISO}">${new Date(
-      dateISO
-    ).toLocaleDateString()}</time>
+        dateISO
+      ).toLocaleDateString()}</time>
       ${
         thumbnail
           ? `<figure class="thumb"><img src="${thumbnail}" alt="${escapeHtml(
@@ -114,34 +117,34 @@ files.forEach((fname) => {
 </body>
 </html>`;
 
-    const outPath = path.join(outDir, slug + ".html");
-    fs.writeFileSync(outPath, outHtml, "utf8");
+      const outPath = path.join(outDir, slug + ".html");
+      fs.writeFileSync(outPath, outHtml, "utf8");
 
-    indexMeta.push({
-      file: fname,
-      slug,
-      title,
-      date: dateISO,
-      thumbnail,
-      summary,
-    });
+      indexMeta.push({
+        file: fname,
+        slug,
+        title,
+        date: dateISO,
+        thumbnail,
+        summary,
+      });
 
-    console.log("Built", outPath);
-  } catch (err) {
-    console.error("Error building", fname, err);
+      console.log("Built", outPath);
+    } catch (err) {
+      console.error("Error building", fname, err);
+    }
   }
-});
 
-// sort by date desc and write index.json (array of filenames)
-indexMeta.sort((a, b) => new Date(b.date) - new Date(a.date));
-const indexPath = path.join(postsDir, "index.json");
-// store array of filenames for compatibility; change if you prefer objects
-fs.writeFileSync(
-  indexPath,
-  JSON.stringify(
-    indexMeta.map((i) => i.file),
-    null,
-    2
-  )
-);
-console.log("Wrote", indexPath);
+  // sort by date desc and write index.json (array of filenames)
+  indexMeta.sort((a, b) => new Date(b.date) - new Date(a.date));
+  const indexPath = path.join(postsDir, "index.json");
+  fs.writeFileSync(
+    indexPath,
+    JSON.stringify(
+      indexMeta.map((i) => i.file),
+      null,
+      2
+    )
+  );
+  console.log("Wrote", indexPath);
+})();
