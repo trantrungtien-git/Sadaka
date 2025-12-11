@@ -2,25 +2,28 @@ backend:
   name: github
   repo: trantrungtien-git/Sadaka
   branch: master
-  # KHÔNG CÓ base_url, auth_endpoint, client_id gì cả!
+  base_url: https://sadakahr.vercel.app
+  auth_endpoint: api/auth
 
 media_folder: "public/images/uploads"
 public_folder: "/images/uploads"
 
 collections:
   - name: "posts"
-    label: "Bài viết"
+    label: "Bài viết / Tin tức"
     folder: "content/posts"
     create: true
-    slug: "{{slug}}"
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     format: frontmatter
     extension: md
     fields:
       - { label: "Tiêu đề", name: "title", widget: "string" }
+      - { label: "Ngày", name: "date", widget: "datetime" }
       - {
-          label: "Ngày đăng",
-          name: "date",
-          widget: "datetime",
+          label: "Ảnh đại diện",
+          name: "thumbnail",
+          widget: "image",
           required: false,
         }
+      - { label: "Tóm tắt", name: "summary", widget: "text" }
       - { label: "Nội dung", name: "body", widget: "markdown" }
