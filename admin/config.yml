@@ -2,7 +2,7 @@ backend:
   name: github
   repo: trantrungtien-git/Sadaka
   branch: master
-  # BỎ HẾT base_url và auth_endpoint
+  # KHÔNG CÓ base_url, auth_endpoint, client_id gì cả!
 
 media_folder: "public/images/uploads"
 public_folder: "/images/uploads"
