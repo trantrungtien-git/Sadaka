@@ -2,8 +2,21 @@ export default async function handler(req, res) {
   const { code } = req.query;
   const { host } = req.headers;
 
+  // Log để debug
+  console.log("Callback received, code:", code);
+  console.log("Client ID:", process.env.OAUTH_CLIENT_ID);
+  console.log("Client Secret exists:", !!process.env.OAUTH_CLIENT_SECRET);
+
+  if (!code) {
+    return res.status(400).send("Error: No authorization code provided");
+  }
+
+  if (!process.env.OAUTH_CLIENT_ID || !process.env.OAUTH_CLIENT_SECRET) {
+    return res.status(500).send("Error: OAuth credentials not configured");
+  }
+
   try {
-    const response = await fetch(
+    const tokenResponse = await fetch(
       "https://github.com/login/oauth/access_token",
       {
         method: "POST",
@@ -14,40 +27,52 @@ export default async function handler(req, res) {
         body: JSON.stringify({
           client_id: process.env.OAUTH_CLIENT_ID,
           client_secret: process.env.OAUTH_CLIENT_SECRET,
-          code,
+          code: code,
           redirect_uri: `https://${host}/api/callback`,
         }),
       }
     );
 
-    const data = await response.json();
+    const data = await tokenResponse.json();
+
+    console.log("Token response:", data);
 
     if (data.error) {
-      return res.status(400).send(`Error: ${data.error_description}`);
+      return res
+        .status(400)
+        .send(`Error: ${data.error_description || data.error}`);
     }
 
-    const script = `
+    if (!data.access_token) {
+      return res.status(400).send("Error: No access token received");
+    }
+
+    // Trả về HTML để gửi token về CMS
+    const html = `
       <!DOCTYPE html>
       <html>
-      <head><title>Authenticating...</title></head>
+      <head>
+        <meta charset="utf-8">
+        <title>Authenticating...</title>
+      </head>
       <body>
+        <p>Authenticating... Please wait.</p>
         <script>
           (function() {
-            function receiveMessage(e) {
-              console.log("Received message:", e);
+            function receiveMessage(event) {
               window.opener.postMessage(
-                'authorization:github:success:${JSON.stringify(data)}',
-                e.origin
+                'authorization:github:success:' + JSON.stringify(${JSON.stringify(
+                  data
+                )}),
+                event.origin
               );
               window.removeEventListener("message", receiveMessage, false);
             }
+            
             window.addEventListener("message", receiveMessage, false);
             
-            console.log("Posting message:", ${JSON.stringify(data)});
-            window.opener.postMessage(
-              "authorizing:github",
-              "*"
-            );
+            // Notify opener that we're ready
+            window.opener.postMessage("authorizing:github", "*");
           })();
         </script>
       </body>
@@ -55,9 +80,9 @@ export default async function handler(req, res) {
     `;
 
     res.setHeader("Content-Type", "text/html");
-    res.send(script);
+    res.status(200).send(html);
   } catch (error) {
-    console.error("OAuth callback error:", error);
-    res.status(500).send("Authentication failed");
+    console.error("OAuth error:", error);
+    return res.status(500).send(`Error: ${error.message}`);
   }
 }

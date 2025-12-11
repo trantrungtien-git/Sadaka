@@ -2,7 +2,7 @@ backend:
   name: github
   repo: trantrungtien-git/Sadaka
   branch: master
-  base_url: https://sadakahr.vercel.app 
+  base_url: https://sadakahr.vercel.app
   auth_endpoint: api/auth
 
 media_folder: "public/images/uploads"
@@ -18,7 +18,6 @@ collections:
     extension: md
     fields:
       - { label: "Tiêu đề", name: "title", widget: "string" }
-      - { label: "Slug", name: "slug", widget: "string", required: false }
       - { label: "Ngày", name: "date", widget: "datetime" }
       - {
           label: "Ảnh đại diện",
@@ -28,29 +27,3 @@ collections:
         }
       - { label: "Tóm tắt", name: "summary", widget: "text" }
       - { label: "Nội dung", name: "body", widget: "markdown" }
-      - {
-          label: "Hiển thị",
-          name: "published",
-          widget: "boolean",
-          default: true,
-        }
-
-  - name: "jobs"
-    label: "Tuyển dụng"
-    folder: "content/jobs"
-    create: true
-    slug: "{{slug}}"
-    format: frontmatter
-    extension: md
-    fields:
-      - { label: "Vị trí", name: "title", widget: "string" }
-      - { label: "Địa điểm", name: "location", widget: "string" }
-      - { label: "Mức lương", name: "salary", widget: "string" }
-      - { label: "Hạn nộp", name: "deadline", widget: "date" }
-      - { label: "Mô tả", name: "body", widget: "markdown" }
-      - {
-          label: "Hiển thị",
-          name: "published",
-          widget: "boolean",
-          default: true,
-        }
