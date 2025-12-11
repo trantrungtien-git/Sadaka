@@ -6,6 +6,7 @@ backend:
   client_id: "Ov23liy1zBSA7PImLpeQ"
 
 media_folder: "images/uploads"
+media_folder: "images/uploads"
 public_folder: "/images/uploads"
 
 collections:
