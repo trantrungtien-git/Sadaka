@@ -1,11 +1,11 @@
 backend:
   name: github
-  repo: "trantrungtien-git/Sadaka"
-  branch: "master" # đổi thành "master" nếu repo của bạn dùng master
-  auth_type: "oauth"
-  client_id: "Ov23liy1zBSA7PImLpeQ"
+  repo: trantrungtien-git/Sadaka
+  branch: master
+  base_url: https://sadakahr.vercel.app 
+  auth_endpoint: api/auth
 
-media_folder: "images/uploads"
+media_folder: "public/images/uploads"
 public_folder: "/images/uploads"
 
 collections:
@@ -14,14 +14,40 @@ collections:
     folder: "content/posts"
     create: true
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
-    format: json
+    format: frontmatter
+    extension: md
     fields:
       - { label: "Tiêu đề", name: "title", widget: "string" }
       - { label: "Slug", name: "slug", widget: "string", required: false }
       - { label: "Ngày", name: "date", widget: "datetime" }
-      - { label: "Ảnh đại diện", name: "thumbnail", widget: "image" }
-      - { label: "Tóm tắt", name: "summary", widget: "string" }
+      - {
+          label: "Ảnh đại diện",
+          name: "thumbnail",
+          widget: "image",
+          required: false,
+        }
+      - { label: "Tóm tắt", name: "summary", widget: "text" }
       - { label: "Nội dung", name: "body", widget: "markdown" }
+      - {
+          label: "Hiển thị",
+          name: "published",
+          widget: "boolean",
+          default: true,
+        }
+
+  - name: "jobs"
+    label: "Tuyển dụng"
+    folder: "content/jobs"
+    create: true
+    slug: "{{slug}}"
+    format: frontmatter
+    extension: md
+    fields:
+      - { label: "Vị trí", name: "title", widget: "string" }
+      - { label: "Địa điểm", name: "location", widget: "string" }
+      - { label: "Mức lương", name: "salary", widget: "string" }
+      - { label: "Hạn nộp", name: "deadline", widget: "date" }
+      - { label: "Mô tả", name: "body", widget: "markdown" }
       - {
           label: "Hiển thị",
           name: "published",

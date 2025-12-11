@@ -573,7 +573,7 @@ body {
 }
 
 .services-header h2 {
-  font-size: calc(1.4rem * var(--font-scale));
+  font-size: calc(1.5rem * var(--font-scale));
   font-weight: 600;
   margin-bottom: 8px;
 }
@@ -617,7 +617,7 @@ body {
   gap: 8px;
   padding: 6px 16px;
   border-radius: 999px;
-  font-size: calc(0.9rem * var(--font-scale));
+  font-size: calc(1.3rem * var(--font-scale));
   font-weight: 500;
   background-color: var(--brand-primary-soft);
   color: #fff;
@@ -684,7 +684,7 @@ body {
   background-color: var(--brand-primary-soft);
   color: #fff;
   font-weight: 600;
-  font-size: calc(0.98rem * var(--font-scale));
+  font-size: calc(1.2rem * var(--font-scale));
   cursor: pointer;
   box-shadow: 0 10px 22px rgba(15, 23, 42, 0.22);
   transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
@@ -1934,11 +1934,11 @@ section.content {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  height: 48px;
-  padding: 0 22px;
+  height: 50px;
+  padding: 5px 25px;
   border-radius: 12px;
   text-decoration: none;
-  font-weight: 700;
+  font-weight: 750;
   letter-spacing: 0.2px;
 
   color: #0f172a;
