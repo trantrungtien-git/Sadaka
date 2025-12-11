@@ -167,6 +167,12 @@ body {
   color: var(--brand-primary-soft);
 }
 
+.nav > li > a,
+.nav > li > div > a {
+  --font-scale: 1.2;
+  font-weight: 400px;
+}
+
 /* ========== DROPDOWN ========== */
 
 .dropdown {
@@ -275,7 +281,7 @@ body {
 
 /* Nút Ứng tuyển ngay */
 .box-recruitment {
-  padding: 0 18px;
+  padding: 5px 25px;
   background: linear-gradient(
     90deg,
     var(--brand-primary),
@@ -285,7 +291,7 @@ body {
   border: none;
   border-radius: 999px;
   cursor: pointer;
-  font-size: calc(16px * var(--font-scale));
+  font-size: calc(18px * var(--font-scale));
   font-weight: 500;
   height: 42px;
   display: flex;
