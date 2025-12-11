@@ -2,6 +2,7 @@ backend:
   name: github
   repo: trantrungtien-git/Sadaka
   branch: master
+  # BỎ HẾT base_url và auth_endpoint
 
 media_folder: "public/images/uploads"
 public_folder: "/images/uploads"
@@ -16,4 +17,10 @@ collections:
     extension: md
     fields:
       - { label: "Tiêu đề", name: "title", widget: "string" }
+      - {
+          label: "Ngày đăng",
+          name: "date",
+          widget: "datetime",
+          required: false,
+        }
       - { label: "Nội dung", name: "body", widget: "markdown" }
