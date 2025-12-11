@@ -1,7 +1,7 @@
 backend:
   name: github
   repo: "trantrungtien-git/Sadaka"
-  branch: "master"
+  branch: "master" # đổi thành "master" nếu repo của bạn dùng master
   auth_type: "oauth"
   client_id: "Ov23liy1zBSA7PImLpeQ"
 
