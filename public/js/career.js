@@ -1,105 +1,141 @@
 // ../js/jobs.data.js
 window.JOBS = [
+  // ======== Job 1: EDEKA PRODUCTION ========
   {
-    id: "edeka",
-    title: "TUYỂN DỤNG THỰC PHẨM LÀM VIỆC TẠI ĐỨC VỚI TẬP ĐOÀN EDEKA",
+    id: "EDEKA-Food-Job",
+    title: "TUYỂN DỤNG CÔNG NHÂN SẢN XUẤT TẠI ĐỨC VỚI TẬP ĐOÀN EDEKA",
     status: "Còn tuyển",
     heroImages: ["../assets/img/Edeka.jpg", "../assets/img/Slider_2.jpg"],
     slogan:
       "Bạn có nhu cầu muốn được làm việc với các doanh nghiệp nước ngoài, SADAKA HR mang đến cho bạn cơ hội...",
     sections: {
       content: [
-        "Vị trí: Công nhân sản xuất.",
+        "Vị trí: <strong>Công nhân sản xuất.</strong>",
         "Địa điểm: Bang Mecklenburg-Vorpommern, Đức.",
         "Thời gian: 5 ngày/tuần - 40 giờ/tuần.",
       ],
       income: [
         "Mức thu nhập: 14.5 EUR/giờ",
-        "Tổng thu nhập: 2.450 EUR/tháng <strong> ~80 triệu VND/tháng </strong>",
+        "Tổng thu nhập: 2.450 EUR/tháng (Bruto) <strong> ~66 triệu VND/tháng </strong>",
       ],
       benefits: [
         "Hợp đồng dài hạn.",
-        "Chế độ an sinh theo luật Đức.",
-        "Có đưa rước nhân viên.",
-        "Được nghỉ phép năm, và các ngày lễ giáng sinh, lễ phục sinh. Vẫn được hưởng lương theo chính sách chung.",
-        "Cơ hội định cư và có hỗ trợ đoàn tụ với người thân (có mất phí).",
+        "Chế độ an sinh, bảo hiểm, thuế theo luật Đức.",
+        "Có xe đưa đón nhân viên đi làm.",
+        "Được nghỉ phép năm, nghỉ lễ (Giáng sinh, Phục sinh...) vẫn hưởng lương.",
+        "Được bảo lãnh vợ/con đoàn tụ (có mất phí).",
       ],
       requirements: [
-        "Số lượng: 50 nam/nữ.",
-        "Độ tuổi: 23 - 43.",
-        "Tốt nghiệp Đai học (chấp nhận các hệ đào tạo Cao đẳng hoặc tương đương).",
-        "Trình độ tiếng Đức: tối thiểu A2 (không bắt buộc có chứng chỉ).",
+        "Số lượng: 50 lao động.",
+        "Độ tuổi: 23 - 43 tuổi (Nam/Nữ).",
+        "Tốt nghiệp Đại học các chuyên ngành (chấp nhận các hệ đào tạo Cao đẳng hoặc tương đương).",
+        "Trình độ tiếng Đức: Khuyến khích tối thiểu A2 (không bắt buộc có chứng chỉ).",
       ],
     },
-    relatedIds: ["job-2", "job-3"],
+    relatedIds: ["Beauty-Care", "Edeka-Supermarket-Sale"],
   },
 
-  // ======== Job 2 ========
+  // ======== Job 2: NAIL / BEAUTY ========
   {
     id: "Beauty-Care",
-    title: "TUYỂN DỤNG NHÂN VIÊN NAIL, KOMESTIC LÀM VIỆC TẠI ĐỨC",
+    title: "TUYỂN DỤNG NHÂN VIÊN NAIL TẠI ĐỨC (BAO ĂN Ở)",
     status: "Còn tuyển",
-    heroImages: ["../assets/img/Edeka.jpg", "../assets/img/Slider_2.jpg"],
+    heroImages: ["../assets/img/Edeka.jpg", "../assets/img/Slider_1.jpg"],
     slogan:
-      "Bạn có nhu cầu muốn được làm việc với các doanh nghiệp nước ngoài, SADAKA HR mang đến cho bạn cơ hội...",
+      "Cơ hội làm việc ngành làm đẹp tại Châu Âu với chế độ đãi ngộ đặc biệt về nhà ở...",
     sections: {
       content: [
-        "Vị trí: Nhân viên chăm sóc móng",
-        "Địa điểm: Bang Humburg / Rostock / Schewerin, Đức.",
+        "Vị trí: <strong>Nhân viên chăm sóc móng (Nail).</strong>",
+        "Địa điểm: Hamburg / Rostock / Schwerin (Chuỗi 10 cửa hàng).",
         "Thời gian: 5 ngày/tuần - 40 giờ/tuần.",
       ],
       income: [
-        "Mức thu nhập: 17 Euro/giờ",
-        "Tổng thu nhập: 2.450 Euro/tháng ~ <strong> 75 triệu VND/tháng </strong>",
+        "Mức lương cầm tay (NET): 1.700 Euro/tháng (đã trừ thuế/bảo hiểm)",
+        "Tương đương lương Bruto: ~2.450 Euro/tháng",
+        "Quy đổi: <strong> ~46 triệu VND (Tiền về túi thực tế) </strong>",
       ],
       benefits: [
-        "Hợp đồng dài hạn.",
-        "Thuế và bảo hiểm theo quy định pháp luật Đức.",
-        "Cung cấp nhà ở và có đưa rước nhân viên.",
-        "Nghỉ phép 20 ngày.",
+        "ĐẶC BIỆT: Công ty thuê nhà và chi trả tiền nhà (Tiết kiệm lớn chi phí sinh hoạt).",
         "Có xe đưa đón đi làm.",
+        "Nghỉ phép 20 ngày/năm.",
+        "Hưởng đầy đủ chế độ thuế và bảo hiểm theo luật Đức.",
       ],
       requirements: [
-        "Số lượng: 10 lao động. Tốt nghiệp Đại học các chuyên ngành (chấp nhận hệ đào tạo Cao đẳng hoặc tương đương).",
-        "Độ tuổi: dưới 32 tuổi.",
-        "Trình độ tiếng Đức: khuyến khích học tiếng Đức tối thiểu A2 (không bắt buộc chứng chỉ).",
+        "Số lượng: 10 lao động.",
+        "Độ tuổi: Dưới 32 tuổi.",
+        "Tốt nghiệp Đại học các chuyên ngành (chấp nhận hệ đào tạo Cao đẳng hoặc tương đương).",
+        "Trình độ tiếng Đức: Khuyến khích học tối thiểu A2 (không bắt buộc chứng chỉ).",
       ],
     },
-    relatedIds: ["job-2", "job-3"],
+    relatedIds: ["EDEKA-Food-Job", "Edeka-Supermarket-Sale"],
   },
 
-  // ======== Job 3 ========
+  // ======== Job 3: EDEKA SUPERMARKET ========
   {
-    id: "Supermarket-Sale",
-    title: "TUYỂN DỤNG NHÂN VIÊN BÁN HÀNG HỆ THỐNG SIÊU THỊ TẠI ĐỨC",
+    id: "Edeka-Supermarket-Sale",
+    title: "TUYỂN DỤNG NHÂN VIÊN BÁN HÀNG HỆ THỐNG SIÊU THỊ EDEKA",
     status: "Còn tuyển",
     heroImages: ["../assets/img/Edeka.jpg", "../assets/img/Slider_2.jpg"],
     slogan:
-      "Bạn có nhu cầu muốn được làm việc với các doanh nghiệp nước ngoài, SADAKA HR mang đến cho bạn cơ hội...",
+      "Làm việc tại chuỗi siêu thị tiện ích hàng đầu nước Đức với môi trường văn minh...",
     sections: {
       content: [
-        "Vị trí: Nhân viên siêu thị",
-        "Địa điểm: Bang Mecklenburg-Vorpommern / Humburg / Rostock, Đức.",
+        "Vị trí: <strong>Nhân viên quầy (Thịt / Bánh mỳ / Thực phẩm).</strong>",
+        "Địa điểm: Bang Mecklenburg-Vorpommern / Hamburg / Rostock.",
         "Thời gian: 5 ngày/tuần - 40 giờ/tuần.",
       ],
       income: [
         "Mức thu nhập: 14.5 Euro/giờ",
-        "Tổng thu nhập: 2.450 Euro/tháng ~ <strong> 75 triệu VND/tháng </strong>",
+        "Tổng thu nhập: 2.450 Euro/tháng <strong> ~66 triệu VND/tháng </strong>",
       ],
       benefits: [
         "Hợp đồng dài hạn.",
         "Chế độ an sinh theo luật Đức.",
-        "Có đưa rước nhân viên.",
-        "Được nghỉ phép năm, và các ngày lễ giáng sinh, lễ phục sinh. Vẫn được hưởng lương theo chính sách chung.",
-        "Cơ hội định cư và có hỗ trợ đoàn tụ với người thân (có mất phí).",
+        "Có xe đưa đón nhân viên.",
+        "Nghỉ lễ tết hưởng nguyên lương theo chính sách chung.",
+        "Cơ hội định cư và có hỗ trợ bảo lãnh vợ/con (có mất phí).",
       ],
       requirements: [
         "Số lượng: 100 lao động.",
-        "Độ tuổi: dưới 32 tuổi.",
+        "Độ tuổi: 22 - 35 tuổi.",
         "Tốt nghiệp Đại học các chuyên ngành (chấp nhận hệ đào tạo Cao đẳng hoặc tương đương).",
-        "Trình độ tiếng Đức: khuyến khích học tiếng Đức tối thiểu A2 (không bắt buộc chứng chỉ).",
+        "Tiếng Đức: Phỏng vấn khi có A1. Xuất cảnh khi học xong A2 (nợ chứng chỉ).",
       ],
     },
-    relatedIds: ["job-2", "job-3"],
+    relatedIds: ["EDEKA-Food-Job", "Wiesenhof-Food"],
+  },
+
+  // ======== Job 4: WIESENHOF ========
+  {
+    id: "Wiesenhof-Food",
+    title: "TẬP ĐOÀN THỰC PHẨM WIESENHOF TẠI ĐỨC TUYỂN DỤNG",
+    status: "Còn tuyển",
+    heroImages: ["../assets/img/Edeka.jpg", "../assets/img/Slider_2.jpg"],
+    slogan:
+      "Cơ hội làm việc tại tập đoàn thực phẩm lớn bậc nhất bang Mecklenburg-Vorpommern...",
+    sections: {
+      content: [
+        "Vị trí: <strong>Công nhân sản xuất (Quy mô nhà máy 1000 lao động).</strong>",
+        "Địa điểm: Bang Mecklenburg-Vorpommern, Đức.",
+        "Thời gian: 5 ngày/tuần - 40 giờ/tuần.",
+      ],
+      income: [
+        "Mức thu nhập: 14.5 Euro/giờ",
+        "Tổng thu nhập: 2.450 Euro/tháng <strong> ~66 triệu VND/tháng </strong>",
+      ],
+      benefits: [
+        "Công ty thuê nhà chi phí (Hỗ trợ chỗ ở ổn định).",
+        "Có xe đưa đón đi làm.",
+        "Nghỉ phép 20 ngày/năm + các ngày lễ tết.",
+        "Được bảo lãnh vợ/con (có mất phí).",
+      ],
+      requirements: [
+        "Số lượng: 50 lao động.",
+        "Độ tuổi: Dưới 43 tuổi (Nam/Nữ).",
+        "Tốt nghiệp Đại học các chuyên ngành (chấp nhận hệ đào tạo Cao đẳng hoặc tương đương).",
+        "Trình độ tiếng Đức: Khuyến khích học tối thiểu A2 (không bắt buộc chứng chỉ).",
+      ],
+    },
+    relatedIds: ["Edeka-Supermarket-Sale", "EDEKA-Food-Job"],
   },
 ];
