@@ -7,43 +7,63 @@
 </head>
 
 <body>
-    <!-- Auth listener -->
+    <!-- Auth listener with detailed logging -->
     <script>
-        console.log('Setting up auth listener...');
+        console.log('=== AUTH LISTENER SETUP ===');
+        console.log('Current URL:', window.location.href);
+        console.log('Origin:', window.location.origin);
 
         window.addEventListener('message', function (e) {
-            console.log('Message received:', e.data);
+            console.log('=== MESSAGE RECEIVED ===');
+            console.log('Event origin:', e.origin);
+            console.log('Event data type:', typeof e.data);
+            console.log('Event data:', e.data);
 
-            if (typeof e.data === 'string' && e.data.indexOf('authorization:github:success:') === 0) {
-                try {
-                    const dataStr = e.data.replace('authorization:github:success:', '');
-                    const authData = JSON.parse(dataStr);
+            if (typeof e.data === 'string') {
+                console.log('Data is string, checking for auth prefix...');
 
-                    console.log('Parsed auth data:', authData);
+                if (e.data.indexOf('authorization:github:success:') === 0) {
+                    console.log('✓ Auth message detected!');
 
-                    if (authData.token) {
-                        // Lưu theo format Decap CMS
-                        const user = {
-                            token: authData.token,
-                            backendName: 'github',
-                            login: 'authenticated-user'
-                        };
+                    try {
+                        const dataStr = e.data.replace('authorization:github:success:', '');
+                        console.log('Extracted data string:', dataStr);
 
-                        localStorage.setItem('netlify-cms-user', JSON.stringify(user));
-                        console.log('Token saved successfully!');
+                        const authData = JSON.parse(dataStr);
+                        console.log('Parsed auth data:', authData);
 
-                        // Reload để CMS load với token mới
-                        setTimeout(function () {
-                            window.location.reload();
-                        }, 500);
+                        if (authData.token) {
+                            console.log('✓ Token found:', authData.token.substring(0, 10) + '...');
+
+                            const user = {
+                                token: authData.token,
+                                backendName: 'github',
+                                login: 'authenticated-user'
+                            };
+
+                            localStorage.setItem('netlify-cms-user', JSON.stringify(user));
+                            console.log('✓ Token saved to localStorage!');
+                            console.log('localStorage content:', localStorage.getItem('netlify-cms-user'));
+
+                            console.log('Reloading page in 1 second...');
+                            setTimeout(function () {
+                                window.location.reload();
+                            }, 1000);
+                        } else {
+                            console.error('✗ No token in auth data');
+                        }
+                    } catch (error) {
+                        console.error('✗ Auth processing error:', error);
                     }
-                } catch (error) {
-                    console.error('Auth processing error:', error);
+                } else {
+                    console.log('Message is not auth-related, ignoring');
                 }
+            } else {
+                console.log('Message is not string, ignoring');
             }
         }, false);
 
-        console.log('Auth listener ready');
+        console.log('✓ Auth listener ready and waiting for messages');
     </script>
 
     <!-- Load Decap CMS -->
