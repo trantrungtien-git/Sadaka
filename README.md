@@ -61,24 +61,28 @@ Node.js (v16 trở lên)
 Git
 
 Bước 1: Clone dự án
-Bash
+```Bash
 
 git clone [https://github.com/trantrungtien-git/Sadaka.git](https://github.com/trantrungtien-git/Sadaka.git)
 cd Sadaka
+```
 Bước 2: Cài đặt thư viện
-Bash
+```Bash
 
 npm install
 Bước 3: Chạy môi trường Dev
-Bash
+```
+```Bash
 
 npm run dev
 Truy cập: http://localhost:5173 để xem trang web.
+```
 
 Bước 4: Build Production
-Bash
+```Bash
 
 npm run build
+```
 Kết quả sẽ được tạo trong thư mục dist/.
 
 ## 📝 Quy Trình Quản Lý Nội Dung (CMS)
