@@ -68,45 +68,51 @@
     <div class="main-container">
       <section class="hero-slider">
         <div class="hero-slider-inner">
-          <div class="hero-slide active">
-            <div class="hero-slide-content">
-              <h1>
-                Cơ hội việc làm tại Đức <br />
-                đang chờ bạn
-              </h1>
-              <p>
-                SADAKA HR đồng hành cùng bạn trong hành trình học tập, làm
-                việc và định cư tại Đức với lộ trình rõ ràng, minh bạch.
-              </p>
-            </div>
-            <div class="hero-slide-graphic">
-              <img src="./assets/img/Slider_1.jpg" alt="Germany illustration 1" />
-            </div>
-          </div>
-
-          <div class="hero-slide">
-            <div class="hero-slide-content">
-              <h1>Đào tạo tiếng Đức<br />bài bản & thực tế</h1>
-              <p>
-                Chương trình đào tạo phù hợp cho người mới bắt đầu, chú trọng
-                giao tiếp và văn hoá doanh nghiệp Đức.
-              </p>
-            </div>
-            <div class="hero-slide-graphic">
-              <img src="./assets/img/Slider_2.jpg" alt="Germany illustration 2" />
+          <div class="hero-slide active" style="background-image: url('./assets/img/Slider_1.jpg');">
+            <div class="hero-slide-overlay"></div>
+            <div class="hero-slide-container">
+              <div class="hero-slide-content">
+                <h1>CƠ HỘI VIỆC LÀM TẠI ĐỨC ĐANG CHỜ BẠN</h1>
+                <p>
+                  SADAKA HR đồng hành cùng bạn trong hành trình học tập, làm
+                  việc và định cư tại Đức với lộ trình rõ ràng, minh bạch.
+                </p>
+              </div>
+              <div class="hero-slide-image">
+                <img src="./assets/img/Slider_1.jpg" alt="Germany illustration" />
+              </div>
             </div>
           </div>
 
-          <div class="hero-slide">
-            <div class="hero-slide-content">
-              <h1>Quy trình tuyển dụng<br />rõ ràng, minh bạch</h1>
-              <p>
-                Tư vấn, định hướng và hỗ trợ hồ sơ để ứng viên tự tin làm việc
-                tại các doanh nghiệp Đức uy tín.
-              </p>
+          <div class="hero-slide" style="background-image: url('./assets/img/Slider_2.jpg');">
+            <div class="hero-slide-overlay"></div>
+            <div class="hero-slide-container">
+              <div class="hero-slide-content">
+                <h1>ĐÀO TẠO TIẾNG ĐỨC BÀI BẢN & THỰC TẾ</h1>
+                <p>
+                  Chương trình đào tạo phù hợp cho người mới bắt đầu, chú trọng
+                  giao tiếp và văn hoá doanh nghiệp Đức.
+                </p>
+              </div>
+              <div class="hero-slide-image">
+                <img src="./assets/img/Slider_2.jpg" alt="Training illustration" />
+              </div>
             </div>
-            <div class="hero-slide-graphic">
-              <img src="./assets/img/Slider_3.jpg" alt="Germany illustration 3" />
+          </div>
+
+          <div class="hero-slide" style="background-image: url('./assets/img/Slider_3.jpg');">
+            <div class="hero-slide-overlay"></div>
+            <div class="hero-slide-container">
+              <div class="hero-slide-content">
+                <h1>QUY TRÌNH TUYỂN DỤNG RÕ RÀNG, MINH BẠCH</h1>
+                <p>
+                  Tư vấn, định hướng và hỗ trợ hồ sơ để ứng viên tự tin làm việc
+                  tại các doanh nghiệp Đức uy tín.
+                </p>
+              </div>
+              <div class="hero-slide-image">
+                <img src="./assets/img/Slider_3.jpg" alt="Recruitment illustration" />
+              </div>
             </div>
           </div>
         </div>
@@ -414,14 +420,20 @@
                 <label for="service">Dịch vụ bạn quan tâm *</label>
                 <select id="service" name="service" required>
                   <option value="">Chọn dịch vụ</option>
-                  <option value="Language Training">Đào tạo ngôn ngữ</option>
-                  <option value="Overseas Recruitment">
-                    Tuyển dụng lao động nước ngoài
+                  <option value="Đào tạo ngôn ngữ">Đào tạo ngôn ngữ</option>
+                  <option value="Tuyển dụng công nhân sản xuất của tập đoàn Edeka">
+                    Tuyển dụng công nhân sản xuất của tập đoàn Edeka
                   </option>
-                  <option value="Career Coaching">
-                    Định hướng &amp; tư vấn nghề nghiệp
+                  <option value="Tuyển dụng nhân viên chăm sóc móng">
+                    Tuyển dụng nhân viên chăm sóc móng
                   </option>
-                  <option value="Other">Khác</option>
+                  <option value="Tuyển dụng nhân viên bán hàng hệ thống siêu thị">
+                    Tuyển dụng nhân viên bán hàng hệ thống siêu thị
+                  </option>
+                  <option value="Tuyển dụng công nhân sản xuất của tập đoàn Weisenof">
+                    Tuyển dụng công nhân sản xuất của tập đoàn Weisenof
+                  </option>
+                  <option value="Khác">Khác</option>
                 </select>
                 <span class="field-error"></span>
               </div>
@@ -575,6 +587,8 @@
     </div>
   </div>
 
+  <script src="/js/contact_form_gas.js" defer></script>
+  <script src="/js/contact_fab.js" defer></script>
   <script src="/js/main.js" defer></script>
 </body>
 

@@ -13,10 +13,8 @@
   --text-main: #0f172a;
   --text-muted: #6b7280;
 
-  /* border hơi xanh nhẹ, thay vì xám xanh cũ */
   --border-soft: rgba(20, 69, 47, 0.18);
 
-  /* Scale chữ toàn site */
   --font-scale: 1.1;
 }
 
@@ -270,7 +268,7 @@ body {
 }
 
 .notification-link .material-icons {
-  font-size: 22px; /* giữ nguyên icon */
+  font-size: 22px;
   color: #4b5563;
   transition: color 0.3s ease;
 }
@@ -321,121 +319,162 @@ body {
   width: 100%;
   min-height: 90vh;
   background: var(--bg-soft);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden; /* để ảnh bị “khuất” */
+  overflow: hidden;
 }
 
-/* Tạo “khung” đủ cao cho các slide absolute */
 .hero-slider-inner {
   position: relative;
   width: 100%;
-  max-width: 1200px;
-  padding: 40px 24px 60px;
-  min-height: 70vh;
+  height: 90vh;
 }
 
 .hero-slide {
-  /* Giữ slide chồng lên nhau */
   position: absolute;
-  inset: 40px 24px 80px;
+  inset: 0;
+  width: 100%;
+  height: 100%;
 
-  /* Không dùng grid nữa vì cần layer (text trên, ảnh phía sau) */
-  display: block;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 
   opacity: 0;
-  transform: translateX(30px);
-  pointer-events: none;
-  transition: opacity 0.5s ease, transform 0.5s ease;
+  visibility: hidden;
+  transition: opacity 0.8s ease, visibility 0.8s ease;
 }
 
 .hero-slide.active {
   opacity: 1;
-  transform: translateX(0);
-  pointer-events: auto;
+  visibility: visible;
 }
 
-/* Lớp chữ phải luôn nằm trên ảnh */
-.hero-slide-content {
+/* Lớp phủ tối để text dễ đọc */
+.hero-slide-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(10, 92, 54, 0.85) 0%,
+    rgba(10, 92, 54, 0.75) 40%,
+    rgba(10, 92, 54, 0.4) 70%,
+    rgba(10, 92, 54, 0.2) 100%
+  );
+  z-index: 1;
+}
+
+/* Container chứa content */
+.hero-slide-container {
   position: relative;
   z-index: 2;
-  padding: 30px;
-  width: min(815px, 92vw);
+  max-width: 1200px;
+  margin: 0 auto;
+  height: 100%;
+  padding: 0 clamp(20px, 5vw, 80px);
 
-  background: rgba(241, 250, 245, 0.92);
-  border-radius: 5%;
-  top: 75px;
-
-  box-shadow: 0 18px 40px rgba(2, 6, 23, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
 }
-/* 
-.hero-slide-content h1 {
-  font-size: calc(3rem * var(--font-scale));
-  line-height: 1.1;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  color: #f9fafb;
-  text-shadow: 0 4px 10px rgba(0, 0, 0, 0.18);
-  padding: 12px 20px;
-  display: inline-block;
-  border-radius: 14px;
-  background-color: var(--brand-primary);
-  border-left: 4px solid var(--brand-accent);
-  text-align: left;
-} */
+
+/* Box chứa text */
+.hero-slide-content {
+  max-width: 680px;
+  flex: 0 0 auto;
+  background: rgba(255, 255, 255, 0.97);
+  backdrop-filter: blur(10px);
+  padding: clamp(30px, 5vw, 50px) clamp(35px, 5vw, 55px);
+  border-radius: 24px;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(255, 255, 255, 0.5);
+
+  z-index: 3;
+  top: 50vh;
+  animation: slideInContent 0.8s ease-out;
+}
+
+/* Hình ảnh bên phải */
+.hero-slide-image {
+  flex: 1;
+  max-width: 850px;
+  height: 600px;
+  position: absolute;
+  overflow: hidden;
+  border-radius: 24px;
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.25),
+    0 0 0 1px rgba(255, 255, 255, 0.3);
+
+  right: 70px;
+  z-index: 0;
+
+  animation: slideInImage 0.8s ease-out;
+}
+
+.hero-slide-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+}
+
+.hero-slide:hover .hero-slide-image img {
+  transform: scale(1.05);
+}
+
+@keyframes slideInContent {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInImage {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.hero-slide.active .hero-slide-content {
+  animation: slideInContent 0.8s ease-out 0.2s both;
+}
+
+.hero-slide.active .hero-slide-image {
+  animation: slideInImage 0.8s ease-out 0.4s both;
+}
 
 .hero-slide-content h1 {
+  margin: 0 0 20px 0;
   font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.02em;
+  line-height: 1.2;
+  color: var(--text-main);
 
-  font-size: clamp(32px, 3.2vw, 56px);
-  line-height: 1.12;
-
-  /*làm các dòng cân hơn */
-  text-wrap: balance;
-
-  /*khống chế số dòng */
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
-  overflow: hidden;
-
-  text-align: left;
-  margin: 0;
+  font-size: clamp(
+    calc(24px * var(--font-scale)),
+    calc(4vw * var(--font-scale)),
+    calc(42px * var(--font-scale))
+  );
 }
 
 .hero-slide-content p {
-  margin-top: 22px;
-  font-size: calc(1.3rem * var(--font-scale));
-  line-height: 1.6;
-  color: var(--text-main);
-  max-width: 560px;
-  /* text-align: center; */
-
-  /* nhẹ nhẹ để đọc rõ khi ảnh nằm phía sau */
-  /* background: rgba(241, 250, 245, 0.92); */
-  /* border: 1px solid rgba(20, 69, 47, 0.14); */
-  padding: 14px 16px;
-  border-radius: 14px;
-  /* box-shadow: 0 16px 30px rgba(15, 23, 42, 0.06); */
-}
-/* Ảnh to + nằm phía sau + “khuất” bên phải */
-.hero-slide-graphic {
-  position: absolute;
-  z-index: 1;
-  right: -10%;
-  top: 50%;
-  transform: translateY(-50%);
-  pointer-events: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  /* SET CỨNG KHUNG ẢNH */
-  width: min(920px, 75vw);
-  height: min(520px, 70vh); /* bạn có thể tăng/giảm */
+  margin: 0;
+  font-size: clamp(
+    calc(15px * var(--font-scale)),
+    calc(1.8vw * var(--font-scale)),
+    calc(18px * var(--font-scale))
+  );
+  line-height: 1.65;
+  color: #374151;
 }
 
 .hero-slide-graphic img {
@@ -443,14 +482,12 @@ body {
   height: 100%;
   display: block;
 
-  /* luôn fill khung, ảnh khác tỉ lệ vẫn đẹp */
   object-fit: cover;
   object-position: center;
 
   border-radius: 26px;
   box-shadow: 0 26px 55px rgba(15, 23, 42, 0.12);
 
-  /* ❌ bỏ mấy cái này để khỏi chênh */
   max-width: none;
   transform: none;
 }
@@ -466,14 +503,14 @@ body {
   border: none;
   background: #ffffff;
   color: var(--brand-primary);
-  font-size: 24px; /* coi như icon/biểu tượng — giữ nguyên */
+  font-size: 24px;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.16);
   transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
-  z-index: 5; /* luôn nổi trên ảnh */
+  z-index: 5;
 }
 
 .slider-arrow-prev {
@@ -1753,9 +1790,9 @@ section.content {
 }
 
 /* content sections */
-#training-content {
+/* #training-content {
   background-color: var(--bg-soft);
-}
+} */
 
 .main-container {
   display: block;
