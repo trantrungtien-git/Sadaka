@@ -1,20 +1,25 @@
-// blogRender.js - File render dữ liệu blog lên trang HTML
+// blogRender.js - Fixed version cho Grid Layout
 
 // Hàm render danh sách blog cho trang blog.html
 function renderBlogList() {
-  const blogListSection = document.querySelector(".job-list-section");
+  const blogListSection = document.querySelector(".blog-list-section");
 
-  if (!blogListSection) return;
+  if (!blogListSection) {
+    console.log("Không tìm thấy .blog-list-section");
+    return;
+  }
 
-  // Xóa nội dung cũ (placeholder)
+  // XÓA HOÀN TOÀN nội dung cũ
   blogListSection.innerHTML = "";
 
+  console.log("Đang render", blogData.length, "blog posts");
+
   // Render từng bài viết
-  blogData.forEach((blog) => {
+  blogData.forEach((blog, index) => {
     const blogCard = `
       <a href="./blog_detail.html?slug=${blog.slug}">
-        <div class="job-content" ${blog.id === 1 ? 'id="job-info"' : ""}>
-          <div class="job-img">
+        <div class="blog-content" ${index === 0 ? 'id="blog-info"' : ""}>
+          <div class="blog-img">
             <img src="${blog.thumbnail}" alt="${blog.title}">
           </div>
 
@@ -26,17 +31,17 @@ function renderBlogList() {
             <p>${blog.shortDesc}</p>
           </div>
 
-          <a href="./blog_detail.html?slug=${
-            blog.slug
-          }" class="btn-desc" aria-label="Xem chi tiết">
+          <span class="btn-desc" aria-label="Xem chi tiết">
             <span class="material-icons">arrow_forward</span>
-          </a>
+          </span>
         </div>
       </a>
     `;
 
     blogListSection.insertAdjacentHTML("beforeend", blogCard);
   });
+
+  console.log("Đã render xong", blogListSection.children.length, "cards");
 }
 
 // Hàm lấy slug từ URL
@@ -68,8 +73,6 @@ function renderBlogDetail() {
 
   if (!blog) {
     console.error("Không tìm thấy bài viết với slug:", slug);
-    // Có thể redirect về trang blog
-    // window.location.href = './blog.html';
     return;
   }
 
@@ -149,11 +152,15 @@ document.addEventListener("DOMContentLoaded", function () {
   // Kiểm tra trang hiện tại và render phù hợp
   const currentPage = window.location.pathname;
 
+  console.log("Current page:", currentPage);
+
   if (currentPage.includes("blog.html")) {
     // Trang danh sách blog
+    console.log("Rendering blog list...");
     renderBlogList();
   } else if (currentPage.includes("blog_detail.html")) {
     // Trang chi tiết blog
+    console.log("Rendering blog detail...");
     renderBlogDetail();
   }
 });
