@@ -1,119 +1,95 @@
-// document.addEventListener("DOMContentLoaded", () => {
-//   document.querySelectorAll(".job-content").forEach((card) => {
-//     const h2 = card.querySelector(".title h2");
-//     const a = card.querySelector("a.btn-desc");
-//     if (!h2 || !a) return;
-
-//     const jobTitle = h2.textContent.trim();
-
-//     const url = new URL(a.getAttribute("href"), window.location.href);
-//     url.searchParams.set("title", jobTitle);
-
-//     a.href = url.toString();
-//   });
-// });
-
-// document.querySelectorAll(".job-content").forEach((card) => {
-//   const id = card.dataset.id;
-//   const a = card.querySelector(".btn-desc");
-//   if (!id || !a) return;
-//   a.href = `../pages/job_detail.html?id=${encodeURIComponent(id)}`;
-// });
-
 // public/js/job_list.js
 
-// 1. KẾT NỐI CONTENTFUL
 const client = contentful.createClient({
-  space: "b6nnba82anu8", // Thay Space ID của bạn
-  accessToken: "dgLOPB6OvoYWhmg7TCc3FhWSULPnIeZTSiGvWGhWhuA", // Thay Access Token của bạn
+  space: "b6nnba82anu8",
+  accessToken: "dgLOPB6OvoYWhmg7TCc3FhWSULPnIeZTSiGvWGhWhuA",
 });
 
-// 2. HÀM LẤY DỮ LIỆU
 async function fetchJobs() {
-  try {
-    const response = await client.getEntries({
-      content_type: "jobPosting", // ID bạn đặt ở Bước 1
-      order: "-sys.createdAt", // Việc mới nhất lên đầu
-    });
-
-    const jobs = response.items.map((item) => {
-      const fields = item.fields;
-      // Xử lý ngày tháng (nếu có trường deadline)
-      let deadlineStr = "";
-      if (fields.deadline) {
-        const d = new Date(fields.deadline);
-        deadlineStr = `${d.getDate()}/${d.getMonth() + 1}/${d.getFullYear()}`;
-      }
-
-      return {
-        id: item.sys.id,
-        title: fields.title,
-        slug: fields.slug,
-        salary: fields.salary || "Thỏa thuận",
-        location: fields.location || "Toàn quốc",
-        jobType: fields.jobType || "Full-time",
-        deadline: deadlineStr,
-        shortDesc: fields.shortDesc || "",
-        // Nếu có ảnh thumbnail thì lấy, không thì dùng ảnh mặc định
-        // thumbnail: fields.thumbnail ? fields.thumbnail.fields.file.url : '../assets/img/default-job.jpg'
-      };
-    });
-
-    renderJobList(jobs);
-  } catch (error) {
-    console.error("Lỗi lấy dữ liệu tuyển dụng:", error);
-    document.getElementById("job-list").innerHTML =
-      "<p>Đang cập nhật danh sách việc làm...</p>";
-  }
-}
-
-// 3. HÀM RENDER RA HTML
-function renderJobList(jobs) {
-  const container = document.getElementById("job-list");
-
-  // Nếu không tìm thấy container trong HTML thì dừng lại
+  const container = document.getElementById("job-list-container");
   if (!container) return;
 
-  if (jobs.length === 0) {
-    container.innerHTML = "<p>Hiện chưa có vị trí tuyển dụng nào.</p>";
-    return;
+  try {
+    const response = await client.getEntries({
+      content_type: "jobPost",
+      order: "-sys.createdAt",
+    });
+
+    if (response.items.length === 0) {
+      container.innerHTML =
+        "<p style='text-align:center; width:100%'>Hiện chưa có vị trí tuyển dụng nào.</p>";
+      return;
+    }
+
+    let html = "";
+
+    response.items.forEach((item) => {
+      const job = item.fields;
+
+      // Xử lý ảnh
+      let imgUrl = "../assets/img/Logo_SADAKA.jpg";
+      if (job.image && job.image.fields) {
+        imgUrl = job.image.fields.file.url;
+        if (!imgUrl.startsWith("http")) imgUrl = "https:" + imgUrl;
+      }
+
+      // HTML chuẩn theo CSS mới
+      html += `
+            <article class="job-card">
+                <a href="job_detail.html?slug=${
+                    job.slug
+                  }" class="job-card-img-wrapper">
+                      <img src="${imgUrl}" alt="${
+                    job.title
+                  }" class="job-card-img">
+                      <span class="salary-badge">${
+                        job.salary || "Thỏa thuận"
+                      }</span>
+                </a>
+
+                <div class="job-card-body">
+                    <a href="job_detail.html?slug=${
+                      job.slug
+                    }" style="text-decoration:none">
+                        <h3 class="job-card-title">${job.title}</h3>
+                    </a>
+
+                    <div class="job-card-info">
+                        <span><i class="material-icons">place</i> ${
+                          job.location || "Đức"
+                        }</span>
+                        <span><i class="material-icons">schedule</i> ${
+                          job.jobType || "Toàn thời gian"
+                        }</span>
+                    </div>
+
+                    <p class="job-card-desc">
+                        ${
+                          job.slogan ||
+                          "Cơ hội việc làm hấp dẫn tại CHLB Đức cùng Sadaka HR."
+                        }
+                    </p>
+
+                    <div class="job-card-footer">
+                        <span class="deadline-text">Hạn nộp: Đang tuyển</span>
+                        <a href="job_detail.html?slug=${
+                          job.slug
+                        }" class="view-more-link">
+                            Xem chi tiết <i class="material-icons" style="font-size:16px">arrow_forward</i>
+                        </a>
+                    </div>
+                </div>
+            </article>
+            `;
+    });
+
+    container.innerHTML = html;
+    container.className = "job-grid"; // Đảm bảo class grid được thêm vào
+  } catch (error) {
+    console.error("Lỗi:", error);
+    container.innerHTML =
+      "<p style='text-align:center'>Đang tải dữ liệu...</p>";
   }
-
-  let html = "";
-
-  jobs.forEach((job) => {
-    // HTML này bạn chỉnh cho giống design của bạn (class, thẻ div...)
-    html += `
-        <div class="job-item">
-            <div class="job-content">
-                <h3 class="job-title">
-                    <a href="job_detail.html?slug=${job.slug}">${job.title}</a>
-                </h3>
-                
-                <div class="job-meta">
-                    <span class="meta-item"><i class="material-icons">attach_money</i> ${job.salary}</span>
-                    <span class="meta-item"><i class="material-icons">place</i> ${job.location}</span>
-                    <span class="meta-item"><i class="material-icons">schedule</i> ${job.jobType}</span>
-                </div>
-
-                <p class="job-desc">${job.shortDesc}</p>
-
-                <div class="job-footer">
-                    <span class="deadline">Hạn nộp: ${job.deadline}</span>
-                    <a href="job_detail.html?slug=${job.slug}" class="btn-apply">Xem chi tiết</a>
-                </div>
-            </div>
-        </div>
-        `;
-  });
-
-  container.innerHTML = html;
 }
 
-// 4. CHẠY KHI TRANG LOAD XONG
-document.addEventListener("DOMContentLoaded", function () {
-  // Chỉ chạy nếu đang ở trang có id="job-list" (tránh lỗi ở trang khác)
-  if (document.getElementById("job-list")) {
-    fetchJobs();
-  }
-});
+document.addEventListener("DOMContentLoaded", fetchJobs);

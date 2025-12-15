@@ -33,18 +33,17 @@
 //   `;
 // });
 
-// ======== CONTENTFUL JOB LIST FETCH & RENDER ========
+// =========== CONTENTFUL INTEGRATION ===========
 
-// public/js/job_detail_render.js
+// FILE: public/js/job_detail_render.js
+
+const client = contentful.createClient({
+  space: "b6nnba82anu8",
+  accessToken: "dgLOPB6OvoYWhmg7TCc3FhWSULPnIeZTSiGvWGhWhuA",
+});
 
 document.addEventListener("DOMContentLoaded", async () => {
-  // 1. Cấu hình Contentful (Dùng chung key với job_list.js)
-  const client = contentful.createClient({
-    space: "b6nnba82anu8", // Space ID của bạn
-    accessToken: "dgLOPB6OvoYWhmg7TCc3FhWSULPnIeZTSiGvWGhWhuA", // Token của bạn
-  });
-
-  // 2. Lấy slug từ URL
+  // 1. Lấy slug từ URL (ví dụ: job_detail.html?slug=cong-nhan-edeka)
   const params = new URLSearchParams(window.location.search);
   const slug = params.get("slug");
 
@@ -53,98 +52,95 @@ document.addEventListener("DOMContentLoaded", async () => {
     return;
   }
 
-  // 3. Hàm hiển thị chi tiết
   try {
+    // 2. Tìm bài viết trên Contentful khớp với slug
     const response = await client.getEntries({
-      content_type: "jobPost", // Đã sửa thành 'jobPost' theo JSON của bạn
+      content_type: "jobPost",
       "fields.slug": slug,
       limit: 1,
     });
 
     if (response.items.length === 0) {
-      document.getElementById("jobTitle").textContent =
-        "Không tìm thấy bài tuyển dụng này";
+      document.getElementById("jobTitle").innerText = "Không tìm thấy bài viết";
       return;
     }
 
     const job = response.items[0].fields;
 
-    // --- A. Cập nhật Tiêu đề & Trạng thái ---
+    // 3. Đổ dữ liệu vào HTML (Cần đảm bảo file HTML có các ID này)
     document.title = `${job.title} | Sadaka HR`;
-    document.getElementById("jobTitle").textContent = job.title;
 
-    // Vì JSON mới không có trường deadline, mặc định là "Còn tuyển"
-    document.getElementById("jobStatus").textContent = "Còn tuyển";
+    // Header
+    const titleEl = document.getElementById("jobTitle");
+    if (titleEl) titleEl.innerText = job.title;
 
-    // --- B. Cập nhật Ảnh (Xử lý mảng jobImage) ---
-    // Model mới: jobImage là Array -> Lấy ảnh đầu tiên làm ảnh chính
-    if (job.jobImage && job.jobImage.length > 0) {
-      const firstImg = job.jobImage[0].fields.file.url;
-      const finalUrl = firstImg.startsWith("//")
-        ? "https:" + firstImg
-        : firstImg;
-      document.getElementById("jobSliderImg").src = finalUrl;
+    const statusEl = document.getElementById("jobStatus");
+    if (statusEl) statusEl.innerText = "Đang tuyển"; // Mặc định
+
+    // Ảnh chính
+    const imgEl = document.getElementById("jobSliderImg");
+    if (imgEl && job.image) {
+      let url = job.image.fields.file.url;
+      if (!url.startsWith("http")) url = "https:" + url;
+      imgEl.src = url;
     }
 
-    // --- C. Xây dựng Nội dung chi tiết (Ghép các trường lại) ---
-    // Model mới tách rời: slogan, jobDesc, benefits, requirements
-    const descEl = document.getElementById("jobDesc");
-    let htmlContent = "";
+    // Nội dung chi tiết (Ghép các trường lại)
+    const descContainer = document.getElementById("jobDesc");
+    if (descContainer) {
+      // Hàm xử lý xuống dòng
+      const format = (text) => (text ? text.replace(/\n/g, "<br>") : "");
 
-    // 1. Slogan
-    if (job.slogan) {
-      htmlContent += `<h4 class="slogan">${job.slogan}</h4>`;
+      descContainer.innerHTML = `
+                ${
+                  job.slogan
+                    ? `<h4 class="slogan" style="font-weight:bold; color:#d32f2f; margin-bottom:20px">${job.slogan}</h4>`
+                    : ""
+                }
+
+                ${
+                  job.jobDesc
+                    ? `<h3>NỘI DUNG CÔNG VIỆC</h3><p>${format(job.jobDesc)}</p>`
+                    : ""
+                }
+                
+                ${
+                  job.income
+                    ? `<h3>THU NHẬP</h3><p>${format(job.income)}</p>`
+                    : ""
+                }
+                
+                ${
+                  job.benefits
+                    ? `<h3>PHÚC LỢI & ĐÃI NGỘ</h3><p>${format(
+                        job.benefits
+                      )}</p>`
+                    : ""
+                }
+                
+                ${
+                  job.requirements
+                    ? `<h3>YÊU CẦU TUYỂN DỤNG</h3><p>${format(
+                        job.requirements
+                      )}</p>`
+                    : ""
+                }
+
+                <div style="margin-top: 40px; text-align: center; border-top: 1px solid #eee; padding-top: 30px;">
+                  <p style="margin-bottom: 15px; color: #666;">Bạn đã sẵn sàng cho hành trình mới?</p>
+                  <a href="./contact.html" class="cta-btn" style="
+                      display: inline-block; 
+                      padding: 15px 40px; 
+                      font-size: 16px; 
+                      text-decoration: none;
+                      background: linear-gradient(90deg, var(--brand-primary), var(--brand-primary-soft));
+                      color: #fff;">
+                    ỨNG TUYỂN NGAY
+                  </a>
+                </div>
+            `;
     }
-
-    // Hàm hỗ trợ đổi ký tự xuống dòng \n thành thẻ <br> để hiển thị đẹp
-    const formatText = (text) => (text ? text.replace(/\n/g, "<br/>") : "");
-
-    // 2. Nội dung công việc (Vị trí, Địa điểm...)
-    if (job.jobDesc) {
-      htmlContent += `
-            <h3>NỘI DUNG CÔNG VIỆC</h3>
-            <div class="job-section-text">
-                ${formatText(job.jobDesc)}
-            </div>
-        `;
-    }
-
-    // 3. Phúc lợi
-    if (job.benefits) {
-      htmlContent += `
-            <h3>PHÚC LỢI & ĐÃI NGỘ</h3>
-            <div class="job-section-text">
-                ${formatText(job.benefits)}
-            </div>
-        `;
-    }
-
-    // 4. Yêu cầu
-    if (job.requirements) {
-      htmlContent += `
-            <h3>YÊU CẦU TUYỂN DỤNG</h3>
-            <div class="job-section-text">
-                ${formatText(job.requirements)}
-            </div>
-        `;
-    }
-
-    // 5. Thêm nút Ứng tuyển cuối bài
-    htmlContent += `
-        <div style="margin-top: 30px; text-align: center;">
-            <a href="./contact.html" class="cta-btn" style="background: #d32f2f; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display:inline-block; font-weight: bold;">
-                ỨNG TUYỂN NGAY
-            </a>
-        </div>
-    `;
-
-    // Render ra màn hình
-    descEl.innerHTML = htmlContent;
-
-    // --- D. (Tùy chọn) Load bài viết liên quan ---
-    // loadRelatedJobs(client, slug);
   } catch (error) {
-    console.error("Lỗi khi tải chi tiết công việc:", error);
-    document.getElementById("jobTitle").textContent = "Lỗi kết nối dữ liệu";
+    console.error("Lỗi:", error);
   }
 });
