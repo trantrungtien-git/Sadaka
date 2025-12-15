@@ -1,0 +1,86 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Admin — Decap CMS</title>
+</head>
+
+<body>
+    <!-- Auth listener with detailed logging -->
+    <script>
+        console.log('=== AUTH LISTENER SETUP ===');
+        console.log('Current URL:', window.location.href);
+        console.log('Origin:', window.location.origin);
+
+        window.addEventListener('message', function (e) {
+            console.log('=== MESSAGE RECEIVED ===');
+            console.log('Event origin:', e.origin);
+            console.log('Event data type:', typeof e.data);
+            console.log('Event data:', e.data);
+
+            if (typeof e.data === 'string') {
+                console.log('Data is string, checking for auth prefix...');
+
+                if (e.data.indexOf('authorization:github:success:') === 0) {
+                    console.log('✓ Auth message detected!');
+
+                    try {
+                        const dataStr = e.data.replace('authorization:github:success:', '');
+                        console.log('Extracted data string:', dataStr);
+
+                        const authData = JSON.parse(dataStr);
+                        console.log('Parsed auth data:', authData);
+
+                        if (authData.token) {
+                            console.log('✓ Token found:', authData.token.substring(0, 10) + '...');
+
+                            const user = {
+                                token: authData.token,
+                                backendName: 'github',
+                                login: 'authenticated-user'
+                            };
+
+                            localStorage.setItem('netlify-cms-user', JSON.stringify(user));
+                            console.log('✓ Token saved to localStorage!');
+                            console.log('localStorage content:', localStorage.getItem('netlify-cms-user'));
+
+                            console.log('Reloading page in 1 second...');
+                            setTimeout(function () {
+                                window.location.reload();
+                            }, 1000);
+                        } else {
+                            console.error('✗ No token in auth data');
+                        }
+                    } catch (error) {
+                        console.error('✗ Auth processing error:', error);
+                    }
+                } else {
+                    console.log('Message is not auth-related, ignoring');
+                }
+            } else {
+                console.log('Message is not string, ignoring');
+            }
+        }, false);
+
+        console.log('✓ Auth listener ready and waiting for messages');
+    </script>
+
+    <!-- Load Decap CMS -->
+    <script>
+        (function () {
+            var script = document.createElement('script');
+            script.src = '/admin/decap-cms.js';
+            script.onload = function () { console.log('Loaded local decap-cms.js'); };
+            script.onerror = function () {
+                console.warn('Local decap-cms.js not found, fallback to jsDelivr');
+                var s2 = document.createElement('script');
+                s2.src = 'https://cdn.jsdelivr.net/npm/decap-cms@^3.0.0/dist/decap-cms.js';
+                document.head.appendChild(s2);
+            };
+            document.head.appendChild(script);
+        })();
+    </script>
+</body>
+
+</html>
