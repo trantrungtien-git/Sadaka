@@ -148,19 +148,20 @@ function renderRecommendedBlogs(currentSlug) {
 }
 
 // Khởi động khi DOM loaded
-document.addEventListener("DOMContentLoaded", function () {
-  // Kiểm tra trang hiện tại và render phù hợp
+document.addEventListener("DOMContentLoaded", async function () {
+  // 1. CHỜ tải dữ liệu từ Contentful về trước
+  await fetchBlogData();
+
+  // 2. Sau khi có dữ liệu rồi mới Render
   const currentPage = window.location.pathname;
 
-  console.log("Current page:", currentPage);
-
-  if (currentPage.includes("blog.html")) {
-    // Trang danh sách blog
-    console.log("Rendering blog list...");
+  // Logic check trang (giữ nguyên hoặc điều chỉnh tùy đường dẫn thực tế)
+  if (currentPage.includes("blog.html") || currentPage.endsWith("/blog")) {
     renderBlogList();
-  } else if (currentPage.includes("blog_detail.html")) {
-    // Trang chi tiết blog
-    console.log("Rendering blog detail...");
+  } else if (
+    currentPage.includes("blog_detail.html") ||
+    currentPage.includes("blog-detail")
+  ) {
     renderBlogDetail();
   }
 });
