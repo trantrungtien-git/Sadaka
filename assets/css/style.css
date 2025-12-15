@@ -3430,3 +3430,166 @@ section.content {
     font-size: calc(15px * var(--font-scale));
   }
 }
+
+/* =========================================
+   JOB LISTING STYLES (Thêm mới)
+   ========================================= */
+
+/* 1. Layout lưới: Tự động chia cột, tối thiểu 350px/cột */
+.job-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 30px;
+  padding: 20px 0;
+  width: 100%;
+}
+
+/* 2. Thẻ Card việc làm */
+.job-card {
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.job-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  border-color: var(--brand-primary-soft, #0f5132);
+}
+
+/* 3. Phần Ảnh: Ép kích thước cố định để không bị lệch */
+.job-thumb-link {
+  display: block;
+  width: 100%;
+  height: 200px; /* Chiều cao cố định cho ảnh */
+  overflow: hidden;
+  position: relative;
+  background-color: #f3f4f6;
+}
+
+.job-thumb-link img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Cắt ảnh vừa khung mà không bị méo */
+  transition: transform 0.5s ease;
+}
+
+.job-card:hover .job-thumb-link img {
+  transform: scale(1.05); /* Zoom nhẹ khi di chuột */
+}
+
+/* Badge trạng thái trên ảnh */
+.job-status-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(255, 255, 255, 0.95);
+  color: var(--brand-primary, #0a5c36);
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 2;
+}
+
+/* 4. Phần Nội dung bên dưới */
+.job-card-body {
+  padding: 20px;
+  flex: 1; /* Để đẩy footer xuống đáy nếu nội dung ngắn */
+  display: flex;
+  flex-direction: column;
+}
+
+.job-card-title {
+  display: block;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-main, #0f172a);
+  margin-bottom: 12px;
+  line-height: 1.4;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.job-card:hover .job-card-title {
+  color: var(--brand-primary, #0a5c36);
+}
+
+/* Thông tin metadata (Địa điểm, Loại hình) */
+.job-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 12px;
+  font-size: 0.85rem;
+  color: var(--text-muted, #6b7280);
+}
+
+.job-meta span {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--bg-soft, #f1faf5);
+  padding: 4px 8px;
+  border-radius: 6px;
+  color: var(--brand-accent, #14452f);
+  font-weight: 500;
+}
+
+.job-meta i {
+  font-size: 16px;
+}
+
+.job-desc {
+  font-size: 0.9rem;
+  color: #555;
+  line-height: 1.5;
+  margin-bottom: 20px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* Chỉ hiện tối đa 3 dòng */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* 5. Nút bấm (Footer của card) */
+.job-card-footer {
+  margin-top: auto; /* Đẩy xuống đáy */
+  padding-top: 15px;
+  border-top: 1px solid #eee;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.btn-detail {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--brand-primary, #0a5c36);
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: gap 0.2s;
+}
+
+.btn-detail:hover {
+  gap: 10px;
+  text-decoration: underline;
+}
+
+/* Responsive cho mobile */
+@media (max-width: 600px) {
+  .job-grid {
+    grid-template-columns: 1fr; /* 1 cột trên mobile */
+    padding: 10px;
+  }
+}
