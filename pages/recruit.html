@@ -79,86 +79,9 @@
             </section>
 
             <!-- Job List -->
-            <section class="job-list-section">
-                <!-- content 1 -->
-                <div class="job-content" data-id="EDEKA-Food-Job">
-                    <div class="title">
-                        <h2>CƠ HỘI VÀNG LÀM VIỆC TẠI CHLB ĐỨC CÙNG TẬP ĐOÀN BÁN LẺ HÀNG ĐẦU EDEKA</h2>
-                        <a href="./job_detail.html" class="btn-desc" aria-label="Xem chi tiết">
-                            <span class="material-icons">arrow_forward</span>
-                        </a>
-                    </div>
-
-                    <div class="short-desc">
-                        <p>Bạn đang tìm kiếm một cơ hội làm việc ổn định tại Châu Âu với mức thu nhập hấp dẫn? Hãy nắm
-                            bắt ngay cơ hội trở thành một phần của Edeka – Tập đoàn siêu thị và bán lẻ lớn nhất tại Đức.
-                            Với mạng lưới khổng lồ và tiêu chuẩn vận hành đẳng cấp Châu Âu, Edeka không chỉ mang lại môi
-                            trường làm việc chuyên nghiệp, an toàn mà còn đảm bảo các chế độ phúc lợi chuẩn mực.</p>
-                    </div>
-                    <div class="job-img">
-                        <img src="../assets/img/Edeka.jpg" alt="Hình ảnh mô tả tuyển dụng">
-                    </div>
-                </div>
-                <!-- content 2 -->
-                <div class="job-content" data-id="Beauty-Care">
-                    <div class="title">
-                        <h2 class="head-title">TUYỂN DỤNG NHÂN VIÊN NAIL TẠI ĐỨC: LƯƠNG CẦM TAY 1.700 EURO - MIỄN PHÍ
-                            TIỀN NHÀ 100%</h2>
-                        <a href="./job_detail.html" class="btn-desc" aria-label="Xem chi tiết">
-                            <span class="material-icons">arrow_forward</span>
-                        </a>
-                    </div>
-
-                    <div class="short-desc">
-                        <p>Bạn khéo tay và muốn phát triển nghề nghiệp tại Châu Âu? Chuỗi hệ thống chăm sóc sắc đẹp uy
-                            tín với 10 cửa hàng tại các thành phố lớn phía Bắc nước Đức (Hamburg, Rostock, Schwerin)
-                            đang tìm kiếm 10 cộng sự tài năng.</p>
-                    </div>
-                    <div class="job-img">
-                        <img src="../assets/img/Slider_2.jpg" alt="Hình ảnh mô tả tuyển dụng">
-                    </div>
-                </div>
-            </section>
-            <!-- List 2 -->
-            <section class="job-list-section">
-                <!-- content 3 -->
-                <div class="job-content" data-id="Edeka-Supermarket-Sale">
-                    <div class="title">
-                        <h2>TUYỂN 100 NHÂN VIÊN BÁN HÀNG CHO CHUỖI 1.000 SIÊU THỊ EDEKA TẠI BẮC ĐỨC</h2>
-                        <a href="./job_detail.html" class="btn-desc" aria-label="Xem chi tiết">
-                            <span class="material-icons">arrow_forward</span>
-                        </a>
-                    </div>
-
-                    <div class="short-desc">
-                        <p>Cơ hội làm việc chính thức tại tập đoàn bán lẻ hàng đầu Châu Âu đang mở rộng hơn bao giờ hết.
-                            Chúng tôi cần tuyển gấp 100 Nhân viên làm việc tại các quầy thực phẩm (Thịt, Bánh mì, Đồ
-                            uống) thuộc hệ thống siêu thị Edeka tại các khu vực sầm uất như Hamburg, Rostock và bang
-                            Mecklenburg-Vorpommern.</p>
-                    </div>
-                    <div class="job-img">
-                        <img src="../assets/img/Edeka.jpg" alt="Hình ảnh mô tả tuyển dụng">
-                    </div>
-                </div>
-                <!-- content 4 -->
-                <div class="job-content" data-id="Wiesenhof-Food">
-                    <div class="title">
-                        <h2>LÀM VIỆC TẠI TẬP ĐOÀN THỰC PHẨM WIESENHOF (ĐỨC) - THU NHẬP ~65 TRIỆU/THÁNG</h2>
-                        <a href="./job_detail.html" class="btn-desc" aria-label="Xem chi tiết">
-                            <span class="material-icons">arrow_forward</span>
-                        </a>
-                    </div>
-
-                    <div class="short-desc">
-                        <p>Cơ hội vàng gia nhập Wiesenhof – Tập đoàn thực phẩm danh tiếng tại bang
-                            Mecklenburg-Vorpommern. Chúng tôi đang tuyển dụng 50 Công nhân sản xuất làm việc tại nhà máy
-                            quy mô 1.000 lao động với dây chuyền hiện đại bậc nhất.</p>
-                    </div>
-                    <div class="job-img">
-                        <img src="../assets/img/Slider_2.jpg" alt="Hình ảnh mô tả tuyển dụng">
-                    </div>
-                </div>
-            </section>
+            <div class="job-list-container" id="job-list">
+                Loading jobs...
+            </div>
 
         </div>
         <!-- =========== FOOTER =========== -->
@@ -289,8 +212,11 @@
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/contentful@latest/dist/contentful.browser.min.js"></script>
+
+    <script src="/js/job_detail_render.js" defer></script>
     <script src="/js/contact_fab.js" defer></script>
-    <script src="/js/job_list.js" defer></script>
+    <!-- <script src="/js/job_list.js" defer></script> -->
     <script src="/js/main.js" defer></script>
 </body>
 
