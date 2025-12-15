@@ -5,15 +5,16 @@
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 ![Tech](https://img.shields.io/badge/tech-Vite%20%7C%20Bootstrap%20%7C%20GAS-orange.svg)
 
-> **Website chính thức của SADAKA HR** - Chuyên trang thông tin về đào tạo, du học nghề và xuất khẩu lao động (Đức, Nhật, Hàn). Dự án được xây dựng theo kiến trúc **Modern Static Site**, kết hợp sức mạnh của **Vite**, **Decap CMS** và quy trình tự động hóa **CI/CD** qua GitHub Actions.
+> Website chính thức của **SADAKA HR**, chuyên cung cấp thông tin tuyển dụng, đào tạo nghề và du học Đức. Dự án được xây dựng dưới dạng **Static Site** (trang tĩnh) sử dụng HTML/CSS/JS thuần kết hợp với **Vite** để đóng gói và **Contentful** (Headless CMS) để quản lý nội dung.
 
 ## 🚀 Điểm Nhấn Công Nghệ (Highlights)
 
 Khác với các website tĩnh truyền thống, SADAKA HR áp dụng mô hình **"Serverless Content Pipeline"**:
 
-1.  **Headless CMS Management:** Sử dụng **Decap CMS** (trước là Netlify CMS) giúp đội ngũ Marketing viết bài, quản lý đơn hàng ngay trên giao diện web mà không cần biết code.
-2.  **Automated Content Build:** Mỗi khi có bài viết mới, **GitHub Actions** sẽ tự động kích hoạt script chuyển đổi dữ liệu từ Markdown sang JSON, cập nhật nội dung cho website tức thì mà không cần build lại toàn bộ trang.
-3.  **Serverless CRM:** Hệ thống form liên hệ kết nối trực tiếp với **Google Sheets** qua Google Apps Script, tích hợp cơ chế **Local Storage Backup** để đảm bảo không mất dữ liệu khách hàng.
+* **Core:** HTML5, CSS3, JavaScript (ES6+).
+* **Build Tool:** [Vite](https://vitejs.dev/) - Giúp dev nhanh và build code tối ưu.
+* **CMS (Quản lý nội dung):** [Contentful](https://www.contentful.com/) - Lưu trữ bài viết và tin tuyển dụng.
+* **Styling:** CSS thuần (biến CSS variables), thiết kế Responsive.
 
 ## 🛠 Tech Stack (Công Nghệ)
 
@@ -27,78 +28,85 @@ Khác với các website tĩnh truyền thống, SADAKA HR áp dụng mô hình 
 | **CI/CD** | **GitHub Actions** | Tự động hóa quy trình build dữ liệu bài viết (`build-posts.js`) |
 | **Backend** | Google Apps Script | Xử lý API Form (No-CORS) |
 
-## 📂 Cấu Trúc Dự Án
+## 📂 Cấu trúc thư mục
 
-```bash
-sadaka/
-├── .github/
-│   ├── workflows/       # Các file cấu hình CI/CD
-│   │   └── build-posts.yml # Workflow tự động build bài viết
-│   └── scripts/
-│       └── build-posts.js  # Script convert Markdown -> JSON
-├── admin/               # Trang quản trị CMS
-│   ├── config.yml       # Cấu hình data schema cho Decap CMS
-│   └── index.html       # Giao diện Admin
-├── content/             # Kho nội dung (Database dạng file)
-│   ├── posts/           # Bài viết blog (.md)
-│   └── pages/           # Nội dung các trang tĩnh
-├── public/              # Assets tĩnh (Images, JSON data đã build)
-│   ├── js/              # Logic frontend
-│   │   ├── contact_form_gas.js  # Xử lý form liên hệ
-│   │   ├── blog_data.js         # Dữ liệu bài viết (Client-side)
-│   │   └── ...
-│   └── img/             # Kho hình ảnh
-├── src/                 # Mã nguồn phát triển
-├── index.html           # Trang chủ
-├── package.json         # Khai báo dependencies
-└── vite.config.js       # Cấu hình Vite
+```text
+├── assets/             # Tài nguyên gốc (SCSS, ảnh chưa xử lý - nếu có)
+├── pages/              # Các trang con (Recruit, Blog, Contact...)
+├── public/             # Thư mục chứa tài nguyên tĩnh (được copy y nguyên khi build)
+│   ├── css/            # File CSS chính
+│   ├── img/            # Hình ảnh
+│   └── js/             # Các file xử lý Logic (gọi API Contentful)
+├── main.js             # Entry point của Vite
+├── vite.config.js      # Cấu hình Vite
+└── index.html          # Trang chủ
 ```
 
 ## ⚙️ Hướng Dẫn Cài Đặt (Local Development)
-Yêu cầu:
-Node.js (v16 trở lên)
+Yêu cầu: Node.js (v16 trở lên)
 
-Git
-
-Bước 1: Clone dự án
-```Bash
-
-git clone [https://github.com/trantrungtien-git/Sadaka.git](https://github.com/trantrungtien-git/Sadaka.git)
-cd Sadaka
+1. Clone dự án và cài đặt thư viện
 ```
-Bước 2: Cài đặt thư viện
-```Bash
+# Clone repo
+git clone [https://github.com/trantrungtien-git/sadaka.git](https://github.com/trantrungtien-git/sadaka.git)
 
+# Di chuyển vào thư mục dự án
+cd sadaka
+
+# Cài đặt các gói phụ thuộc (dependencies)
 npm install
-Bước 3: Chạy môi trường Dev
 ```
-```Bash
 
+2. Chạy môi trường Development
+Lệnh này sẽ khởi động server local (thường là http://localhost:5173). Mọi thay đổi trong code sẽ tự động cập nhật lên trình duyệt.
+
+```
 npm run dev
-Truy cập: http://localhost:5173 để xem trang web.
 ```
 
-Bước 4: Build Production
-```Bash
+3. Đóng gói (Build) để deploy
+Khi hoàn thiện, chạy lệnh này để Vite tối ưu hóa code và xuất ra thư mục dist/.
 
+```
 npm run build
 ```
-Kết quả sẽ được tạo trong thư mục dist/.
 
-## 📝 Quy Trình Quản Lý Nội Dung (CMS)
-Truy cập trang quản trị: /admin/
+## 🔑 Cấu hình Contentful (CMS)
+Dự án kết nối trực tiếp với Contentful thông qua API. Để thay đổi nội dung (Tuyển dụng, Bài viết), hãy truy cập Contentful Web App.
 
-Đăng nhập bằng tài khoản GitHub (được phân quyền).
+Cấu hình API Key
+Hiện tại, API Key đang được cấu hình trong các file JS tương ứng trong thư mục public/js/.
 
-Tạo bài viết mới hoặc chỉnh sửa thông tin đơn hàng.
+ * Space ID: b6nnba82anu8
+ * Access Token: (Đã tích hợp trong code)
 
-Nhấn Publish:
+Lưu ý bảo mật: Access Token hiện tại là loại Content Delivery API (chỉ đọc), nên an toàn khi để public trên client-side. Tuy nhiên, tuyệt đối không được để lộ Content Management Token (token quyền ghi/xóa) vào code.
 
-Decap CMS sẽ tạo commit và push file .md lên kho chứa GitHub.
+Mô hình dữ liệu (Content Models)
+Dự án yêu cầu các Content Type sau trên Contentful:
 
-GitHub Actions tự động chạy build-posts.js.
+ 1. Job Post (jobPost): Dùng cho trang Tuyển dụng.
 
-Dữ liệu mới sẽ xuất hiện trên website sau vài giây.
+    * title (Text): Tên công việc.
+    * slug (Text): Đường dẫn tĩnh (VD: dieu-duong-vien).
+    * image (Media): Ảnh đại diện.
+    * description (Rich Text/Text): Mô tả chi tiết.
+    * location, jobType, deadline, slogan.
+
+ 2. Blog Post (blogPost): Dùng cho trang Tin tức.
+
+    * title, slug, image, content.
+
+## 📱 Liên hệ Dev
+Phát triển bởi: Tran Trung Tien - Fullstack developer
+Repository: [GitHub Link](https://github.com/trantrungtien-git/Sadaka.git)
+
+
+### Những điểm tôi đã chỉnh sửa trong README này:
+1.  **Loại bỏ Decap CMS:** Không còn nhắc đến `admin/config.yml` hay Netlify CMS nữa.
+2.  **Thêm phần Vite:** Vì repo của bạn có `vite.config.js`, nên việc nhắc người dùng chạy `npm run dev` là chuẩn xác nhất (thay vì mở file HTML thủ công).
+3.  **Làm rõ Contentful:** Tôi đã liệt kê rõ Space ID và nhắc nhở về bảo mật Token (chỉ dùng token Read-only).
+4.  **Content Model:** Liệt kê các trường dữ liệu cần thiết để người quản trị Contentful biết cần tạo gì.
 
 ## 🤝 Đóng Góp (Contributing)
 Dự án được phát triển và duy trì bởi Team Tech SADAKA. Mọi đóng góp vui lòng tạo Pull Request hoặc liên hệ trực tiếp.
