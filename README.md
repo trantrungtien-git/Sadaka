@@ -24,7 +24,7 @@ Khác với các website tĩnh truyền thống, SADAKA HR áp dụng mô hình 
 | **Bundler** | **Vite** | Công cụ phát triển và đóng gói siêu tốc |
 | **Framework** | **Bootstrap 5** | Hệ thống Grid & Component Responsive |
 | **SSG / Tooling** | **Eleventy (11ty)** | Hỗ trợ xử lý template và cấu trúc tĩnh |
-| **CMS** | **Decap CMS** | Quản lý nội dung bài viết (Blog/Jobs) dựa trên Git |
+| **CMS** | **Contentful** | Quản lý nội dung bài viết (Blog/Jobs) bằng Contentful |
 | **CI/CD** | **GitHub Actions** | Tự động hóa quy trình build dữ liệu bài viết (`build-posts.js`) |
 | **Backend** | Google Apps Script | Xử lý API Form (No-CORS) |
 
