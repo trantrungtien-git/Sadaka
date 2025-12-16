@@ -3177,14 +3177,14 @@ section.content {
   gap: 18px;
 }
 
-.job-slider {
+#job-slider {
   height: 600px;
   border-radius: 24px;
   overflow: hidden;
   box-shadow: 0 20px 40px rgba(10, 92, 54, 0.25);
 }
 
-.job-slider img {
+#job-slider img {
   width: 100%;
   display: block;
   object-fit: cover;
@@ -3194,11 +3194,11 @@ section.content {
   opacity: 1;
 }
 
-.job-slider:hover img {
+#job-slider:hover img {
   transform: scale(1.04);
 }
 
-.job-slider img.is-fading {
+#job-slider img.is-fading {
   opacity: 0;
 }
 
@@ -3399,7 +3399,7 @@ section.content {
 }
 
 @media (max-width: 768px) {
-  .job-slider {
+  #job-slider {
     height: 400px;
   }
 
@@ -3413,7 +3413,7 @@ section.content {
     grid-template-columns: 1fr;
   }
 
-  .job-slider {
+  #job-slider {
     height: 300px;
   }
 
