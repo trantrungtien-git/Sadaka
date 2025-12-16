@@ -7,59 +7,157 @@
 // });
 
 // Hero slider functionality
-const slides = document.querySelectorAll(".hero-slide");
-const dots = document.querySelectorAll(".slider-dot");
-const prevBtn = document.querySelector(".slider-arrow-prev");
-const nextBtn = document.querySelector(".slider-arrow-next");
+// const slides = document.querySelectorAll(".hero-slide");
+// const dots = document.querySelectorAll(".slider-dot");
+// const prevBtn = document.querySelector(".slider-arrow-prev");
+// const nextBtn = document.querySelector(".slider-arrow-next");
 
-let currentIndex = 0;
+// let currentIndex = 0;
 
-function showSlide(index) {
-  // Ensure index is within [0, slides.length)
-  if (index < 0) index = slides.length - 1;
-  if (index >= slides.length) index = 0;
-  currentIndex = index;
+// function showSlide(index) {
+//   // Ensure index is within [0, slides.length)
+//   if (index < 0) index = slides.length - 1;
+//   if (index >= slides.length) index = 0;
+//   currentIndex = index;
 
-  // Toggle active class for slides
-  slides.forEach((slide, i) => {
-    slide.classList.toggle("active", i === currentIndex);
-  });
+//   // Toggle active class for slides
+//   slides.forEach((slide, i) => {
+//     slide.classList.toggle("active", i === currentIndex);
+//   });
 
-  // Toggle active class for dots
-  dots.forEach((dot, i) => {
-    dot.classList.toggle("active", i === currentIndex);
-  });
-}
+//   // Toggle active class for dots
+//   dots.forEach((dot, i) => {
+//     dot.classList.toggle("active", i === currentIndex);
+//   });
+// }
 
-prevBtn.addEventListener("click", () => {
-  showSlide(currentIndex - 1);
-});
+// prevBtn.addEventListener("click", () => {
+//   showSlide(currentIndex - 1);
+// });
 
-nextBtn.addEventListener("click", () => {
-  showSlide(currentIndex + 1);
-});
+// nextBtn.addEventListener("click", () => {
+//   showSlide(currentIndex + 1);
+// });
 
-dots.forEach((dot) => {
-  dot.addEventListener("click", () => {
-    const slideIndex = Number(dot.dataset.slide);
-    showSlide(slideIndex);
-  });
-});
+// dots.forEach((dot) => {
+//   dot.addEventListener("click", () => {
+//     const slideIndex = Number(dot.dataset.slide);
+//     showSlide(slideIndex);
+//   });
+// });
 
-// Auto-play functionality
-let autoPlay = setInterval(() => {
-  showSlide(currentIndex + 1);
-}, 7000);
+// // Auto-play functionality
+// let autoPlay = setInterval(() => {
+//   showSlide(currentIndex + 1);
+// }, 7000);
 
-// Stop autoplay on hover
-document.querySelector(".hero-slider").addEventListener("mouseenter", () => {
-  clearInterval(autoPlay);
-});
+// // Stop autoplay on hover
+// document.querySelector(".hero-slider").addEventListener("mouseenter", () => {
+//   clearInterval(autoPlay);
+// });
 
-document.querySelector(".hero-slider").addEventListener("mouseleave", () => {
-  autoPlay = setInterval(() => {
-    showSlide(currentIndex + 1);
-  }, 7000);
+// document.querySelector(".hero-slider").addEventListener("mouseleave", () => {
+//   autoPlay = setInterval(() => {
+//     showSlide(currentIndex + 1);
+//   }, 7000);
+// });
+
+// ==========================================
+// HERO SLIDER FUNCTIONALITY (Đã sửa lại)
+// ==========================================
+
+// Khai báo biến toàn cục để quản lý Autoplay
+let sliderInterval;
+
+// Đóng gói logic vào hàm initSlider để có thể gọi lại sau khi render dữ liệu
+window.initSlider = function () {
+  const slides = document.querySelectorAll(".hero-slide");
+  const dotsContainer = document.querySelector(".slider-dots");
+  const prevBtn = document.querySelector(".slider-arrow-prev");
+  const nextBtn = document.querySelector(".slider-arrow-next");
+
+  // 1. Kiểm tra an toàn: Nếu không có slide nào thì dừng luôn
+  if (slides.length === 0) return;
+
+  // 2. Tự động tạo Dots dựa trên số lượng slide thực tế
+  // (Giúp bạn không phải sửa HTML thủ công khi thêm/bớt slide)
+  if (dotsContainer) {
+    dotsContainer.innerHTML = ""; // Xóa dots cũ (nếu có)
+    slides.forEach((_, index) => {
+      const dot = document.createElement("button");
+      dot.classList.add("slider-dot");
+      if (index === 0) dot.classList.add("active");
+      dot.dataset.slide = index;
+
+      // Thêm sự kiện click cho dot
+      dot.addEventListener("click", () => {
+        showSlide(index);
+      });
+
+      dotsContainer.appendChild(dot);
+    });
+  }
+
+  const dots = document.querySelectorAll(".slider-dot");
+  let currentIndex = 0;
+
+  // Hàm hiển thị slide
+  function showSlide(index) {
+    if (index < 0) index = slides.length - 1;
+    if (index >= slides.length) index = 0;
+    currentIndex = index;
+
+    // Toggle active class for slides
+    slides.forEach((slide, i) => {
+      slide.classList.toggle("active", i === currentIndex);
+    });
+
+    // Toggle active class for dots
+    dots.forEach((dot, i) => {
+      dot.classList.toggle("active", i === currentIndex);
+    });
+  }
+
+  // Sự kiện nút Next / Prev
+  // Cần cloneNode để xóa event listener cũ nếu hàm này bị gọi nhiều lần
+  if (prevBtn) {
+    const newPrev = prevBtn.cloneNode(true);
+    prevBtn.parentNode.replaceChild(newPrev, prevBtn);
+    newPrev.addEventListener("click", () => showSlide(currentIndex - 1));
+  }
+
+  if (nextBtn) {
+    const newNext = nextBtn.cloneNode(true);
+    nextBtn.parentNode.replaceChild(newNext, nextBtn);
+    newNext.addEventListener("click", () => showSlide(currentIndex + 1));
+  }
+
+  // 3. Xử lý Auto Play
+  function startAutoPlay() {
+    clearInterval(sliderInterval); // Xóa interval cũ để tránh chồng chéo
+    sliderInterval = setInterval(() => {
+      showSlide(currentIndex + 1);
+    }, 5000); // 5 giây đổi 1 lần
+  }
+
+  startAutoPlay();
+
+  // Dừng autoplay khi di chuột vào slider
+  const sliderSection = document.querySelector(".hero-slider");
+  if (sliderSection) {
+    sliderSection.addEventListener("mouseenter", () =>
+      clearInterval(sliderInterval)
+    );
+    sliderSection.addEventListener("mouseleave", startAutoPlay);
+  }
+};
+
+// Tự động chạy thử 1 lần khi trang load (Dành cho trường hợp HTML tĩnh không dùng JS render)
+document.addEventListener("DOMContentLoaded", () => {
+  // Chỉ chạy nếu tìm thấy slide có sẵn trong HTML
+  if (document.querySelectorAll(".hero-slide").length > 0) {
+    window.initSlider();
+  }
 });
 
 // ==== Reveal services on scroll ====

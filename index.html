@@ -67,54 +67,8 @@
     <!-- =========== SECTION =========== -->
     <div class="main-container">
       <section class="hero-slider">
-        <div class="hero-slider-inner">
-          <div class="hero-slide active" style="background-image: url('./assets/img/Slider_1.jpg');">
-            <div class="hero-slide-overlay"></div>
-            <div class="hero-slide-container">
-              <div class="hero-slide-content">
-                <h1>CHẠM TAY ĐẾN GIẤC MƠ ĐỨC - TƯƠNG LAI BỀN VỮNG</h1>
-                <p>
-                  SADAKA HR mở ra cánh cửa việc làm thu nhập cao tại Châu Âu, đồng hành cùng bạn kiến tạo sự nghiệp và
-                  cuộc sống định cư ổn định tại CHLB Đức.
-                </p>
-              </div>
-              <div class="hero-slide-image">
-                <img src="./assets/img/Slider_1.jpg" alt="Germany illustration" />
-              </div>
-            </div>
-          </div>
-
-          <div class="hero-slide" style="background-image: url('./assets/img/Slider_2.jpg');">
-            <div class="hero-slide-overlay"></div>
-            <div class="hero-slide-container">
-              <div class="hero-slide-content">
-                <h1>CHINH PHỤC TIẾNG ĐỨC - CHÌA KHÓA HỘI NHẬP</h1>
-                <p>
-                  Kết nối với hệ thống đào tạo chuẩn Châu Âu, chúng tôi giúp bạn xóa bỏ rào cản ngôn ngữ để tự tin giao
-                  tiếp và hòa nhập văn hóa Đức ngay từ ngày đầu.
-                </p>
-              </div>
-              <div class="hero-slide-image">
-                <img src="./assets/img/Slider_2.jpg" alt="Training illustration" />
-              </div>
-            </div>
-          </div>
-
-          <div class="hero-slide" style="background-image: url('./assets/img/Slider_3.jpg');">
-            <div class="hero-slide-overlay"></div>
-            <div class="hero-slide-container">
-              <div class="hero-slide-content">
-                <h1>LỘ TRÌNH MINH BẠCH - VỮNG VÀNG PHÁP LÝ</h1>
-                <p>
-                  Cam kết quy trình xử lý hồ sơ rõ ràng, không phát sinh chi phí ẩn. Chúng tôi là điểm tựa pháp lý tin
-                  cậy để bạn an tâm cất cánh.
-                </p>
-              </div>
-              <div class="hero-slide-image">
-                <img src="./assets/img/Slider_3.jpg" alt="Recruitment illustration" />
-              </div>
-            </div>
-          </div>
+        <div class="hero-slider-inner" id="hero-slider-container">
+          <div style="color: white; padding: 50px; text-align: center;">Đang tải dữ liệu...</div>
         </div>
 
         <button class="slider-arrow slider-arrow-prev">&#10094;</button>
@@ -124,6 +78,7 @@
           <button class="slider-dot active" data-slide="0"></button>
           <button class="slider-dot" data-slide="1"></button>
           <button class="slider-dot" data-slide="2"></button>
+          <button class="slider-dot" data-slide="3"></button>
         </div>
       </section>
 
@@ -589,9 +544,12 @@
     </div>
   </div>
 
-  <script src="/js/contact_fab.js" defer></script>
-  <script src="/js/contact_form_gas.js" defer></script>
-  <script src="/js/main.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/contentful@latest/dist/contentful.browser.min.js"></script>
+
+  <script src="./public/js/slider_render.js" defer></script>
+  <script src="./public/js/contact_fab.js" defer></script>
+  <script src="./public/js/contact_form_gas.js" defer></script>
+  <script src="./public/js/main.js" defer></script>
 </body>
 
 </html>

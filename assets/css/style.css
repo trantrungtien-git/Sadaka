@@ -45,6 +45,7 @@ body {
   margin: 0;
   padding: 0;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  /* font-family: "Be Vietnam Pro", sans-serif; */
   color: var(--text-main);
   background: #fff;
   -webkit-font-smoothing: antialiased;
@@ -1253,7 +1254,7 @@ a {
 
 .why-header h2 {
   font-size: calc(1.4rem * var(--font-scale));
-  font-weight: 7contact-header h200;
+  font-weight: 700;
   margin-bottom: 8px;
 }
 
@@ -1655,7 +1656,8 @@ a {
   position: fixed;
   right: 18px;
   bottom: 18px;
-  z-index: 9999;
+  z-index: 9999 !important;
+  isolation: isolate;
 }
 
 /* Main FAB Button */
@@ -1724,7 +1726,8 @@ a {
 .fab-panel {
   position: absolute;
   right: 0;
-  bottom: 78px;
+  bottom: 100%;
+  margin-bottom: 10px;
   width: min(320px, calc(100vw - 36px));
   border-radius: 16px;
   background: #fff;
@@ -1735,6 +1738,10 @@ a {
   opacity: 0;
   pointer-events: none;
   transition: 0.22s ease;
+}
+
+.contact-fab.is-open {
+  z-index: 99999 !important;
 }
 
 .contact-fab.is-open .fab-panel {
@@ -2315,6 +2322,86 @@ section.content {
   .content > .image-training:last-child {
     clip-path: none;
     min-height: 280px;
+  }
+}
+
+/* Tổng thể section */
+.roadmap-section {
+  background-color: #f8f9fa;
+  padding: 60px 0;
+}
+
+/* Container giới hạn độ rộng */
+.roadmap-section .container {
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 50px;
+}
+
+/* Tiêu đề chính (H2) */
+.roadmap-section h2 {
+  color: #d32f2f;
+  margin-bottom: 40px;
+  text-transform: uppercase;
+  font-size: 30px;
+}
+
+/* Khung chứa các bước (Flexbox) */
+.steps-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+/* Từng thẻ bước (Item) */
+.step-item {
+  flex: 1;
+  min-width: 200px;
+  padding: 20px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease; /* Thêm hiệu ứng hover nhẹ */
+}
+
+/* Hiệu ứng khi di chuột vào thẻ (Optional) */
+.step-item:hover {
+  transform: translateY(-5px);
+}
+
+/* Số thứ tự/Icon */
+.step-icon {
+  font-size: 40px;
+  color: #d32f2f;
+  margin-bottom: 15px;
+  font-weight: bold;
+}
+
+/* Tiêu đề bước (H3) */
+.step-item h3 {
+  font-size: 18px;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+/* Nội dung mô tả */
+.step-item p {
+  font-size: 14px;
+  color: #666;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Responsive cho màn hình nhỏ (Mobile) */
+@media (max-width: 768px) {
+  .roadmap-section .container {
+    padding: 30px 15px; /* Giảm padding trên mobile */
+  }
+
+  .step-item {
+    flex: 100%; /* Trên mobile mỗi thẻ chiếm 100% chiều rộng */
   }
 }
 
