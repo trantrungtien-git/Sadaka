@@ -1083,7 +1083,7 @@ a {
 
 .services-header h2 {
   font-size: calc(1.5rem * var(--font-scale));
-  font-weight: 600;
+  font-weight: 700;
   margin-bottom: 8px;
 }
 
@@ -1253,7 +1253,7 @@ a {
 
 .why-header h2 {
   font-size: calc(1.4rem * var(--font-scale));
-  font-weight: 600;
+  font-weight: 7contact-header h200;
   margin-bottom: 8px;
 }
 
@@ -1381,7 +1381,7 @@ a {
 
 .contact-header h2 {
   font-size: calc(1.4rem * var(--font-scale));
-  font-weight: 600;
+  font-weight: 700;
   margin-bottom: 8px;
 }
 
@@ -1667,11 +1667,12 @@ a {
   cursor: pointer;
   display: grid;
   place-items: center;
-  background: var(--brand-primary);
+  background: rgba(223, 41, 25, 0.7);
   color: #fff;
   box-shadow: 0 18px 40px rgba(10, 92, 54, 0.35);
   position: relative;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  margin-bottom: 30px;
 }
 
 /* Pulse animation */
@@ -1680,7 +1681,7 @@ a {
   position: absolute;
   inset: -10px;
   border-radius: 999px;
-  background: var(--overlay-light);
+  background: rgba(223, 41, 25, 0.3);
   animation: fabPulse 1.6s ease-in-out infinite;
 }
 

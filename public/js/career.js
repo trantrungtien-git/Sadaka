@@ -81,7 +81,7 @@ window.JOBS = [
     sections: {
       content: [
         "Vị trí: <strong>Nhân viên quầy (Thịt / Bánh mỳ / Thực phẩm).</strong>",
-        "Địa điểm: Bang Mecklenburg-Vorpommern / Hamburg / Rostock.",
+        "Địa điểm: Bang Mecklenburg-Vorpommern / Hamburg / Rostock, Đức.",
         "Thời gian: 5 ngày/tuần - 40 giờ/tuần.",
       ],
       income: [
