@@ -3824,3 +3824,55 @@ section.content {
     padding: 10px;
   }
 }
+
+/* ========= BLOG DATAIL ========= */
+/* --- STYLE CHO NỘI DUNG BÀI VIẾT --- */
+.blog-text {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: #333;
+}
+
+.blog-text p {
+  margin-bottom: 1.5rem;
+  text-align: justify; /* Căn đều 2 bên */
+}
+
+.blog-text h2 {
+  color: #0066cc; /* Màu xanh chủ đạo */
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+/* Container chứa ảnh và chú thích */
+figure.content-image-wrapper {
+  margin: 2.5rem 0;
+  text-align: center;
+  width: 100%;
+  background: #f9f9f9; /* Nền nhẹ bao quanh nếu muốn */
+  padding: 10px;
+  border-radius: 12px;
+}
+
+/* Ảnh chính */
+figure.content-image-wrapper img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ */
+  transition: transform 0.3s ease;
+}
+
+figure.content-image-wrapper img:hover {
+  transform: scale(1.01); /* Hiệu ứng zoom nhẹ khi di chuột */
+}
+
+/* Chú thích ảnh (Caption) */
+figure.content-image-wrapper figcaption {
+  margin-top: 12px;
+  font-size: 0.95rem;
+  color: #666;
+  font-style: italic;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
