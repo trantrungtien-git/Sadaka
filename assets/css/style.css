@@ -143,6 +143,7 @@ a {
   border-radius: 12px;
   text-decoration: none;
   font-weight: 750;
+  font-size: larger;
   letter-spacing: 0.2px;
   color: #0f172a;
   background: #ffffff;
@@ -154,8 +155,10 @@ a {
 
 .cta-btn:hover {
   transform: translateY(-1px);
-  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.28);
+  box-shadow: 0 16px 34px rgba(255, 84, 84, 0.449);
   filter: brightness(0.98);
+  background-color: #ec3636cf;
+  color: #fff;
 }
 
 .cta-btn:active {
@@ -1371,15 +1374,15 @@ a {
    IMAGE STRIP STYLES (New)
    ======================================== */
 .image-strip-section {
-  padding-bottom: 80px; /* Cách phần dưới một chút */
-  background: var(--bg-alt); /* Cùng màu nền với phần Why Choose để liền mạch */
+  padding-bottom: 80px;
+  background: var(--bg-alt);
 }
 
 /* Lưới 5 cột đều nhau */
 .strip-grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: 16px; /* Khoảng cách giữa các ảnh */
+  gap: 20px;
   max-width: 1200px;
   margin: 0 auto;
 }
@@ -1387,20 +1390,20 @@ a {
 /* Khung chứa từng ảnh */
 .strip-item {
   position: relative;
-  aspect-ratio: 4 / 3; /* Tỉ lệ khung hình chữ nhật (giống mẫu bạn gửi) */
-  border-radius: 16px; /* Bo góc hiện đại */
-  overflow: hidden; /* Cắt phần ảnh thừa */
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05); /* Bóng đổ nhẹ */
+  /* /* aspect-ratio: 4 / 3; */
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
   cursor: pointer;
-  border: 1px solid rgba(255, 255, 255, 0.6); /* Viền mỏng tinh tế */
+  border: 1px solid rgba(255, 255, 255, 0.6);
 }
 
 /* Xử lý ảnh bên trong */
 .strip-item img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover; /* Ảnh tự lấp đầy khung, không bị méo */
-  transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1); /* Hiệu ứng mượt */
+  width: 250px;
+  height: 300px;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
   display: block;
 }
 
@@ -1416,33 +1419,31 @@ a {
 
 /* --- HIỆU ỨNG HOVER --- */
 .strip-item:hover {
-  box-shadow: 0 15px 30px rgba(10, 92, 54, 0.15); /* Bóng đổ màu xanh thương hiệu */
-  transform: translateY(-5px); /* Nhấc ảnh lên nhẹ */
+  box-shadow: 0 15px 30px rgba(10, 92, 54, 0.1);
+  transform: translateY(-5px);
 }
 
 .strip-item:hover img {
-  transform: scale(1.1); /* Phóng to ảnh bên trong */
+  transform: scale(1.1);
 }
 
 .strip-item:hover .strip-overlay {
-  opacity: 1; /* Hiện lớp phủ màu */
+  opacity: 1;
 }
 
 /* --- RESPONSIVE (Điện thoại) --- */
 @media (max-width: 992px) {
   .strip-grid {
-    grid-template-columns: repeat(3, 1fr); /* Tablet: 3 cột */
+    grid-template-columns: repeat(3, 1fr);
   }
-  /* Ẩn bớt 2 ảnh cuối hoặc để dòng mới tùy bạn, ở đây để dòng mới */
 }
 
 @media (max-width: 640px) {
   .strip-grid {
-    grid-template-columns: repeat(2, 1fr); /* Mobile: 2 cột */
+    grid-template-columns: repeat(2, 1fr);
     gap: 10px;
   }
 
-  /* Nếu muốn ảnh cuối to ra giữa màn hình ở mobile */
   .strip-item:last-child {
     grid-column: span 2;
     aspect-ratio: 2 / 1;
@@ -1967,7 +1968,7 @@ a {
       rgba(15, 23, 42, 0.55),
       rgba(15, 23, 42, 0.55)
     ),
-    url("../img/Slider_3.jpg");
+    url("../../public/img/Slider_3.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -2266,6 +2267,25 @@ section.content {
    ======================================== */
 
 /* ========== TRAINING HERO SLOGAN ========== */
+#training-content .hero-slogan {
+  width: 100%;
+  height: 600px;
+  text-align: center;
+  display: flex;
+  /* justify-content: center; */
+  align-items: center;
+  background-image: linear-gradient(
+      rgba(15, 23, 42, 0.55),
+      rgba(15, 23, 42, 0.55)
+    ),
+    url("../../public/img/ThucTe_Duc_15.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: #ffffff;
+  margin-bottom: 50px;
+}
+
 #training-slogan {
   position: relative;
   width: 100%;
@@ -2305,10 +2325,10 @@ section.content {
 }
 
 #training-slogan .slogan h1 {
-  margin: 0;
+  margin: 30px 0;
   color: #fff;
   font-weight: 800;
-  line-height: 1.5;
+  line-height: 1.25;
   letter-spacing: 0.5px;
   text-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
   text-align: left;
@@ -2345,7 +2365,7 @@ section.content {
   position: relative;
   overflow: hidden;
   border-radius: 0;
-  min-height: 360px;
+  max-height: 600px;
   box-shadow: 0 18px 40px rgba(2, 6, 23, 0.12);
 }
 
@@ -2505,6 +2525,25 @@ section.content {
   align-items: center;
 }
 
+#recruit-content .hero-slogan {
+  width: 100%;
+  height: 600px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: linear-gradient(
+      rgba(15, 23, 42, 0.55),
+      rgba(15, 23, 42, 0.55)
+    ),
+    url("../../public/img/Hop_Dong_01.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: #ffffff;
+  margin-bottom: 50px;
+}
+
 #recruit-slogan .layer {
   position: absolute;
   inset: 0;
@@ -2534,11 +2573,11 @@ section.content {
 }
 
 #recruit-slogan .slogan h1 {
-  margin: 0;
-  max-width: 720px;
+  margin: 30px 0;
+  max-width: 900px;
   color: #fff;
   font-weight: 800;
-  line-height: 1.5;
+  line-height: 1.25;
   letter-spacing: 0.5px;
   text-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
   font-size: clamp(
@@ -2807,6 +2846,25 @@ section.content {
    ======================================== */
 
 /* ========== BLOG HERO ========== */
+#blog-content .hero-slogan {
+  width: 100%;
+  height: 600px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: linear-gradient(
+      rgba(15, 23, 42, 0.55),
+      rgba(15, 23, 42, 0.55)
+    ),
+    url("../../public/img/ThucTe_02.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: #ffffff;
+  margin-bottom: 50px;
+}
+
 .block-blog a {
   text-decoration: none;
   color: #020617;
