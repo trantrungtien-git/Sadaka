@@ -1,0 +1,1527 @@
+/* ========================================
+   RESPONSIVE IMPROVEMENTS - Mobile & Tablet
+   Thêm vào cuối file style.css
+   ======================================== */
+
+/* ========== HAMBURGER MENU (Mobile) ========== */
+.mobile-menu-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  z-index: 1001;
+}
+
+.mobile-menu-toggle span {
+  width: 28px;
+  height: 3px;
+  background: var(--brand-primary);
+  border-radius: 3px;
+  transition: all 0.3s ease;
+}
+
+.mobile-menu-toggle.active span:nth-child(1) {
+  transform: rotate(45deg) translate(8px, 8px);
+}
+
+.mobile-menu-toggle.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.mobile-menu-toggle.active span:nth-child(3) {
+  transform: rotate(-45deg) translate(7px, -7px);
+}
+
+/* ========== TABLET RESPONSIVE (768px - 1024px) ========== */
+@media (max-width: 1024px) {
+  /* Header adjustments */
+  #main-header {
+    padding: 8px 24px;
+  }
+
+  .logo {
+    height: 90px;
+  }
+
+  .nav {
+    gap: 40px;
+  }
+
+  .navbar-header ul li a {
+    font-size: 15px;
+  }
+
+  /* Hero slider */
+  .hero-slider {
+    min-height: 70vh;
+  }
+
+  .hero-slider-inner {
+    height: 70vh;
+  }
+
+  .hero-slide-container {
+    flex-direction: column;
+    gap: 30px;
+    padding: 40px 24px;
+  }
+
+  .hero-slide-content {
+    max-width: 100%;
+    padding: 32px 40px;
+  }
+
+  .hero-slide-image {
+    position: relative;
+    right: 0;
+    max-width: 100%;
+    height: 400px;
+  }
+
+  /* Services section */
+  .services-section {
+    padding: 0 24px;
+    margin: 60px auto 80px;
+  }
+
+  .service-item {
+    gap: 32px;
+  }
+
+  .service-media {
+    height: 400px;
+  }
+
+  /* Why section grid */
+  .why-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+  }
+
+  /* Image strip */
+  .strip-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  /* Contact section */
+  .contact-highlights {
+    grid-template-columns: repeat(1, 1fr);
+    gap: 12px;
+  }
+
+  /* Blog list */
+  .blog-list-section {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 20px !important;
+  }
+
+  /* Job grid */
+  .job-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+  }
+
+  /* Footer */
+  .footer-inner {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 32px;
+  }
+}
+
+/* ========== MOBILE RESPONSIVE (max-width: 768px) ========== */
+@media (max-width: 768px) {
+  /* Show hamburger, hide desktop nav */
+  .mobile-menu-toggle {
+    display: flex;
+  }
+
+  .navbar-header {
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 80%;
+    max-width: 320px;
+    height: 100vh;
+    background: #fff;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 80px 24px 24px;
+    box-shadow: 4px 0 12px rgba(0, 0, 0, 0.1);
+    transition: left 0.3s ease;
+    z-index: 1000;
+    overflow-y: auto;
+  }
+
+  .navbar-header.active {
+    left: 0;
+  }
+
+  /* Mobile overlay */
+  .mobile-menu-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+  }
+
+  .mobile-menu-overlay.active {
+    display: block;
+  }
+
+  /* Mobile nav styling */
+  .main-nav {
+    width: 100%;
+  }
+
+  .nav {
+    flex-direction: column;
+    gap: 0;
+    width: 100%;
+  }
+
+  .nav > li {
+    width: 100%;
+    border-bottom: 1px solid #f0f0f0;
+  }
+
+  .navbar-header ul li a,
+  .nav > li > div > a.dropdown-toggle {
+    padding: 16px 12px;
+    font-size: 16px;
+  }
+
+  /* Mobile dropdown */
+  .dropdown {
+    position: static;
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    pointer-events: auto;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    box-shadow: none;
+    border: none;
+    border-radius: 0;
+    margin-top: 0;
+  }
+
+  .dropdown::before,
+  .dropdown::after {
+    display: none;
+  }
+
+  .has-dropdown.active .dropdown {
+    max-height: 500px;
+  }
+
+  .dropdown li {
+    border-bottom: 1px solid #f9f9f9;
+  }
+
+  .dropdown li a {
+    padding: 12px 20px 12px 32px;
+    font-size: 14px;
+  }
+
+  /* Header actions in mobile menu */
+  .header-actions {
+    width: 100%;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 2px solid #f0f0f0;
+  }
+
+  .box-recruitment {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .notification-link {
+    display: none;
+  }
+
+  /* Header adjustments */
+  #main-header {
+    padding: 8px 16px;
+  }
+
+  .logo {
+    height: 75px;
+  }
+
+  /* Hero slider */
+  .hero-slider {
+    min-height: 60vh;
+  }
+
+  .hero-slider-inner {
+    height: 60vh;
+  }
+
+  .hero-slide-content {
+    padding: 24px 28px;
+  }
+
+  .hero-slide-content h1 {
+    font-size: 1.75rem !important;
+  }
+
+  .hero-slide-content p {
+    font-size: 0.95rem !important;
+  }
+
+  .hero-slide-image {
+    height: 300px;
+  }
+
+  .slider-arrow {
+    width: 36px;
+    height: 36px;
+  }
+
+  .slider-arrow-prev {
+    left: 12px;
+  }
+
+  .slider-arrow-next {
+    right: 12px;
+  }
+
+  /* Services section */
+  .services-section {
+    padding: 0 16px;
+    margin: 40px auto 60px;
+  }
+
+  .service-item,
+  .service-item.reverse {
+    flex-direction: column;
+    gap: 24px;
+    margin-bottom: 50px;
+  }
+
+  .service-media {
+    height: 300px;
+  }
+
+  .service-badge {
+    font-size: 0.95rem;
+  }
+
+  .service-text h3 {
+    font-size: 1.3rem;
+  }
+
+  /* Why section */
+  .why-section {
+    padding: 50px 16px 70px;
+  }
+
+  .why-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  /* Image strip */
+  .strip-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .strip-item img {
+    width: 100%;
+    height: 200px;
+  }
+
+  /* Contact section */
+  .contact-section {
+    padding: 0 16px;
+    margin: 60px auto 80px;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .contact-form-card {
+    padding: 20px 18px;
+  }
+
+  /* Map section */
+  .map-card {
+    grid-template-columns: 1fr;
+    padding: 18px;
+  }
+
+  .map-embed-wrapper {
+    min-height: 250px;
+  }
+
+  /* Hero slogan pages */
+  .hero-slogan {
+    height: 450px !important;
+    min-height: 450px !important;
+  }
+
+  .hero-slogan h1 {
+    font-size: 1.75rem !important;
+  }
+
+  /* About page */
+  section.content {
+    flex-direction: column;
+    gap: 32px;
+    margin: 50px auto;
+  }
+
+  .image-about {
+    min-height: 250px;
+  }
+
+  .about-stats {
+    gap: 24px;
+    justify-content: center;
+  }
+
+  .core-value-sections .core-contents {
+    flex-direction: column;
+    margin: 0 16px;
+  }
+
+  .core-contents .core-value {
+    min-height: auto;
+    margin: 10px 0;
+  }
+
+  /* Training page */
+  #training-slogan {
+    min-height: 450px;
+  }
+
+  #training-slogan .slogan {
+    padding-left: 24px;
+    padding-right: 24px;
+    text-align: center;
+    align-items: center;
+  }
+
+  .training-content .content {
+    flex-direction: column;
+  }
+
+  .image-training {
+    max-height: 300px;
+    clip-path: none !important;
+  }
+
+  /* Recruit page */
+  #recruit-slogan {
+    min-height: 450px;
+  }
+
+  #recruit-slogan .slogan {
+    align-items: center;
+    text-align: center;
+    padding: 0 24px;
+  }
+
+  .job-list-section {
+    padding: 0 16px;
+    margin: 50px auto;
+  }
+
+  .job-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  /* Job detail page */
+  .main-sections {
+    width: 95%;
+    margin: 30px auto;
+  }
+
+  #job-slider {
+    height: 300px;
+  }
+
+  .related-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  /* Blog page */
+  .blog-list-section {
+    grid-template-columns: 1fr !important;
+    gap: 20px !important;
+    margin: 40px auto !important;
+  }
+
+  .blog-list-section .blog-img {
+    height: 200px;
+  }
+
+  /* Blog detail */
+  .main-detail-sections {
+    grid-template-columns: 1fr;
+    gap: 30px;
+    margin: 50px auto 70px;
+    padding: 0 16px;
+  }
+
+  .main-detail {
+    padding: 24px 20px;
+  }
+
+  .main-detail .blog-title {
+    font-size: 1.75rem;
+  }
+
+  .list-rcm {
+    position: static;
+    max-width: 100%;
+  }
+
+  /* Footer */
+  .site-footer {
+    padding: 32px 16px 24px;
+    margin-top: 60px;
+  }
+
+  .footer-inner {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  /* Floating contact button */
+  .contact-fab {
+    right: 12px;
+    bottom: 12px;
+  }
+
+  .fab-btn {
+    width: 56px;
+    height: 56px;
+  }
+
+  .fab-panel {
+    width: calc(100vw - 32px);
+    max-width: 300px;
+  }
+}
+
+/* ========== SMALL MOBILE (max-width: 480px) ========== */
+@media (max-width: 480px) {
+  /* Even smaller adjustments */
+  :root {
+    --font-scale: 0.95;
+  }
+
+  .logo {
+    height: 65px;
+  }
+
+  .hero-slider {
+    min-height: 50vh;
+  }
+
+  .hero-slider-inner {
+    height: 50vh;
+  }
+
+  .hero-slide-content {
+    padding: 20px 24px;
+  }
+
+  .hero-slide-content h1 {
+    font-size: 1.5rem !important;
+  }
+
+  .hero-slide-image {
+    height: 250px;
+  }
+
+  .cta-btn {
+    padding: 5px 20px;
+    font-size: 0.95rem;
+  }
+
+  .btn {
+    padding: 8px 18px;
+    font-size: 0.9rem;
+  }
+
+  .service-media {
+    height: 250px;
+  }
+
+  .strip-item img {
+    height: 180px;
+  }
+
+  .hero-slogan {
+    height: 380px !important;
+    min-height: 380px !important;
+  }
+
+  .hero-slogan h1 {
+    font-size: 1.5rem !important;
+  }
+
+  .about-stat {
+    min-width: 140px;
+  }
+
+  .about-stat-number {
+    font-size: 2rem;
+  }
+
+  #job-slider {
+    height: 250px;
+  }
+
+  .job-description {
+    padding: 18px 16px;
+  }
+
+  .job-description h3 {
+    font-size: 1rem;
+  }
+
+  .blog-list-section .blog-img {
+    height: 180px;
+  }
+
+  .main-detail .blog-title {
+    font-size: 1.5rem;
+  }
+
+  .fab-btn {
+    width: 52px;
+    height: 52px;
+  }
+
+  .fab-text {
+    font-size: 10px;
+  }
+}
+
+/* ========== LANDSCAPE MOBILE (max-height: 500px) ========== */
+@media (max-height: 500px) and (orientation: landscape) {
+  .hero-slider,
+  .hero-slider-inner,
+  .hero-slogan {
+    min-height: 100vh !important;
+    height: 100vh !important;
+  }
+
+  .hero-slide-container {
+    padding: 20px;
+  }
+
+  .hero-slide-content {
+    padding: 20px 24px;
+  }
+}
+
+/* ========================================
+   RESPONSIVE FIXES - Full Width Mobile
+   Thêm vào cuối file responsive.css
+   ======================================== */
+
+/* ========== MOBILE FIXES (max-width: 768px) ========== */
+@media (max-width: 768px) {
+  /* ✅ FIX 1: Container full width trên mobile */
+  .container {
+    padding: 0 !important;
+    width: 100% !important;
+  }
+
+  .main-container {
+    padding: 0;
+  }
+
+  /* ✅ FIX 2: Sections padding điều chỉnh */
+  .services-section {
+    padding: 0 12px !important;
+    margin: 40px auto 60px;
+  }
+
+  .service-item {
+    margin-bottom: 40px;
+  }
+
+  /* Service cards full width */
+  .job-list-section .job-content {
+    padding: 28px 20px;
+    margin: 0 12px;
+    border-radius: 16px;
+  }
+
+  .job-content .title h2 {
+    font-size: 1.2rem;
+    line-height: 1.3;
+    margin-bottom: 12px;
+  }
+
+  .job-content .short-desc {
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  /* ✅ FIX 3: Hero slider full width */
+  .hero-slider {
+    margin: 0;
+    width: 100%;
+  }
+
+  .hero-slide-container {
+    padding: 0 16px;
+  }
+
+  .hero-slide-content {
+    max-width: 100%;
+    margin: 0;
+  }
+
+  /* ✅ FIX 4: Why section cards full width */
+  .why-section {
+    padding: 40px 12px 60px;
+  }
+
+  .why-grid {
+    gap: 14px;
+  }
+
+  .why-card {
+    padding: 24px 18px;
+  }
+
+  /* ✅ FIX 5: Contact section full width */
+  .contact-section {
+    padding: 0 12px;
+  }
+
+  /* ✅ FIX 6: About section full width */
+  .about-section {
+    padding: 0 12px;
+    margin: 60px auto 80px;
+  }
+
+  section.content {
+    padding: 0 12px;
+    margin: 40px auto;
+  }
+
+  /* ✅ FIX 7: Image strip full width */
+  .image-strip-section {
+    padding: 0 12px 60px;
+  }
+
+  .strip-grid {
+    gap: 10px;
+  }
+
+  /* ✅ FIX 8: Mobile menu improvements */
+  .navbar-header {
+    width: 85%;
+    max-width: 340px;
+    padding: 70px 0 24px 0;
+  }
+
+  .nav > li {
+    padding: 0 20px;
+  }
+
+  .navbar-header ul li a,
+  .nav > li > div > a.dropdown-toggle {
+    padding: 14px 0;
+    font-size: 15px;
+  }
+
+  .dropdown li a {
+    padding: 12px 0 12px 20px;
+    font-size: 14px;
+  }
+
+  .header-actions {
+    margin: 20px 20px 0 20px;
+    padding: 20px 0 0 0;
+  }
+
+  /* ✅ FIX 9: Typography mobile */
+  h1 {
+    font-size: 1.75rem;
+    line-height: 1.3;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+    line-height: 1.3;
+  }
+
+  h3 {
+    font-size: 1.25rem;
+    line-height: 1.3;
+  }
+
+  p {
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  /* ✅ FIX 10: Buttons full width nếu cần */
+  .service-btn,
+  .btn-primary {
+    width: 100%;
+    max-width: 100%;
+    padding: 12px 24px;
+    font-size: 15px;
+  }
+
+  .cta-btn {
+    padding: 10px 24px;
+    font-size: 16px;
+  }
+
+  /* ✅ FIX 11: Footer full width */
+  .site-footer {
+    padding: 32px 12px 24px;
+  }
+
+  .footer-inner {
+    gap: 24px;
+  }
+
+  .footer-col {
+    padding: 0;
+  }
+
+  /* ✅ FIX 12: Hero slogan full width */
+  .hero-slogan {
+    margin: 0;
+    width: 100%;
+  }
+
+  .hero-slogan .slogan,
+  #training-slogan .slogan,
+  #recruit-slogan .slogan {
+    padding: 0 16px;
+  }
+
+  /* ✅ FIX 13: Map section full width */
+  .map-section {
+    padding: 0 12px 60px;
+  }
+
+  .map-card {
+    padding: 16px;
+    border-radius: 16px;
+  }
+
+  /* ✅ FIX 14: Blog list full width */
+  .blog-list-section {
+    padding: 0 12px !important;
+    margin: 40px auto !important;
+  }
+
+  .blog-list-section .blog-content {
+    border-radius: 14px;
+  }
+
+  /* ✅ FIX 15: Job detail full width */
+  .main-sections {
+    width: 100%;
+    padding: 0 12px;
+    margin: 30px auto;
+  }
+
+  .job-description {
+    padding: 20px 16px;
+    border-radius: 14px;
+  }
+
+  /* ✅ FIX 16: Core values section */
+  .core-value-sections {
+    padding: 50px 12px;
+  }
+
+  .core-value-sections .core-contents {
+    margin: 0;
+  }
+
+  /* ✅ FIX 17: Roadmap section */
+  .roadmap-section .container {
+    padding: 40px 12px !important;
+  }
+
+  /* ✅ FIX 18: Spacing adjustments */
+  .section {
+    padding: 40px 0;
+  }
+
+  .section-header {
+    margin-bottom: 32px;
+    padding: 0 12px;
+  }
+
+  /* ✅ FIX 19: Remove unnecessary margins */
+  .main-detail-sections {
+    padding: 0 12px;
+    margin: 40px auto 60px;
+  }
+
+  .main-detail {
+    padding: 24px 16px;
+    border-radius: 14px;
+  }
+
+  /* ✅ FIX 20: Job grid full width */
+  .job-list-section {
+    padding: 0 12px;
+    margin: 50px auto;
+  }
+
+  .job-grid {
+    gap: 16px;
+  }
+
+  .job-card {
+    border-radius: 14px;
+  }
+}
+
+/* ========== SMALL MOBILE FIXES (max-width: 480px) ========== */
+@media (max-width: 480px) {
+  /* Even smaller padding */
+  .services-section,
+  .contact-section,
+  .about-section,
+  section.content,
+  .image-strip-section,
+  .why-section,
+  .map-section,
+  .blog-list-section,
+  .job-list-section,
+  .main-sections,
+  .main-detail-sections {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+  }
+
+  .hero-slogan .slogan,
+  #training-slogan .slogan,
+  #recruit-slogan .slogan {
+    padding: 0 12px;
+  }
+
+  .hero-slide-container {
+    padding: 0 12px;
+  }
+
+  /* Typography smaller */
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  h2 {
+    font-size: 1.3rem;
+  }
+
+  h3 {
+    font-size: 1.15rem;
+  }
+
+  p {
+    font-size: 14px;
+  }
+
+  /* Cards padding smaller */
+  .why-card,
+  .service-item,
+  .job-content,
+  .contact-form-card,
+  .map-card,
+  .blog-content,
+  .job-card {
+    padding: 18px 14px;
+  }
+
+  /* Service badges smaller */
+  .service-badge {
+    font-size: 13px;
+    padding: 5px 12px;
+  }
+
+  /* Buttons */
+  .cta-btn {
+    padding: 8px 20px;
+    font-size: 15px;
+  }
+
+  .service-btn,
+  .btn-primary {
+    padding: 10px 20px;
+    font-size: 14px;
+  }
+
+  /* Mobile menu narrower */
+  .navbar-header {
+    width: 90%;
+    max-width: 300px;
+  }
+
+  .nav > li {
+    padding: 0 16px;
+  }
+
+  /* Footer */
+  .site-footer {
+    padding: 28px 10px 20px;
+  }
+}
+
+/* ========== LANDSCAPE MODE FIX ========== */
+@media (max-height: 500px) and (orientation: landscape) {
+  /* Reduce hero height in landscape */
+  .hero-slider,
+  .hero-slider-inner,
+  .hero-slogan {
+    min-height: 100vh !important;
+    height: auto !important;
+  }
+
+  .hero-slide-container {
+    padding: 16px;
+    min-height: 100vh;
+    justify-content: center;
+  }
+
+  .hero-slide-content {
+    padding: 16px 20px;
+  }
+
+  .hero-slide-content h1 {
+    font-size: 1.5rem !important;
+    margin-bottom: 12px;
+  }
+
+  .hero-slide-content p {
+    font-size: 14px !important;
+  }
+}
+
+/* ========== UTILITY CLASSES ========== */
+/* Thêm class này nếu muốn force full width */
+.full-width-mobile {
+  width: 100% !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+@media (max-width: 768px) {
+  .mobile-padding-sm {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+  }
+
+  .mobile-no-margin {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+}
+
+/* ========================================
+   TYPOGRAPHY & ALIGNMENT IMPROVEMENTS
+   Fixes cho text alignment và spacing
+   Thêm vào cuối responsive.css
+   ======================================== */
+
+/* ========== SERVICE CARDS MOBILE IMPROVEMENTS ========== */
+@media (max-width: 768px) {
+  /* Service item alignment */
+  .service-item {
+    text-align: left;
+    padding: 0;
+  }
+
+  .service-text {
+    width: 100%;
+  }
+
+  .service-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 14px;
+    font-size: 13px;
+    padding: 6px 14px;
+  }
+
+  .service-badge .material-icons {
+    font-size: 16px;
+  }
+
+  .service-text h3 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+    line-height: 1.3;
+    text-align: left;
+  }
+
+  .service-intro {
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: 16px;
+    text-align: left;
+    color: #4b5563;
+  }
+
+  .service-list {
+    margin: 0 0 20px 0;
+    padding: 0;
+    gap: 12px;
+  }
+
+  .service-list li {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .service-list li strong {
+    font-size: 15px;
+    color: #0f172a;
+  }
+
+  .service-list li p {
+    font-size: 14px;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  .service-icon {
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .service-icon .material-icons {
+    font-size: 18px;
+  }
+
+  .service-btn {
+    width: 100%;
+    margin-top: 20px;
+  }
+
+  /* Service media */
+  .service-media {
+    width: 100%;
+    height: 280px;
+    margin-top: 20px;
+  }
+
+  .service-media img {
+    border-radius: 12px;
+  }
+
+  /* ========== JOB CONTENT CARDS ========== */
+  .job-list-section .job-content {
+    text-align: left;
+  }
+
+  .job-content .title {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 0;
+    align-items: flex-start;
+  }
+
+  .job-content .title h2 {
+    font-size: 1.2rem;
+    line-height: 1.3;
+    text-align: left;
+    margin: 0;
+    width: 100%;
+  }
+
+  .btn-desc {
+    align-self: flex-start;
+  }
+
+  .job-content .short-desc {
+    text-align: left;
+    padding: 0;
+  }
+
+  .job-content .short-desc p {
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: 16px;
+  }
+
+  /* ========== MOBILE MENU TYPOGRAPHY ========== */
+  .navbar-header {
+    padding: 80px 0 24px 0;
+  }
+
+  .nav > li {
+    padding: 0;
+  }
+
+  .nav > li > a,
+  .nav > li > div > a.dropdown-toggle {
+    display: flex;
+    align-items: center;
+    padding: 14px 20px;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-main);
+  }
+
+  .dropdown {
+    margin: 0;
+    padding: 0;
+  }
+
+  .dropdown li {
+    padding: 0;
+  }
+
+  .dropdown li a {
+    padding: 12px 20px 12px 40px;
+    font-size: 15px;
+    font-weight: 500;
+  }
+
+  /* ========== HERO CONTENT ALIGNMENT ========== */
+  .hero-slide-content {
+    text-align: left;
+  }
+
+  .hero-slide-content h1,
+  .hero-slide-content p {
+    text-align: left;
+  }
+
+  /* ========== WHY CARDS ALIGNMENT ========== */
+  .why-card {
+    text-align: center;
+  }
+
+  .why-card h3 {
+    font-size: 1.1rem;
+    line-height: 1.3;
+    margin-bottom: 10px;
+  }
+
+  .why-card p {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  /* ========== CONTACT FORM ALIGNMENT ========== */
+  .contact-section {
+    text-align: center;
+  }
+
+  .contact-header h2 {
+    font-size: 1.5rem;
+    margin-bottom: 12px;
+  }
+
+  .contact-header p {
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  .contact-form-card {
+    text-align: left;
+  }
+
+  .form-field label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #374151;
+  }
+
+  .form-field input,
+  .form-field select,
+  .form-field textarea {
+    font-size: 15px;
+  }
+
+  /* ========== FOOTER ALIGNMENT ========== */
+  .footer-brand-text,
+  .footer-links a,
+  .footer-contact {
+    text-align: left;
+  }
+
+  .footer-heading {
+    text-align: left;
+    font-size: 1rem;
+  }
+
+  /* ========== SECTION HEADERS ========== */
+  .section-header,
+  .services-header,
+  .why-header,
+  .contact-header {
+    text-align: center;
+    padding: 0 12px;
+  }
+
+  .section-header h2,
+  .services-header h2,
+  .why-header h2 {
+    font-size: 1.4rem;
+    line-height: 1.3;
+    margin-bottom: 12px;
+  }
+
+  .section-header p,
+  .services-header p,
+  .why-header p {
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  /* ========== ABOUT PAGE ========== */
+  .about-title {
+    font-size: 1.4rem;
+    line-height: 1.3;
+    margin-bottom: 14px;
+    text-align: left;
+  }
+
+  .about-text {
+    text-align: left;
+  }
+
+  .about-text p {
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: 14px;
+  }
+
+  .about-text strong {
+    font-weight: 700;
+    color: #0f172a;
+  }
+
+  /* Core values */
+  .hero-core-value {
+    text-align: center;
+    padding: 0 12px;
+  }
+
+  .hero-core-value h3 {
+    font-size: 1.5rem;
+    margin-bottom: 14px;
+  }
+
+  .hero-core-value p {
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  .core-value {
+    text-align: left;
+  }
+
+  .core-text h3 {
+    font-size: 1.2rem;
+    margin-bottom: 12px;
+  }
+
+  .core-text p {
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  /* ========== BLOG CARDS ========== */
+  .blog-list-section .blog-content .title {
+    text-align: left;
+  }
+
+  .blog-list-section .blog-content .title h2 {
+    font-size: 1.1rem;
+    line-height: 1.3;
+  }
+
+  .blog-list-section .blog-content .short-desc {
+    text-align: left;
+  }
+
+  .blog-list-section .blog-content .short-desc p {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  /* ========== JOB DETAIL ========== */
+  .job-description {
+    text-align: left;
+  }
+
+  .job-description .slogan {
+    font-size: 14px;
+    line-height: 1.5;
+    padding: 14px;
+    text-align: left;
+  }
+
+  .job-description h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    margin: 18px 0 10px;
+    text-transform: uppercase;
+  }
+
+  .job-description p,
+  .job-description ul li {
+    font-size: 15px;
+    line-height: 1.6;
+    text-align: left;
+  }
+
+  /* ========== TRAINING PAGE ========== */
+  #training-slogan .slogan {
+    text-align: center;
+  }
+
+  #training-slogan .slogan h1 {
+    text-align: center;
+  }
+
+  /* ========== RECRUIT PAGE ========== */
+  #recruit-slogan .slogan {
+    text-align: center;
+  }
+
+  #recruit-slogan .slogan h1 {
+    text-align: center;
+  }
+
+  /* ========== ROADMAP SECTION ========== */
+  .roadmap-section h2 {
+    font-size: 1.5rem;
+    margin-bottom: 30px;
+  }
+
+  .step-item {
+    text-align: center;
+  }
+
+  .step-item h3 {
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+  }
+
+  .step-item p {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  /* ========== MAP SECTION ========== */
+  .map-info {
+    text-align: left;
+  }
+
+  .map-info h3 {
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+  }
+
+  .map-text {
+    font-size: 15px;
+    line-height: 1.6;
+  }
+}
+
+/* ========== SMALL MOBILE (480px) ========== */
+@media (max-width: 480px) {
+  /* Further reduce font sizes */
+  .service-text h3 {
+    font-size: 1.2rem;
+  }
+
+  .service-intro {
+    font-size: 14px;
+  }
+
+  .service-list li strong {
+    font-size: 14px;
+  }
+
+  .service-list li p {
+    font-size: 13px;
+  }
+
+  .job-content .title h2 {
+    font-size: 1.1rem;
+  }
+
+  .job-content .short-desc p {
+    font-size: 14px;
+  }
+
+  .section-header h2,
+  .services-header h2,
+  .why-header h2,
+  .about-title {
+    font-size: 1.3rem;
+  }
+
+  .hero-core-value h3 {
+    font-size: 1.3rem;
+  }
+
+  .roadmap-section h2 {
+    font-size: 1.3rem;
+  }
+}
+
+/* ========== LINE HEIGHT CONSISTENCY ========== */
+@media (max-width: 768px) {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    line-height: 1.3;
+  }
+
+  p,
+  li {
+    line-height: 1.6;
+  }
+
+  /* Better readability */
+  * {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
