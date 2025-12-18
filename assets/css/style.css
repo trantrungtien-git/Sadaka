@@ -754,6 +754,29 @@ a {
   transform: translateX(2px);
 }
 
+/* Style riêng cho trang Contact */
+.contact-page {
+  background-image: linear-gradient(
+      to bottom,
+      rgba(241, 250, 245, 0.8),
+      rgba(255, 255, 255, 0.9)
+    ),
+    url("../../public/img/EU_01.jpg");
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+.contact-form-card,
+.map-card {
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15) !important;
+  border: 1px solid rgba(255, 255, 255, 0.8) !important;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
 /* Footer Contact */
 .footer-contact {
   list-style: none;
