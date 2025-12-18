@@ -52,6 +52,30 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (descContainer) {
       const format = (text) => (text ? text.replace(/\n/g, "<br>") : "");
 
+      // --- START: XỬ LÝ GALLERY ẢNH (Phần mới thêm) ---
+      let galleryHtml = "";
+      // Kiểm tra xem bài viết có field 'jobImages' chứa ảnh hay không
+      if (job.jobImages && job.jobImages.length > 0) {
+        galleryHtml = `<div class="job-gallery-grid">`;
+
+        job.jobImages.forEach((img) => {
+          if (img.fields && img.fields.file) {
+            let url = img.fields.file.url;
+            if (!url.startsWith("http")) url = "https:" + url;
+            // Tạo thẻ ảnh
+            galleryHtml += `
+                    <div class="gallery-item">
+                        <img src="${url}" alt="Hình ảnh thực tế" loading="lazy">
+                    </div>
+                `;
+          }
+        });
+
+        galleryHtml += `</div>`;
+      }
+      // --- END: XỬ LÝ GALLERY ẢNH ---
+
+      // Render nội dung HTML
       descContainer.innerHTML = `
                 ${
                   job.slogan
@@ -83,6 +107,8 @@ document.addEventListener("DOMContentLoaded", async () => {
                     : ""
                 }
                 
+                ${galleryHtml}
+                
                 <div style="margin-top: 40px; text-align: center; border-top: 1px solid #eee; padding-top: 30px;">
                   <p style="margin-bottom: 15px; color: #666;">Bạn đã sẵn sàng cho hành trình mới?</p>
                   <a href="./contact.html" class="cta-btn" style="
@@ -105,7 +131,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 // Hàm lấy và hiển thị các bài viết liên quan
 async function renderRelatedJobs(currentId) {
-  const grid = document.getElementById("relatedJobsGrid"); // Đảm bảo ID này khớp với HTML bước 1
+  const grid = document.getElementById("relatedJobsGrid");
   if (!grid) return;
 
   try {
@@ -134,7 +160,7 @@ async function renderRelatedJobs(currentId) {
           if (!thumbUrl.startsWith("http")) thumbUrl = "https:" + thumbUrl;
         }
 
-        // Tạo thẻ HTML giống hệt cấu trúc cũ của bạn
+        // Tạo thẻ HTML
         return `
                 <article class="related-card">
                     <a href="job_detail.html?slug=${fields.slug}">
