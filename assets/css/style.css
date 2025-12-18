@@ -452,33 +452,63 @@ a {
   font-weight: 400;
 }
 
-/* ========== DROPDOWN MENU ========== */
+/* ========== MODERN DROPDOWN MENU ========== */
+
+/* Container chính của dropdown */
 .dropdown {
   position: absolute;
-  top: 100%;
-  left: 0;
-  min-width: 160px;
-  margin: 2px 15px 0;
-  padding: 8px 0;
+  top: calc(100% + -6px);
+  left: -20px;
+  min-width: 280px;
+  max-width: 320px;
+  padding: 0;
+  margin: 0;
   list-style: none;
   background: #ffffff;
-  border-radius: 8px;
-  box-shadow: 0 14px 24px -12px rgba(0, 0, 0, 0.25);
+  border-radius: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05),
+    0 10px 15px -3px rgba(0, 0, 0, 0.1);
+
+  /* Trạng thái ẩn mặc định */
   opacity: 0;
   visibility: hidden;
-  transform: translateY(8px);
+  transform: translateY(10px);
   pointer-events: none;
-  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
-  display: flex;
-  flex-direction: column;
-  gap: 0;
+
+  /* Transition mượt (cubic-bezier tạo cảm giác nảy nhẹ) */
+  transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
   z-index: 1000;
+  overflow: hidden;
 }
 
-.dropdown li {
-  margin: 0;
+/* Mũi tên nhỏ chỉ lên trên (Triangle) */
+.dropdown::before {
+  content: "";
+  position: absolute;
+  top: -6px;
+  left: 30px;
+  width: 12px;
+  height: 12px;
+  background: #fff;
+  transform: rotate(45deg);
+  border-left: 1px solid rgba(0, 0, 0, 0.08);
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  z-index: 1;
 }
 
+/* Khoảng đệm vô hình để chuột không bị mất hover khi di chuyển từ menu cha xuống */
+.dropdown::after {
+  content: "";
+  position: absolute;
+  top: -15px;
+  left: 0;
+  width: 100%;
+  height: 15px;
+  background: transparent;
+}
+
+/* Hiển thị khi hover */
 .has-dropdown:hover .dropdown,
 .has-dropdown:focus-within .dropdown {
   opacity: 1;
@@ -487,45 +517,65 @@ a {
   pointer-events: auto;
 }
 
+/* Các mục trong list (LI) */
+.dropdown li {
+  margin: 0;
+  border-bottom: 1px solid #f3f4f6;
+  position: relative;
+  z-index: 2;
+  background: #fff;
+}
+
+/* Bỏ đường kẻ ở mục cuối cùng */
+.dropdown li:last-child {
+  border-bottom: none;
+}
+
+/* Style cho thẻ A bên trong */
 .dropdown li a {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 8px 16px;
-  font-size: calc(14px * var(--font-scale));
-  font-weight: 400;
-  line-height: 1.4;
-  color: #374151;
+  display: block;
+  padding: 12px 20px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.5;
+  color: #4b5563;
   text-decoration: none;
   text-align: left;
-  white-space: nowrap;
+  transition: all 0.2s ease;
+
+  /* Quan trọng: Cho phép xuống dòng nếu tên job dài */
+  white-space: normal;
 }
 
+/* Hiệu ứng hover vào từng mục */
 .dropdown li a:hover {
-  background: var(--bg-soft);
-  color: var(--brand-primary);
+  background-color: #fff1f0;
+  /* color: #d32f2f; */
+  padding-left: 24px;
 }
 
-/* Dropdown Arrow Icon */
+/* Style đặc biệt cho nút "Xem tất cả" (nếu có class riêng hoặc là li cuối) */
+.dropdown li:last-child a {
+  font-weight: 600;
+  /* color: #d32f2f; */
+  background-color: #fafafa;
+  text-align: center;
+}
+
+.dropdown li:last-child a:hover {
+  background-color: #d32f2f !important;
+  color: #ffffff !important;
+  padding-left: 20px;
+}
+
+/* --- ICONS ROTATION --- */
 .nav > li > div > a.dropdown-toggle .material-icons {
-  transform: rotate(0deg);
-  transition: transform 0.25s ease;
-}
-
-.has-dropdown:hover > div > a.dropdown-toggle {
-  background: transparent;
-  cursor: pointer;
+  font-size: 18px;
+  transition: transform 0.3s ease;
 }
 
 .has-dropdown:hover > div > a.dropdown-toggle .material-icons {
   transform: rotate(180deg);
-}
-
-.dropdown-toggle:focus,
-.dropdown-toggle:focus-visible,
-.dropdown-toggle:active {
-  outline: none;
-  box-shadow: none;
 }
 
 /* ========== HEADER ACTIONS ========== */

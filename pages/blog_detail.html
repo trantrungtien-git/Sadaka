@@ -30,7 +30,17 @@
                     <nav class="main-nav">
                         <ul class="nav">
                             <li class="has-dropdown">
-                                <div><a href="./recruit.html" class="dropdown-toggle">Tuyển dụng</a></div>
+                                <div style="position: relative; height: 100%; display: flex; align-items: center;">
+                                    <a href="/pages/recruit.html" class="dropdown-toggle">
+                                        Tuyển dụng
+                                        <span class="material-icons"
+                                            style="font-size: 18px; margin-left: 4px; vertical-align: middle;">arrow_drop_down</span>
+                                    </a>
+
+                                    <ul class="dropdown" id="jobDropdownList">
+                                        <li><a href="#">Đang tải công việc...</a></li>
+                                    </ul>
+                                </div>
                             </li>
                             <li><a href="./training.html">Đào tạo</a></li>
                             <li><a href="./about.html">Giới thiệu</a></li>
@@ -167,10 +177,12 @@
         console.log("✅ Đã load Rich Text Renderer từ Skypack thành công!");
     </script>
 
+    <script src="https://cdn.jsdelivr.net/npm/contentful@latest/dist/contentful.browser.min.js"></script>
     <!-- 4️⃣ Scripts của bạn -->
     <script src="/js/contact_fab.js"></script>
     <script src="/js/blog_data.js"></script>
     <script src="/js/blog_render.js"></script>
+    <script src="/js/dropdown.js" defer></script>
 
 </body>
 

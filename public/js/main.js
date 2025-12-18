@@ -1,369 +1,306 @@
-// document.querySelectorAll(".dropdown-toggle").forEach(function (toggle) {
-//   toggle.addEventListener("click", function (e) {
-//     e.preventDefault();
-//     const li = this.parentElement;
-//     li.classList.toggle("open");
-//   });
-// });
+/**
+ * MAIN.JS - SADAKA HR (Phiên bản Fix lỗi đường dẫn)
+ */
 
-// Hero slider functionality
-// const slides = document.querySelectorAll(".hero-slide");
-// const dots = document.querySelectorAll(".slider-dot");
-// const prevBtn = document.querySelector(".slider-arrow-prev");
-// const nextBtn = document.querySelector(".slider-arrow-next");
+(function () {
+  "use strict";
 
-// let currentIndex = 0;
-
-// function showSlide(index) {
-//   // Ensure index is within [0, slides.length)
-//   if (index < 0) index = slides.length - 1;
-//   if (index >= slides.length) index = 0;
-//   currentIndex = index;
-
-//   // Toggle active class for slides
-//   slides.forEach((slide, i) => {
-//     slide.classList.toggle("active", i === currentIndex);
-//   });
-
-//   // Toggle active class for dots
-//   dots.forEach((dot, i) => {
-//     dot.classList.toggle("active", i === currentIndex);
-//   });
-// }
-
-// prevBtn.addEventListener("click", () => {
-//   showSlide(currentIndex - 1);
-// });
-
-// nextBtn.addEventListener("click", () => {
-//   showSlide(currentIndex + 1);
-// });
-
-// dots.forEach((dot) => {
-//   dot.addEventListener("click", () => {
-//     const slideIndex = Number(dot.dataset.slide);
-//     showSlide(slideIndex);
-//   });
-// });
-
-// // Auto-play functionality
-// let autoPlay = setInterval(() => {
-//   showSlide(currentIndex + 1);
-// }, 7000);
-
-// // Stop autoplay on hover
-// document.querySelector(".hero-slider").addEventListener("mouseenter", () => {
-//   clearInterval(autoPlay);
-// });
-
-// document.querySelector(".hero-slider").addEventListener("mouseleave", () => {
-//   autoPlay = setInterval(() => {
-//     showSlide(currentIndex + 1);
-//   }, 7000);
-// });
-
-// ==========================================
-// HERO SLIDER FUNCTIONALITY (Đã sửa lại)
-// ==========================================
-
-// Khai báo biến toàn cục để quản lý Autoplay
-let sliderInterval;
-
-// Đóng gói logic vào hàm initSlider để có thể gọi lại sau khi render dữ liệu
-window.initSlider = function () {
-  const slides = document.querySelectorAll(".hero-slide");
-  const dotsContainer = document.querySelector(".slider-dots");
-  const prevBtn = document.querySelector(".slider-arrow-prev");
-  const nextBtn = document.querySelector(".slider-arrow-next");
-
-  // 1. Kiểm tra an toàn: Nếu không có slide nào thì dừng luôn
-  if (slides.length === 0) return;
-
-  // 2. Tự động tạo Dots dựa trên số lượng slide thực tế
-  // (Giúp bạn không phải sửa HTML thủ công khi thêm/bớt slide)
-  if (dotsContainer) {
-    dotsContainer.innerHTML = ""; // Xóa dots cũ (nếu có)
-    slides.forEach((_, index) => {
-      const dot = document.createElement("button");
-      dot.classList.add("slider-dot");
-      if (index === 0) dot.classList.add("active");
-      dot.dataset.slide = index;
-
-      // Thêm sự kiện click cho dot
-      dot.addEventListener("click", () => {
-        showSlide(index);
-      });
-
-      dotsContainer.appendChild(dot);
-    });
-  }
-
-  const dots = document.querySelectorAll(".slider-dot");
-  let currentIndex = 0;
-
-  // Hàm hiển thị slide
-  function showSlide(index) {
-    if (index < 0) index = slides.length - 1;
-    if (index >= slides.length) index = 0;
-    currentIndex = index;
-
-    // Toggle active class for slides
-    slides.forEach((slide, i) => {
-      slide.classList.toggle("active", i === currentIndex);
-    });
-
-    // Toggle active class for dots
-    dots.forEach((dot, i) => {
-      dot.classList.toggle("active", i === currentIndex);
-    });
-  }
-
-  // Sự kiện nút Next / Prev
-  // Cần cloneNode để xóa event listener cũ nếu hàm này bị gọi nhiều lần
-  if (prevBtn) {
-    const newPrev = prevBtn.cloneNode(true);
-    prevBtn.parentNode.replaceChild(newPrev, prevBtn);
-    newPrev.addEventListener("click", () => showSlide(currentIndex - 1));
-  }
-
-  if (nextBtn) {
-    const newNext = nextBtn.cloneNode(true);
-    nextBtn.parentNode.replaceChild(newNext, nextBtn);
-    newNext.addEventListener("click", () => showSlide(currentIndex + 1));
-  }
-
-  // 3. Xử lý Auto Play
-  function startAutoPlay() {
-    clearInterval(sliderInterval); // Xóa interval cũ để tránh chồng chéo
-    sliderInterval = setInterval(() => {
-      showSlide(currentIndex + 1);
-    }, 5000); // 5 giây đổi 1 lần
-  }
-
-  startAutoPlay();
-
-  // Dừng autoplay khi di chuột vào slider
-  const sliderSection = document.querySelector(".hero-slider");
-  if (sliderSection) {
-    sliderSection.addEventListener("mouseenter", () =>
-      clearInterval(sliderInterval)
-    );
-    sliderSection.addEventListener("mouseleave", startAutoPlay);
-  }
-};
-
-// Tự động chạy thử 1 lần khi trang load (Dành cho trường hợp HTML tĩnh không dùng JS render)
-document.addEventListener("DOMContentLoaded", () => {
-  // Chỉ chạy nếu tìm thấy slide có sẵn trong HTML
-  if (document.querySelectorAll(".hero-slide").length > 0) {
-    window.initSlider();
-  }
-});
-
-// ==== Reveal services on scroll ====
-document.addEventListener("DOMContentLoaded", () => {
-  const serviceItems = document.querySelectorAll(".service-item");
-  const getButtonsEvent = document.querySelectorAll(".service-btn");
-
-  if (!("IntersectionObserver" in window)) {
-    serviceItems.forEach((item) => item.classList.add("in-view"));
-    return;
-  }
-
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("in-view");
-          observer.unobserve(entry.target);
-        }
-      });
+  const CONFIG = {
+    contentful: {
+      space: "b6nnba82anu8",
+      accessToken: "dgLOPB6OvoYWhmg7TCc3FhWSULPnIeZTSiGvWGhWhuA",
     },
-    { threshold: 0.2 }
-  );
+    selectors: {
+      slider: ".hero-slider",
+      dropdown: "#jobDropdownList",
+      contactForm: "#contact-form",
+    },
+  };
 
-  getButtonsEvent.forEach((btn) => {
-    btn.addEventListener("click", () => {
-      console.log("Bấm nút ", btn.innerText);
-    });
-  });
+  let appClient = null;
 
-  serviceItems.forEach((item) => observer.observe(item));
-});
+  if (typeof contentful !== "undefined") {
+    appClient = contentful.createClient(CONFIG.contentful);
+  } else {
+    console.warn(
+      "Lưu ý: Thư viện Contentful chưa được load ở trang này. Chức năng Dropdown sẽ tắt."
+    );
+  }
 
-document.addEventListener("DOMContentLoaded", () => {
-  const aboutSection = document.querySelector(".about-section");
-  const counters = document.querySelectorAll(".about-stat-number");
+  const App = {
+    init: function () {
+      this.handleDropdown();
+      this.handleSlider();
+      this.handleScrollAnimations();
+      this.handleContactForm();
+      this.handleSmoothScroll();
+      this.handleAboutCounters();
+    },
 
-  if (!aboutSection || !counters.length) return;
+    // --- XỬ LÝ DROPDOWN MENU (ĐÃ FIX) ---
+    handleDropdown: async function () {
+      const dropdownList = document.querySelector(CONFIG.selectors.dropdown);
 
-  let animated = false;
+      if (!dropdownList) return;
 
-  function animateCounters() {
-    counters.forEach((counter) => {
-      const target = Number(counter.dataset.target);
-      const duration = 1200; // ms
-      const startTime = performance.now();
-
-      function update(now) {
-        const progress = Math.min((now - startTime) / duration, 1);
-        const value = Math.floor(progress * target);
-        counter.textContent = value.toString();
-        if (progress < 1) {
-          requestAnimationFrame(update);
-        } else {
-          counter.textContent = target.toString();
-        }
+      if (!appClient) {
+        dropdownList.innerHTML =
+          '<li><a href="#" style="color:red">Lỗi: Thiếu thư viện Contentful</a></li>';
+        return;
       }
 
-      requestAnimationFrame(update);
-    });
-  }
-
-  // Using IntersectionObserver for run in one when scroll
-  if ("IntersectionObserver" in window) {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting && !animated) {
-            animated = true;
-            aboutSection.classList.add("in-view");
-            animateCounters();
-            observer.unobserve(aboutSection);
-          }
+      try {
+        const response = await appClient.getEntries({
+          content_type: "jobPost",
+          limit: 5,
+          order: "-sys.createdAt",
         });
-      },
-      { threshold: 0.2 }
-    );
 
-    observer.observe(aboutSection);
-  } else {
-    aboutSection.classList.add("in-view");
-    animateCounters();
-  }
-});
+        dropdownList.innerHTML = "";
 
-// ==== Reveal "Why Choose" cards on scroll ====
-document.addEventListener("DOMContentLoaded", () => {
-  const whyCards = document.querySelectorAll(".why-card");
-
-  if (!whyCards.length) return;
-
-  // Browser cũ: hiện luôn
-  if (!("IntersectionObserver" in window)) {
-    whyCards.forEach((card) => card.classList.add("in-view"));
-    return;
-  }
-
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("in-view");
-          observer.unobserve(entry.target);
+        if (response.items.length === 0) {
+          dropdownList.innerHTML =
+            '<li><span style="padding:10px; display:block; text-align:center">Chưa có công việc nào.</span></li>';
+          return;
         }
+
+        // ✅ FIX: Dùng absolute path (bắt đầu bằng /) thay vì relative path
+        // Điều này đảm bảo link luôn trỏ đúng từ root, không bị lặp /pages/
+        const basePath = "/pages/job_detail.html";
+        const recruitPath = "/pages/recruit.html";
+
+        const html = response.items
+          .map((item) => {
+            const { title, slug } = item.fields;
+            return `
+            <li>
+              <a href="${basePath}?slug=${slug}" title="${title}">
+                ${title}
+              </a>
+            </li>
+          `;
+          })
+          .join("");
+
+        const viewAllLink = `
+          <li>
+            <a href="${recruitPath}" style="font-weight: 600; color: #d32f2f; background-color: #fafafa; text-align: center;">
+              Xem tất cả công việc &rarr;
+            </a>
+          </li>
+        `;
+
+        dropdownList.innerHTML = html + viewAllLink;
+      } catch (error) {
+        console.error("Lỗi tải dropdown:", error);
+        dropdownList.innerHTML =
+          '<li><a href="#">Không thể tải dữ liệu</a></li>';
+      }
+    },
+
+    // --- XỬ LÝ HERO SLIDER ---
+    handleSlider: function () {
+      if (document.querySelectorAll(".hero-slide").length === 0) return;
+
+      const slides = document.querySelectorAll(".hero-slide");
+      const dotsContainer = document.querySelector(".slider-dots");
+      const prevBtn = document.querySelector(".slider-arrow-prev");
+      const nextBtn = document.querySelector(".slider-arrow-next");
+      let sliderInterval;
+
+      if (dotsContainer) {
+        dotsContainer.innerHTML = "";
+        slides.forEach((_, index) => {
+          const dot = document.createElement("button");
+          dot.classList.add("slider-dot");
+          if (index === 0) dot.classList.add("active");
+          dot.dataset.slide = index;
+          dot.addEventListener("click", () => showSlide(index));
+          dotsContainer.appendChild(dot);
+        });
+      }
+
+      const dots = document.querySelectorAll(".slider-dot");
+      let currentIndex = 0;
+
+      function showSlide(index) {
+        if (index < 0) index = slides.length - 1;
+        if (index >= slides.length) index = 0;
+        currentIndex = index;
+
+        slides.forEach((s, i) =>
+          s.classList.toggle("active", i === currentIndex)
+        );
+        dots.forEach((d, i) =>
+          d.classList.toggle("active", i === currentIndex)
+        );
+      }
+
+      if (prevBtn) {
+        const newPrev = prevBtn.cloneNode(true);
+        if (prevBtn.parentNode)
+          prevBtn.parentNode.replaceChild(newPrev, prevBtn);
+        newPrev.addEventListener("click", () => {
+          showSlide(currentIndex - 1);
+          resetAutoPlay();
+        });
+      }
+
+      if (nextBtn) {
+        const newNext = nextBtn.cloneNode(true);
+        if (nextBtn.parentNode)
+          nextBtn.parentNode.replaceChild(newNext, nextBtn);
+        newNext.addEventListener("click", () => {
+          showSlide(currentIndex + 1);
+          resetAutoPlay();
+        });
+      }
+
+      function startAutoPlay() {
+        clearInterval(sliderInterval);
+        sliderInterval = setInterval(() => showSlide(currentIndex + 1), 5000);
+      }
+
+      function resetAutoPlay() {
+        clearInterval(sliderInterval);
+        startAutoPlay();
+      }
+
+      startAutoPlay();
+
+      const sliderSection = document.querySelector(CONFIG.selectors.slider);
+      if (sliderSection) {
+        sliderSection.addEventListener("mouseenter", () =>
+          clearInterval(sliderInterval)
+        );
+        sliderSection.addEventListener("mouseleave", startAutoPlay);
+      }
+    },
+
+    // --- XỬ LÝ HIỆU ỨNG CUỘN ---
+    handleScrollAnimations: function () {
+      const targets = document.querySelectorAll(
+        ".service-item, .why-card, .map-card"
+      );
+      if (targets.length === 0) return;
+
+      if (!("IntersectionObserver" in window)) {
+        targets.forEach((el) => el.classList.add("in-view"));
+        return;
+      }
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("in-view");
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.15 }
+      );
+
+      targets.forEach((el) => observer.observe(el));
+    },
+
+    // --- XỬ LÝ SỐ ĐẾM (About) ---
+    handleAboutCounters: function () {
+      const aboutSection = document.querySelector(".about-section");
+      const counters = document.querySelectorAll(".about-stat-number");
+      if (!aboutSection || counters.length === 0) return;
+
+      let animated = false;
+
+      const runAnimation = () => {
+        if (animated) return;
+        animated = true;
+        counters.forEach((counter) => {
+          const target = +counter.dataset.target;
+          const duration = 1500;
+          const start = performance.now();
+
+          function update(now) {
+            const progress = Math.min((now - start) / duration, 1);
+            const ease = 1 - Math.pow(1 - progress, 3);
+            counter.textContent = Math.floor(ease * target);
+            if (progress < 1) requestAnimationFrame(update);
+            else counter.textContent = target;
+          }
+          requestAnimationFrame(update);
+        });
+      };
+
+      if ("IntersectionObserver" in window) {
+        const observer = new IntersectionObserver(
+          (entries) => {
+            if (entries[0].isIntersecting) {
+              aboutSection.classList.add("in-view");
+              runAnimation();
+              observer.disconnect();
+            }
+          },
+          { threshold: 0.3 }
+        );
+        observer.observe(aboutSection);
+      } else {
+        aboutSection.classList.add("in-view");
+        runAnimation();
+      }
+    },
+
+    // --- XỬ LÝ FORM ---
+    handleContactForm: function () {
+      const form = document.querySelector(CONFIG.selectors.contactForm);
+      if (!form) return;
+
+      const statusEl = document.getElementById("form-status");
+
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        if (statusEl) statusEl.textContent = "";
+
+        form
+          .querySelectorAll(".form-field")
+          .forEach((f) => f.classList.remove("has-error"));
+
+        const formData = new FormData(form);
+        const fullName = formData.get("fullName")
+          ? formData.get("fullName").trim()
+          : "";
+        const email = formData.get("email") ? formData.get("email").trim() : "";
+        const service = formData.get("service");
+
+        if (!fullName || !email || !service) {
+          if (statusEl) {
+            statusEl.style.color = "#EF4444";
+            statusEl.textContent = "Vui lòng điền đầy đủ thông tin bắt buộc.";
+          }
+          return;
+        }
+
+        if (statusEl) {
+          statusEl.style.color = "#10B981";
+          statusEl.textContent = "Gửi thành công! Chúng tôi sẽ liên hệ sớm.";
+        }
+        form.reset();
       });
     },
-    { threshold: 0.2 }
-  );
 
-  whyCards.forEach((card) => observer.observe(card));
-});
-
-// Contact section
-document.addEventListener("DOMContentLoaded", () => {
-  const contactForm = document.getElementById("contact-form");
-  if (!contactForm) return;
-
-  const statusEl = document.getElementById("form-status");
-
-  contactForm.addEventListener("submit", (e) => {
-    e.preventDefault();
-
-    // reset last error
-    statusEl.textContent = "";
-    const fields = contactForm.querySelectorAll(".form-field");
-    fields.forEach((f) => {
-      f.classList.remove("has-error");
-      const err = f.querySelector(".field-error");
-      if (err) err.textContent = "";
-    });
-
-    // get value
-    const fullName = contactForm.fullName.value.trim();
-    const email = contactForm.email.value.trim();
-    const service = contactForm.service.value.trim();
-
-    let hasError = false;
-
-    function setError(name, message) {
-      const field = contactForm
-        .querySelector(`[name="${name}"]`)
-        ?.closest(".form-field");
-      if (!field) return;
-      field.classList.add("has-error");
-      const err = field.querySelector(".field-error");
-      if (err) err.textContent = message;
-      hasError = true;
-    }
-
-    if (!fullName) setError("fullName", "Please enter your full name.");
-    if (!email) {
-      setError("email", "Please enter your email.");
-    } else if (!/^\S+@\S+\.\S+$/.test(email)) {
-      setError("email", "Please enter a valid email address.");
-    }
-    if (!service) setError("service", "Please select a service.");
-
-    if (hasError) {
-      statusEl.style.color = "#EF4444";
-      statusEl.textContent = "Please check the highlighted fields.";
-      return;
-    }
-
-    // Tới đây là hợp lệ – bạn có thể gọi API/backend ở đây
-    // Demo: chỉ hiện thông báo thành công + reset form
-    statusEl.style.color = "#10B981";
-    statusEl.textContent =
-      "Thank you! We have received your information and will contact you soon.";
-
-    contactForm.reset();
-  });
-});
-
-// ========== CONTACT PAGE ==========
-document.addEventListener("DOMContentLoaded", function () {
-  const mapCard = document.querySelector(".map-card");
-  if (!mapCard || !("IntersectionObserver" in window)) {
-    // nếu trình duyệt cũ thì cho hiện luôn
-    if (mapCard) mapCard.classList.add("in-view");
-    return;
-  }
-
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          mapCard.classList.add("in-view");
-          observer.disconnect(); // chỉ chạy 1 lần
-        }
-      });
+    // --- SMOOTH SCROLL ---
+    handleSmoothScroll: function () {
+      const btn = document.querySelector(".cta-btn");
+      const target = document.querySelector(".job-content");
+      if (btn && target) {
+        btn.addEventListener("click", (e) => {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: "smooth", block: "start" });
+        });
+      }
     },
-    { threshold: 0.2 }
-  );
+  };
 
-  observer.observe(mapCard);
-});
-
-// ============ BLOG PAGE ============
-document.addEventListener("DOMContentLoaded", () => {
-  const btn = document.querySelector(".cta-btn");
-  const target = document.querySelector(".job-content");
-
-  if (!btn || !target) return;
-
-  btn.addEventListener("click", (e) => {
-    e.preventDefault();
-    target.scrollIntoView({ behavior: "smooth", block: "start" });
+  document.addEventListener("DOMContentLoaded", () => {
+    App.init();
   });
-});
+})();
